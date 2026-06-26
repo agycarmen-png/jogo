@@ -1,0 +1,3230 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StatusVerse - Prestígio Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+            --diamond: #b9f2ff;
+            --veterano: #ff6b6b;
+            --black: #000000;
+            --success: #00c851;
+            --danger: #ff4444;
+            --warning: #ffbb33;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --elite: #ff00ff;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            flex-shrink: 0;
+        }
+        
+        .logo i {
+            color: var(--gold);
+            -webkit-text-fill-color: var(--gold);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            max-width: 100%;
+            position: relative;
+        }
+        
+        /* Efeitos brilhantes para tiers especiais */
+        .user-info.diamond-effect::before,
+        .user-info.veterano-effect::before,
+        .user-info.black-effect::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 52px;
+            z-index: -1;
+            animation: borderGlow 3s linear infinite;
+        }
+        
+        .user-info.diamond-effect::before {
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(185, 242, 255, 0.3), 
+                #b9f2ff,
+                rgba(185, 242, 255, 0.3),
+                transparent);
+        }
+        
+        .user-info.veterano-effect::before {
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 107, 107, 0.3), 
+                #ff6b6b,
+                rgba(255, 107, 107, 0.3),
+                transparent);
+        }
+        
+        .user-info.black-effect::before {
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 215, 0, 0.3), 
+                #ffd700,
+                rgba(255, 215, 0, 0.3),
+                transparent);
+        }
+        
+        @keyframes borderGlow {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 3px solid var(--gold);
+            flex-shrink: 0;
+        }
+        
+        .user-details {
+            min-width: 0;
+            overflow: hidden;
+        }
+        
+        .user-details h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-details .balance {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+        
+        .user-tier {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            flex: 1;
+            min-width: 90px;
+            text-align: center;
+            padding: 15px 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        /* Avatar Section */
+        .avatar-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .avatar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .avatar-display {
+            width: 100%;
+            max-width: 300px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+        }
+        
+        .avatar-character {
+            font-size: 120px;
+            margin-bottom: 20px;
+            z-index: 2;
+        }
+        
+        .avatar-tier-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 12px;
+            z-index: 3;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+        
+        .avatar-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        
+        .avatar-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .avatar-item i {
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        
+        .avatar-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            text-align: center;
+            word-break: break-word;
+        }
+        
+        .avatar-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stat {
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .avatar-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .control-btn {
+            padding: 10px 25px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        /* Shop Items */
+        .shop-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .item-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+        
+        .item-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        /* Cores de fumo para vapes */
+        .vape-smoke-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .vape-smoke {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.8;
+            animation: smokeFloatAdvanced 3s infinite ease-in-out;
+            filter: blur(2px);
+        }
+
+        @keyframes smokeFloatAdvanced {
+            0% { transform: translate(0, 0) scale(0.8) rotate(0deg); opacity: 0.9; }
+            50% { transform: translate(20px, -20px) scale(1.2) rotate(180deg); opacity: 0.5; }
+            100% { transform: translate(40px, -40px) scale(0.8) rotate(360deg); opacity: 0; }
+        }
+        
+        .item-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            min-height: 40px;
+        }
+        
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            flex: 1;
+            word-break: break-word;
+        }
+        
+        .item-rarity {
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        
+        .rarity-common {
+            background: rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        .rarity-rare {
+            background: rgba(0, 200, 255, 0.2);
+            color: #00c8ff;
+        }
+        
+        .rarity-epic {
+            background: rgba(162, 0, 255, 0.2);
+            color: #a200ff;
+        }
+        
+        .rarity-legendary {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--gold);
+        }
+        
+        .rarity-exclusive {
+            background: rgba(255, 0, 100, 0.2);
+            color: #ff0064;
+        }
+        
+        .rarity-elite {
+            background: rgba(255, 0, 255, 0.2);
+            color: var(--elite);
+            animation: eliteGlow 2s infinite alternate;
+        }
+        
+        @keyframes eliteGlow {
+            0% { box-shadow: 0 0 5px var(--elite); }
+            100% { box-shadow: 0 0 15px var(--elite); }
+        }
+        
+        .item-price {
+            color: var(--gold);
+            font-size: 22px;
+            font-weight: bold;
+            margin: 10px 0;
+            flex-shrink: 0;
+        }
+        
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .buy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .buy-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .already-owned {
+            background: linear-gradient(45deg, #00c851, #007e33) !important;
+        }
+        
+        /* Party Section */
+        .party-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .party-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .party-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .party-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-color: var(--gold);
+        }
+        
+        .party-image {
+            height: 150px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+        }
+        
+        .party-content {
+            padding: 20px;
+        }
+        
+        .party-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+        
+        .party-location {
+            color: var(--gold);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .party-price {
+            color: var(--elite);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .party-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .party-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .party-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Redeem Section */
+        .redeem-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .redeem-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .redeem-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--primary);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .redeem-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #00c851, #007e33);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .redeem-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Chat Section */
+        .chat-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-bottom: 20px;
+            min-height: 0;
+        }
+        
+        .message {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            word-break: break-word;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .message-user {
+            font-weight: bold;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .message-tier {
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            opacity: 0.7;
+            white-space: nowrap;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        
+        .chat-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+        
+        .chat-send {
+            padding: 15px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        /* Social Feed */
+        .feed-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .feed-post {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .post-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+        
+        .post-user {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .post-user h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            word-break: break-word;
+        }
+        
+        .post-user .post-tier {
+            padding: 3px 10px;
+            background: var(--diamond);
+            color: black;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .post-avatar-image {
+            width: 100%;
+            max-width: 300px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin: 0 auto 20px;
+            border: 3px solid var(--gold);
+            position: relative;
+        }
+        
+        .post-avatar-tier {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 10px;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 100px;
+            justify-content: center;
+        }
+        
+        .post-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Stories Section - ESTILO INSTAGRAM */
+        .stories-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stories-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            scrollbar-width: thin;
+        }
+
+        .story-circle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .story-avatar-wrapper {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            margin-bottom: 5px;
+            transition: transform 0.2s;
+        }
+
+        .story-avatar-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .story-avatar-wrapper.no-story {
+            background: #555;
+        }
+
+        .story-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            border: 3px solid #1a1a2e;
+        }
+
+        .story-name {
+            font-size: 12px;
+            text-align: center;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Modal de Stories estilo Instagram */
+        .story-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .story-modal-content {
+            width: 100%;
+            max-width: 400px;
+            height: 700px;
+            background: #000;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .story-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .story-header-info {
+            flex: 1;
+        }
+
+        .story-header-name {
+            font-weight: bold;
+        }
+
+        .story-header-time {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .story-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .story-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            position: relative;
+        }
+
+        .story-item {
+            font-size: 150px;
+            margin-bottom: 20px;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .story-text {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .story-progress-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            z-index: 20;
+        }
+
+        .story-progress-fill {
+            height: 100%;
+            background: white;
+            width: 0%;
+            animation: progress 5s linear forwards;
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .story-nav-left, .story-nav-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 15;
+            color: white;
+        }
+
+        .story-nav-left {
+            left: 10px;
+        }
+
+        .story-nav-right {
+            right: 10px;
+        }
+        
+        /* Challenges Section */
+        .challenges-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .challenge-info {
+            flex: 1;
+        }
+
+        .challenge-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--gold);
+        }
+
+        .challenge-progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            width: 200px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            width: 0%;
+        }
+
+        .challenge-reward {
+            color: var(--success);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* Ranking Section */
+        .ranking-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ranking-list {
+            list-style: none;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 15px;
+        }
+
+        .ranking-pos {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--gold);
+            min-width: 30px;
+        }
+
+        .ranking-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .ranking-name {
+            flex: 1;
+        }
+
+        .ranking-score {
+            font-weight: bold;
+            color: var(--silver);
+        }
+        
+        /* Footer */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+        
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 50px;
+        }
+        
+        .nav-icon.active {
+            color: var(--gold);
+        }
+        
+        .nav-icon i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .nav-icon span {
+            font-size: 11px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid var(--primary);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .mpesa-option {
+            background: rgba(0, 200, 81, 0.2);
+            border: 2px solid #00c851;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mpesa-option:hover {
+            background: rgba(0, 200, 81, 0.3);
+            transform: scale(1.02);
+        }
+        
+        .mpesa-option h4 {
+            color: #00c851;
+            margin-bottom: 10px;
+        }
+        
+        /* Items Modal */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .item-small {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .item-small-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .item-small-name {
+            font-size: 14px;
+            word-break: break-word;
+        }
+        
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+        
+        /* Avatar Grid no Modal */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .avatar-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .avatar-option:hover {
+            background: rgba(106, 17, 203, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .avatar-option.selected {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .avatar-option-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .avatar-option-name {
+            font-size: 12px;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .shop-section, .party-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .user-info {
+                padding: 8px 15px;
+                justify-content: center;
+            }
+            
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .avatar-display {
+                height: 350px;
+            }
+            
+            .avatar-character {
+                font-size: 80px;
+            }
+            
+            .tab {
+                min-width: 70px;
+                padding: 12px 3px;
+                font-size: 11px;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .nav-icon {
+                min-width: 40px;
+            }
+            
+            .nav-icon span {
+                font-size: 9px;
+            }
+            
+            .story-modal-content {
+                height: 600px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .shop-section, .party-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .avatar-section {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .bottom-nav {
+                padding: 10px;
+            }
+            
+            .nav-icon {
+                min-width: 35px;
+            }
+            
+            .nav-icon span {
+                font-size: 8px;
+            }
+            
+            .tab {
+                min-width: 60px;
+                font-size: 10px;
+                padding: 10px 2px;
+            }
+            
+            .filter-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+            
+            .story-modal-content {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <span>StatusVerse</span>
+            </div>
+            <div class="user-info" id="userInfoContainer">
+                <div class="user-avatar" id="headerAvatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h3 id="username">Tahir</h3>
+                    <div class="balance" id="balance">25.000 MT</div>
+                </div>
+                <div class="user-tier" id="userTier">TIER OURO</div>
+            </div>
+        </header>
+        
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <div class="tab active" data-tab="avatar">Meu Avatar</div>
+            <div class="tab" data-tab="shop">Loja VIP</div>
+            <div class="tab" data-tab="party">Festas Elite</div>
+            <div class="tab" data-tab="stories">Stories</div>
+            <div class="tab" data-tab="ranking">Ranking</div>
+            <div class="tab" data-tab="chat">Chat VIP</div>
+            <div class="tab" data-tab="feed">Feed</div>
+            <div class="tab" data-tab="redeem">Códigos</div>
+        </div>
+        
+        <!-- Avatar Section -->
+        <div class="content-section" id="avatar-section">
+            <div class="avatar-section" id="avatarContainer">
+                <div class="avatar-container">
+                    <div class="avatar-display">
+                        <div class="avatar-tier-badge" id="avatarTierBadge">OURO</div>
+                        <div class="avatar-character" id="avatarChar">👑</div>
+                        <div class="avatar-items" id="avatarItems">
+                            <!-- Items will be populated by JS -->
+                        </div>
+                    </div>
+                    <div class="avatar-name" id="avatarName">Tahir - O Rei</div>
+                    <div class="avatar-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="totalSpent">85.500 MT</div>
+                            <div class="stat-label">Total Gasto</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="itemCount">3</div>
+                            <div class="stat-label">Itens VIP</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="prestigeScore">945</div>
+                            <div class="stat-label">Prestígio</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Desafios Diários dentro do Avatar -->
+                    <div class="challenges-section">
+                        <h3 style="margin-bottom: 15px; color: var(--gold);">🎯 Desafios Diários</h3>
+                        <div id="challengesContainer"></div>
+                    </div>
+                    
+                    <div class="avatar-controls">
+                        <button class="control-btn" onclick="showAllItems()">
+                            <i class="fas fa-box-open"></i> Ver Itens
+                        </button>
+                        <button class="control-btn" onclick="changeAvatar()">
+                            <i class="fas fa-user-edit"></i> Modificar Avatar
+                        </button>
+                        <button class="control-btn" onclick="shareAvatar()">
+                            <i class="fas fa-share"></i> Compartilhar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Shop Section -->
+        <div class="content-section" id="shop-section" style="display: none;">
+            <h2 style="margin-bottom: 20px; font-size: 28px;">🛒 Loja VIP</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterItems('all')">Todos</button>
+                <button class="filter-btn" onclick="filterItems('phone')">Telefones</button>
+                <button class="filter-btn" onclick="filterItems('moto')">Motos</button>
+                <button class="filter-btn" onclick="filterItems('maverick')">Mavericks</button>
+                <button class="filter-btn" onclick="filterItems('carro')">Carros</button>
+                <button class="filter-btn" onclick="filterItems('drink')">Bebidas</button>
+                <button class="filter-btn" onclick="filterItems('vape')">Vapes</button>
+                <button class="filter-btn" onclick="filterItems('jewelry')">Jóias</button>
+                <button class="filter-btn" onclick="filterItems('tech')">Tecnologia</button>
+                <button class="filter-btn" onclick="filterItems('elite')">Elite</button>
+                <button class="filter-btn" onclick="filterItems('cheap')">Baratos</button>
+            </div>
+            
+            <div class="shop-section" id="shop-items">
+                <!-- Shop items will be loaded by JS -->
+            </div>
+        </div>
+        
+        <!-- Party Section -->
+        <div class="content-section" id="party-section" style="display: none;">
+            <div class="party-section">
+                <h2 style="margin-bottom: 15px; font-size: 28px;">🎉 Festas Elite</h2>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Organize festas exclusivas nas melhores praias de Moçambique ou em casas sociais VIP.</p>
+                
+                <div class="party-grid" id="party-grid">
+                    <!-- Party cards will be loaded by JS -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stories Section -->
+        <div class="content-section" id="stories-section" style="display: none;">
+            <div class="stories-section">
+                <h2 style="margin-bottom: 20px; font-size: 28px;">📸 Stories</h2>
+                <div class="stories-container" id="storiesContainer">
+                    <!-- Stories will be loaded by JS -->
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="control-btn" onclick="addStory()">
+                        <i class="fas fa-plus-circle"></i> Adicionar Story
+                    </button>
+                    <button class="control-btn" onclick="viewMyStory()" style="background: linear-gradient(45deg, #f09433, #bc1888);">
+                        <i class="fas fa-eye"></i> Ver Meu Story
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ranking Section -->
+        <div class="content-section" id="ranking-section" style="display: none;">
+            <div class="ranking-section">
+                <h2 style="margin-bottom: 20px; font-size: 28px;">🏆 Ranking Nacional</h2>
+                <ul class="ranking-list" id="rankingList">
+                    <!-- Ranking will be loaded by JS -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Chat Section -->
+        <div class="content-section" id="chat-section" style="display: none;">
+            <div class="chat-section">
+                <div class="chat-header">
+                    <i class="fas fa-comments"></i> Chat VIP - Apenas Diamante, Veterano e Black
+                    <div id="chatAccessWarning" style="font-size: 14px; color: var(--warning); margin-top: 5px; display: none;">
+                        Você precisa ser DIAMANTE, VETERANO ou BLACK para acessar este chat
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be loaded by JS -->
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
+                    <button class="chat-send" id="sendMessage">ENVIAR</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Social Feed Section -->
+        <div class="content-section" id="feed-section" style="display: none;">
+            <h2 style="margin-bottom: 20px; font-size: 28px;">📱 Feed Social</h2>
+            <div class="feed-section" id="socialFeed">
+                <!-- Posts will be loaded by JS -->
+            </div>
+        </div>
+        
+        <!-- Redeem Code Section -->
+        <div class="content-section" id="redeem-section" style="display: none;">
+            <div class="redeem-section">
+                <h2 style="margin-bottom: 15px; font-size: 28px;">🔑 Códigos Secretos</h2>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Digite códigos especiais para desbloquear itens exclusivos e vantagens VIP.</p>
+                
+                <div class="redeem-form">
+                    <input type="text" class="redeem-input" id="redeemCode" placeholder="Digite seu código secreto">
+                    <button class="redeem-btn" id="submitRedeem">
+                        <i class="fas fa-key"></i> RESGATAR
+                    </button>
+                </div>
+                
+                <div style="margin-top: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border-left: 4px solid var(--gold);">
+                    <h3 style="margin-bottom: 10px; color: var(--gold);">
+                        <i class="fas fa-lock"></i> Códigos Secretos VIP:
+                    </h3>
+                    <p>Dica: Tente TAHIR1, TAHIR12, VIP2024, DIAMANTE, VETERANO, BLACK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-icon active" data-tab="avatar">
+            <i class="fas fa-user-circle"></i>
+            <span>Avatar</span>
+        </div>
+        <div class="nav-icon" data-tab="shop">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Loja</span>
+        </div>
+        <div class="nav-icon" data-tab="stories">
+            <i class="fas fa-story"></i>
+            <span>Stories</span>
+        </div>
+        <div class="nav-icon" data-tab="ranking">
+            <i class="fas fa-trophy"></i>
+            <span>Ranking</span>
+        </div>
+        <div class="nav-icon" data-tab="feed">
+            <i class="fas fa-newspaper"></i>
+            <span>Feed</span>
+        </div>
+        <div class="nav-icon" data-tab="chat">
+            <i class="fas fa-comment"></i>
+            <span>Chat</span>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Pagamento M-Pesa</div>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div id="modalBody">
+                <!-- Payment content will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Items Modal -->
+    <div class="modal" id="itemsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Meus Itens</div>
+                <button class="modal-close" onclick="closeItemsModal()">&times;</button>
+            </div>
+            <div id="itemsModalBody">
+                <!-- Items will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Avatar Customization Modal -->
+    <div class="modal" id="avatarModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Personalizar Avatar</div>
+                <button class="modal-close" onclick="closeAvatarModal()">&times;</button>
+            </div>
+            <div id="avatarModalBody">
+                <!-- Avatar customization will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Story Modal (Instagram Style) -->
+    <div class="story-modal" id="storyModal" onclick="closeStoryModal()">
+        <div class="story-modal-content" onclick="event.stopPropagation()">
+            <div class="story-progress-bar">
+                <div class="story-progress-fill" id="storyProgress"></div>
+            </div>
+            <div class="story-header">
+                <div class="story-header-avatar" id="storyHeaderAvatar">👤</div>
+                <div class="story-header-info">
+                    <div class="story-header-name" id="storyHeaderName">Usuário</div>
+                    <div class="story-header-time" id="storyHeaderTime">Agora mesmo</div>
+                </div>
+            </div>
+            <div class="story-close" onclick="closeStoryModal()">×</div>
+            <div class="story-nav-left" onclick="previousStory()">‹</div>
+            <div class="story-nav-right" onclick="nextStory()">›</div>
+            <div class="story-image" id="storyImage">
+                <div class="story-item" id="storyItemIcon">💎</div>
+                <div class="story-text" id="storyText">Momento de status!</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // App Data - COMPLETO com todas as funcionalidades e 6 TIERS
+        const appData = {
+            user: {
+                name: "Tahir",
+                balance: 25000,
+                tier: "OURO", // BRONZE, PRATA, OURO, DIAMANTE, VETERANO, BLACK
+                avatarChar: "👑",
+                items: [
+                    {id: "iphone17", name: "iPhone 17 Pro", icon: "📱", rarity: "exclusive", category: "phone"},
+                    {id: "rolex", name: "Rolex Diamante", icon: "⌚", rarity: "legendary", category: "watch"},
+                    {id: "vape_nasty_blue", name: "Nasty Vape Blue", icon: "💨", rarity: "rare", category: "vape", smokeColor: "#1e90ff"}
+                ],
+                parties: [],
+                totalSpent: 85500,
+                prestigeScore: 945,
+                story: null,
+                dailyChallenges: {
+                    buyItem: { progress: 0, target: 1, completed: false },
+                    postStory: { progress: 0, target: 1, completed: false },
+                    chatMessage: { progress: 0, target: 3, completed: false }
+                }
+            },
+            
+            ranking: [
+                { name: "Don Rich", tier: "BLACK", avatarChar: "🤴", prestige: 12500 },
+                { name: "King Moz", tier: "VETERANO", avatarChar: "🎩", prestige: 10200 },
+                { name: "Mona Lisa", tier: "DIAMANTE", avatarChar: "👸", prestige: 8900 },
+                { name: "Tahir", tier: "OURO", avatarChar: "👑", prestige: 945 },
+                { name: "Sheik", tier: "DIAMANTE", avatarChar: "🧑‍💻", prestige: 8300 },
+                { name: "Zara", tier: "PRATA", avatarChar: "🕺", prestige: 3200 },
+                { name: "Junior", tier: "BRONZE", avatarChar: "🧑", prestige: 850 }
+            ],
+            
+            stories: [
+                { 
+                    user: "Don Rich", 
+                    tier: "BLACK", 
+                    avatarChar: "🤴", 
+                    item: "✈️", 
+                    itemIcon: "✈️",
+                    text: "No meu jato a caminho de Dubai! ✈️", 
+                    time: "15 min",
+                    backgroundColor: "linear-gradient(135deg, #667eea, #764ba2)"
+                },
+                { 
+                    user: "Mona Lisa", 
+                    tier: "DIAMANTE", 
+                    avatarChar: "👸", 
+                    item: "⌚", 
+                    itemIcon: "⌚",
+                    text: "Novo Rolex, simples assim 💎", 
+                    time: "32 min",
+                    backgroundColor: "linear-gradient(135deg, #ff6b6b, #feca57)"
+                },
+                { 
+                    user: "King Moz", 
+                    tier: "VETERANO", 
+                    avatarChar: "🎩", 
+                    item: "🏰", 
+                    itemIcon: "🏰",
+                    text: "Minha mansão está pronta para a festa! 🎉", 
+                    time: "1 h",
+                    backgroundColor: "linear-gradient(135deg, #48c6ef, #6f86d6)"
+                }
+            ],
+            
+            shopItems: [
+                // iPhones
+                {id: "iphone17", name: "iPhone 17 Pro Max", icon: "📱", price: 8500, rarity: "exclusive", description: "O mais recente iPhone", category: "phone"},
+                {id: "iphone16pro", name: "iPhone 16 Pro", icon: "📱", price: 7500, rarity: "exclusive", description: "Edição Pro", category: "phone"},
+                {id: "iphone16", name: "iPhone 16", icon: "📱", price: 6500, rarity: "legendary", description: "Modelo básico top", category: "phone"},
+                {id: "iphone15pro", name: "iPhone 15 Pro", icon: "📱", price: 6000, rarity: "legendary", description: "Versão anterior Pro", category: "phone"},
+                {id: "iphone15", name: "iPhone 15", icon: "📱", price: 5000, rarity: "epic", description: "iPhone 15 normal", category: "phone"},
+                {id: "iphone14pro", name: "iPhone 14 Pro", icon: "📱", price: 4500, rarity: "epic", description: "Pro modelo antigo", category: "phone"},
+                {id: "iphone14", name: "iPhone 14", icon: "📱", price: 4000, rarity: "rare", description: "iPhone 14 básico", category: "phone"},
+                {id: "iphone13", name: "iPhone 13", icon: "📱", price: 3500, rarity: "rare", description: "Modelo acessível", category: "phone"},
+                {id: "iphone12", name: "iPhone 12", icon: "📱", price: 3000, rarity: "common", description: "iPhone mais antigo", category: "phone"},
+                {id: "iphoneSE", name: "iPhone SE 4", icon: "📱", price: 2500, rarity: "common", description: "Compacto e barato", category: "phone"},
+                {id: "iphone18_concept", name: "iPhone 18 Concept", icon: "📱", price: 15000, rarity: "exclusive", description: "Edição limitada conceitual", category: "phone"},
+                
+                // Vapes Nasty
+                {id: "vape_nasty_blue", name: "Nasty Vape Blue", icon: "💨", price: 1200, rarity: "rare", description: "Fumo azul gelado", category: "vape", smokeColor: "#1e90ff"},
+                {id: "vape_nasty_green", name: "Nasty Vape Green", icon: "💨", price: 1300, rarity: "rare", description: "Fumo verde menta", category: "vape", smokeColor: "#32cd32"},
+                {id: "vape_nasty_red", name: "Nasty Vape Red", icon: "💨", price: 1400, rarity: "epic", description: "Fumo vermelho berry", category: "vape", smokeColor: "#ff4500"},
+                {id: "vape_nasty_purple", name: "Nasty Vape Purple", icon: "💨", price: 1500, rarity: "epic", description: "Fumo roxo uva", category: "vape", smokeColor: "#9370db"},
+                {id: "vape_nasty_gold", name: "Nasty Vape Gold", icon: "💨", price: 1800, rarity: "legendary", description: "Edição dourada", category: "vape", smokeColor: "#ffd700"},
+                {id: "vape_nasty_rainbow", name: "Nasty Vape Rainbow", icon: "💨", price: 2000, rarity: "exclusive", description: "Fumo arco-íris", category: "vape", smokeColor: "rainbow"},
+                
+                // Motos
+                {id: "moto_ltr", name: "LTR 450", icon: "🏍️", price: 4500, rarity: "epic", description: "Moto de corrida LTR", category: "moto"},
+                {id: "moto_yfz", name: "YFZ 450", icon: "🏍️", price: 4800, rarity: "epic", description: "Yamaha YFZ 450", category: "moto"},
+                {id: "moto_banshee", name: "Banshee 350", icon: "🏍️", price: 5200, rarity: "legendary", description: "Banshee 2 tempos", category: "moto"},
+                {id: "moto_trx", name: "TRX 450", icon: "🏍️", price: 4600, rarity: "epic", description: "Honda TRX 450", category: "moto"},
+                {id: "moto_ltz", name: "LTZ 400", icon: "🏍️", price: 4200, rarity: "rare", description: "Suzuki LTZ 400", category: "moto"},
+                {id: "moto_yz", name: "YZ 250", icon: "🏍️", price: 4000, rarity: "rare", description: "Yamaha YZ 250", category: "moto"},
+                {id: "moto_ktm", name: "KTM 450", icon: "🏍️", price: 5000, rarity: "legendary", description: "KTM SX 450", category: "moto"},
+                {id: "moto_raptor", name: "Raptor 700", icon: "🏍️", price: 5500, rarity: "exclusive", description: "Yamaha Raptor 700", category: "moto"},
+                
+                // Mavericks
+                {id: "maverick_2", name: "Maverick 2 Portas", icon: "🚙", price: 8500, rarity: "legendary", description: "Maverick sport 2 portas", category: "maverick"},
+                {id: "maverick_4", name: "Maverick 4 Portas", icon: "🚙", price: 9500, rarity: "exclusive", description: "Maverick família 4 portas", category: "maverick"},
+                {id: "maverick_trail", name: "Maverick Trail", icon: "🚙", price: 10500, rarity: "exclusive", description: "Versão trail off-road", category: "maverick"},
+                {id: "maverick_x3", name: "Maverick X3", icon: "🚙", price: 12000, rarity: "exclusive", description: "Maverick X3 turbo", category: "maverick"},
+                
+                // Carros
+                {id: "toyota_ractis", name: "Toyota Ractis", icon: "🚗", price: 5500, rarity: "epic", description: "Popular em Maputo", category: "carro"},
+                {id: "ford_raptor", name: "Ford Raptor", icon: "🚙", price: 15000, rarity: "exclusive", description: "Pickup de luxo", category: "carro"},
+                {id: "ford_wildtrak", name: "Ford Wildtrak", icon: "🚙", price: 12000, rarity: "exclusive", description: "Ranger Wildtrak", category: "carro"},
+                {id: "fortuner_gd6", name: "Toyota Fortuner GD6", icon: "🚙", price: 18000, rarity: "exclusive", description: "SUV premium", category: "carro"},
+                {id: "hilux_gd6", name: "Toyota Hilux GD6", icon: "🚚", price: 16000, rarity: "exclusive", description: "Carrinha GD6", category: "carro"},
+                {id: "lexus_lx570", name: "Lexus LX 570", icon: "🚗", price: 22000, rarity: "exclusive", description: "SUV de luxo", category: "carro"},
+                {id: "mazda_demio", name: "Mazda Demio", icon: "🚗", price: 4500, rarity: "rare", description: "Económico e bonito", category: "carro"},
+                {id: "nissan_navara", name: "Nissan Navara", icon: "🚙", price: 9500, rarity: "legendary", description: "Pickup resistente", category: "carro"},
+                {id: "bmw_x5", name: "BMW X5", icon: "🚗", price: 20000, rarity: "exclusive", description: "SUV alemão", category: "carro"},
+                {id: "mercedes_g", name: "Mercedes G63", icon: "🚙", price: 25000, rarity: "exclusive", description: "G-Wagon de luxo", category: "carro"},
+                {id: "bugatti_chiron", name: "Bugatti Chiron", icon: "🏎️", price: 45000, rarity: "elite", description: "Hipercarro de 1500cv", category: "carro"},
+                {id: "lamborghini_sian", name: "Lamborghini Sián", icon: "🏎️", price: 42000, rarity: "elite", description: "Híbrido V12", category: "carro"},
+                {id: "porsche_911", name: "Porsche 911 Turbo S", icon: "🏎️", price: 28000, rarity: "exclusive", description: "Esportivo alemão", category: "carro"},
+                {id: "audi_r8", name: "Audi R8 V10", icon: "🏎️", price: 25000, rarity: "exclusive", description: "Supercarro diário", category: "carro"},
+                
+                // Bebidas
+                {id: "tinto_capital", name: "Tinto Capital", icon: "🍷", price: 800, rarity: "common", description: "Vinho tinto popular", category: "drink"},
+                {id: "jack_daniels", name: "Jack Daniels", icon: "🥃", price: 1500, rarity: "epic", description: "Whiskey americano", category: "drink"},
+                {id: "streeton", name: "Streeton", icon: "🍸", price: 1000, rarity: "rare", description: "Vodka moçambicana", category: "drink"},
+                {id: "beefeater", name: "Beefeater Gin", icon: "🍸", price: 1200, rarity: "epic", description: "Gin premium", category: "drink"},
+                {id: "johnnie_walker", name: "Johnnie Walker", icon: "🥃", price: 2000, rarity: "legendary", description: "Whiskey escocês", category: "drink"},
+                {id: "hennessy", name: "Hennessy VSOP", icon: "🥃", price: 2500, rarity: "exclusive", description: "Cognac francês", category: "drink"},
+                {id: "moet", name: "Moët & Chandon", icon: "🍾", price: 3000, rarity: "exclusive", description: "Champagne francês", category: "drink"},
+                {id: "laurentina", name: "Laurentina", icon: "🍺", price: 500, rarity: "common", description: "Cerveja nacional", category: "drink"},
+                {id: "2m", name: "Cerveja 2M", icon: "🍺", price: 500, rarity: "common", description: "Cerveja popular", category: "drink"},
+                
+                // Jóias e acessórios
+                {id: "pandora_bracelet", name: "Pulseira Pandora", icon: "💍", price: 1800, rarity: "epic", description: "Pulseira de prata", category: "jewelry"},
+                {id: "pandora_charm", name: "Charm Pandora", icon: "✨", price: 600, rarity: "rare", description: "Charm especial", category: "jewelry"},
+                {id: "brokenchild_hat", name: "Chapéu Brokenchild", icon: "🧢", price: 1200, rarity: "epic", description: "Marca moçambicana", category: "accessory"},
+                {id: "brokenchild_tshirt", name: "T-shirt Brokenchild", icon: "👕", price: 900, rarity: "rare", description: "Streetwear MOZ", category: "clothing"},
+                {id: "diamond_chain", name: "Colar Diamante", icon: "💎", price: 3500, rarity: "legendary", description: "Colar brilhante", category: "jewelry"},
+                {id: "gold_watch", name: "Relógio Ouro", icon: "⌚", price: 4000, rarity: "exclusive", description: "Relógio de ouro", category: "jewelry"},
+                
+                // Tecnologia
+                {id: "jbl_boombox", name: "JBL Boombox 3", icon: "🔊", price: 1800, rarity: "epic", description: "Som potente para festas", category: "tech"},
+                {id: "bang_olufsen", name: "Fone B&O H95", icon: "🎧", price: 2200, rarity: "exclusive", description: "Áudio premium", category: "tech"},
+                {id: "macbook_pro", name: "MacBook Pro M3", icon: "💻", price: 7500, rarity: "exclusive", description: "Laptop dos sonhos", category: "tech"},
+                {id: "imac_pro", name: "iMac Pro", icon: "🖥️", price: 9000, rarity: "exclusive", description: "Workstation de luxo", category: "tech"},
+                
+                // Experiências
+                {id: "casino_vip", name: "Membros VIP Casino", icon: "🎰", price: 5000, rarity: "epic", description: "Acesso à sala VIP", category: "experience"},
+                {id: "spa_day", name: "Dia de SPA 5 Estrelas", icon: "🧖", price: 3000, rarity: "rare", description: "Massagem e tratamentos", category: "experience"},
+                
+                // Animais
+                {id: "cavalo_luso", name: "Cavalo Lusitano", icon: "🐎", price: 6000, rarity: "epic", description: "Para os amantes de equitação", category: "animal"},
+                {id: "leao_estimacao", name: "Leão de Estimação (Elite)", icon: "🦁", price: 25000, rarity: "elite", description: "O verdadeiro rei da selva", category: "animal"},
+                
+                // Elite items
+                {id: "diamond_vvs", name: "Diamante VVS", icon: "💎", price: 150000, rarity: "elite", description: "Diamante VVS puro 5 quilates", category: "jewelry"},
+                {id: "private_jet", name: "Jato Privado Elite", icon: "✈️", price: 250000, rarity: "elite", description: "Jato particular Gulfstream", category: "vehicle"},
+                {id: "yacht_elite", name: "Super Iate Elite", icon: "🛥️", price: 300000, rarity: "elite", description: "Iate de 50 metros com heliporto", category: "vehicle"},
+                {id: "mansion_maputo", name: "Mansão em Maputo", icon: "🏰", price: 180000, rarity: "elite", description: "Mansão completa na Costa do Sol", category: "property"},
+                {id: "island_private", name: "Ilha Privada Moz", icon: "🏝️", price: 500000, rarity: "elite", description: "Ilha privada em Inhambane", category: "property"},
+                {id: "hotel_chain", name: "Cadeia de Hotéis", icon: "🏨", price: 750000, rarity: "elite", description: "5 hotéis em Moçambique", category: "business"},
+                {id: "time_futebol", name: "Clube de Futebol", icon: "⚽", price: 55000, rarity: "elite", description: "Seja dono de um time", category: "business"},
+                {id: "helicopter_elite", name: "Helicóptero Elite", icon: "🚁", price: 150000, rarity: "elite", description: "Helicóptero de luxo com interior de couro", category: "vehicle"},
+                {id: "art_collection", name: "Coleção de Arte", icon: "🎨", price: 200000, rarity: "elite", description: "Obras de arte africanas raras", category: "collection"},
+                {id: "crypto_portfolio", name: "Portfólio Crypto", icon: "₿", price: 350000, rarity: "elite", description: "Carteira com 10 Bitcoin + NFTs", category: "crypto"},
+                
+                // Outros itens
+                {id: "rolex", name: "Rolex Submariner", icon: "⌚", price: 8500, rarity: "exclusive", description: "Relógio de mergulho", category: "watch"},
+                {id: "gucci", name: "Óculos Gucci", icon: "🕶️", price: 2200, rarity: "epic", description: "Óculos de sol", category: "accessory"},
+                {id: "yacht", name: "Iate de Luxo", icon: "🛥️", price: 25000, rarity: "exclusive", description: "Iate para festas", category: "vehicle"},
+                {id: "bitcoin", name: "Bitcoin", icon: "₿", price: 12000, rarity: "exclusive", description: "Criptomoeda", category: "crypto"},
+                {id: "mansao", name: "Mansão VIP", icon: "🏰", price: 30000, rarity: "exclusive", description: "Mansão de luxo", category: "property"},
+                {id: "jet", name: "Jato Privado", icon: "✈️", price: 45000, rarity: "exclusive", description: "Jato particular", category: "vehicle"},
+                {id: "ferrari", name: "Ferrari Roma", icon: "🚗", price: 35000, rarity: "exclusive", description: "Supercarro", category: "carro"},
+                {id: "helicopter", name: "Helicóptero", icon: "🚁", price: 28000, rarity: "exclusive", description: "Helicóptero particular", category: "vehicle"}
+            ],
+            
+            parties: [
+                {id: "party_tofo", name: "Festão em Tofo", location: "Praia do Tofo, Inhambane", icon: "🏖️", price: 25000, description: "Festão completo na melhor praia de Moçambique com DJ internacional, bar aberto e camarotes VIP.", capacity: 150, date: "15/12/2024"},
+                {id: "party_bilene", name: "Festa Bilene Sunset", location: "Bilene, Gaza", icon: "🌅", price: 18000, description: "Festa no pôr do sol na Lagoa de Bilene com comida tradicional e música ao vivo.", capacity: 100, date: "22/12/2024"},
+                {id: "party_ponta", name: "Ponta do Ouro Exclusive", location: "Ponta do Ouro", icon: "🐬", price: 30000, description: "Festa exclusiva na Ponta do Ouro com piscina infinita e open bar premium.", capacity: 80, date: "29/12/2024"},
+                {id: "party_casa", name: "House Party VIP", location: "Casa Social Maputo", icon: "🏠", price: 15000, description: "Festa em casa social completa com pista de dança, karaokê e chef particular.", capacity: 60, date: "05/01/2025"},
+                {id: "party_praia", name: "Beach Party Xai-Xai", location: "Praia do Xai-Xai", icon: "🌊", price: 12000, description: "Festa na areia com luzes, fogueira e frutos do mar frescos.", capacity: 120, date: "12/01/2025"},
+                {id: "party_ilha", name: "Ilha de Moçambique Gala", location: "Ilha de Moçambique", icon: "🏝️", price: 35000, description: "Gala histórica na Ilha de Moçambique com traje a rigor e jantar de gala.", capacity: 50, date: "19/01/2025"},
+                {id: "party_elite", name: "Festival Elite 2025", location: "Complexo Costa do Sol", icon: "🎪", price: 50000, description: "Maior festival elite do ano com 3 palcos, artistas internacionais e experiência 5 estrelas.", capacity: 300, date: "25/01/2025"}
+            ],
+            
+            redeemCodes: {
+                "TAHIR1": {type: "add_money", amount: 200000, message: "200.000 MT adicionados secretamente!"},
+                "TAHIR12": {type: "add_money", amount: 1000000, message: "1.000.000 MT adicionados secretamente!"},
+                "VIP2024": {type: "add_money", amount: 10000, message: "10.000 MT adicionados!"},
+                "DIAMANTE": {type: "upgrade_tier", tier: "DIAMANTE", message: "Tier atualizado para Diamante!"},
+                "VETERANO": {type: "upgrade_tier", tier: "VETERANO", message: "Tier atualizado para Veterano!"},
+                "BLACK": {type: "upgrade_tier", tier: "BLACK", message: "Tier atualizado para Black!"},
+                "PARTY2024": {type: "add_money", amount: 30000, message: "30.000 MT para festas!"}
+            },
+            
+            chatMessages: [
+                {user: "Don Rich", tier: "BLACK", message: "Acabei de comprar o Maverick X3, alguém para um passeio?", time: "10:30"},
+                {user: "Mona Lisa", tier: "DIAMANTE", message: "Minha pulseira Pandora chegou! Tá linda", time: "10:25"},
+                {user: "King Moz", tier: "VETERANO", message: "Quem tem o Ford Raptor? Vale a pena?", time: "10:15"},
+                {user: "Sheik", tier: "DIAMANTE", message: "Comprei todos os vapes Nasty, cada um tem fumo de cor diferente!", time: "09:45"}
+            ],
+            
+            socialFeed: [
+                {user: "Don Rich", tier: "BLACK", avatarChar: "🤴", items: ["✈️", "🛥️", "💎"], likes: 245, comments: 42, text: "Finalmente meu jato privado chegou! Próxima paragem: Dubai"},
+                {user: "Mona Lisa", tier: "DIAMANTE", avatarChar: "👸", items: ["⌚", "💎", "🕶️"], likes: 189, comments: 31, text: "Rolex combinando com o colar. Tudo comprado aqui no StatusVerse!"},
+                {user: "King Moz", tier: "VETERANO", avatarChar: "🎩", items: ["🏰", "🚗", "📱"], likes: 312, comments: 67, text: "Minha mansão VIP está pronta para a festa desta sexta. Só os tops!"}
+            ],
+            
+            avatarOptions: [
+                "👑", "🤴", "👸", "🎩", "🕺", "💃", "🧑‍💻", "🧑‍🎤", "🧑‍🎨", "🧑‍🚀", 
+                "🧛", "🧞", "🐲", "🦁", "🐯", "🦊", "🐺", "🦝", "🐨", "🐼", 
+                "🐸", "🐧", "🐦", "🐤", "🐣", "🐥", "🦅", "🦉", "🐺", "🐗",
+                "🐴", "🦄", "🐝", "🐛", "🦋", "🐞", "🦟", "🦗", "🕷️", "🦂"
+            ],
+            
+            currentStoryIndex: 0,
+            storyTimeout: null
+        };
+        
+        // DOM Elements
+        const contentSections = document.querySelectorAll('.content-section');
+        const tabs = document.querySelectorAll('.tab');
+        const navIcons = document.querySelectorAll('.nav-icon');
+        
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserInfo();
+            loadAvatarItems();
+            loadShopItems();
+            loadParties();
+            loadChatMessages();
+            loadSocialFeed();
+            loadStories();
+            loadRanking();
+            loadChallenges();
+            updateAvatarTierBadge();
+            updateTierEffects();
+            
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+            
+            // Bottom nav switching
+            navIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+            
+            // Redeem code submission
+            document.getElementById('submitRedeem').addEventListener('click', redeemCode);
+            
+            // Chat message sending
+            document.getElementById('sendMessage').addEventListener('click', sendChatMessage);
+            
+            // Payment modal
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('paymentModal').style.display = 'none';
+            });
+            
+            // Enter key for redeem code
+            document.getElementById('redeemCode').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') redeemCode();
+            });
+            
+            // Enter key for chat
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+            
+            // Initial filter
+            filterItems('all');
+        });
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            contentSections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            navIcons.forEach(icon => {
+                icon.classList.remove('active');
+            });
+            
+            document.getElementById(`${tabName}-section`).style.display = 'block';
+            
+            const activeTab = document.querySelector(`.tab[data-tab="${tabName}"]`);
+            if (activeTab) activeTab.classList.add('active');
+            
+            const activeNav = document.querySelector(`.nav-icon[data-tab="${tabName}"]`);
+            if (activeNav) activeNav.classList.add('active');
+            
+            if (tabName === 'chat') {
+                const canAccessChat = appData.user.tier === 'DIAMANTE' || appData.user.tier === 'VETERANO' || appData.user.tier === 'BLACK';
+                document.getElementById('chatAccessWarning').style.display = canAccessChat ? 'none' : 'block';
+                document.getElementById('chatInput').disabled = !canAccessChat;
+                document.getElementById('sendMessage').disabled = !canAccessChat;
+                
+                if (!canAccessChat) {
+                    document.getElementById('chatInput').placeholder = "Acesso apenas para DIAMANTE, VETERANO e BLACK";
+                }
+            }
+            
+            if (tabName === 'stories') loadStories();
+            if (tabName === 'ranking') loadRanking();
+            if (tabName === 'avatar') loadChallenges();
+        }
+        
+        // Update user info display
+        function updateUserInfo() {
+            document.getElementById('username').textContent = appData.user.name;
+            document.getElementById('balance').textContent = `${appData.user.balance.toLocaleString()} MT`;
+            document.getElementById('userTier').textContent = `TIER ${appData.user.tier}`;
+            document.getElementById('userTier').style.background = getTierGradient(appData.user.tier);
+            
+            // Atualizar avatar no header
+            const headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) {
+                headerAvatar.innerHTML = appData.user.avatarChar;
+            }
+            
+            document.getElementById('avatarChar').textContent = appData.user.avatarChar;
+            document.getElementById('avatarName').textContent = `${appData.user.name} - ${getTierTitle(appData.user.tier)}`;
+            document.getElementById('totalSpent').textContent = `${appData.user.totalSpent.toLocaleString()} MT`;
+            document.getElementById('itemCount').textContent = appData.user.items.length;
+            document.getElementById('prestigeScore').textContent = appData.user.prestigeScore;
+            
+            updateTierEffects();
+        }
+        
+        // Update tier effects
+        function updateTierEffects() {
+            const userInfo = document.getElementById('userInfoContainer');
+            const avatarContainer = document.getElementById('avatarContainer');
+            
+            userInfo.classList.remove('diamond-effect', 'veterano-effect', 'black-effect');
+            avatarContainer.classList.remove('diamond-effect', 'veterano-effect', 'black-effect');
+            
+            if (appData.user.tier === 'DIAMANTE') {
+                userInfo.classList.add('diamond-effect');
+                avatarContainer.classList.add('diamond-effect');
+            } else if (appData.user.tier === 'VETERANO') {
+                userInfo.classList.add('veterano-effect');
+                avatarContainer.classList.add('veterano-effect');
+            } else if (appData.user.tier === 'BLACK') {
+                userInfo.classList.add('black-effect');
+                avatarContainer.classList.add('black-effect');
+            }
+        }
+        
+        // Get tier title
+        function getTierTitle(tier) {
+            switch(tier) {
+                case 'BRONZE': return "Iniciante";
+                case 'PRATA': return "Aspirante";
+                case 'OURO': return "O Rei";
+                case 'DIAMANTE': return "O Diamante";
+                case 'VETERANO': return "O Veterano";
+                case 'BLACK': return "O Dono";
+                default: return "VIP";
+            }
+        }
+        
+        // Get gradient for tier
+        function getTierGradient(tier) {
+            switch(tier) {
+                case 'BRONZE': return 'linear-gradient(45deg, #cd7f32, #b8860b)';
+                case 'PRATA': return 'linear-gradient(45deg, #c0c0c0, #a8a8a8)';
+                case 'OURO': return 'linear-gradient(45deg, #ffd700, #daa520)';
+                case 'DIAMANTE': return 'linear-gradient(45deg, #b9f2ff, #0892d0)';
+                case 'VETERANO': return 'linear-gradient(45deg, #ff6b6b, #ff4757)';
+                case 'BLACK': return 'linear-gradient(45deg, #000000, #333333)';
+                default: return 'linear-gradient(45deg, var(--primary), var(--secondary))';
+            }
+        }
+        
+        // Get tier color
+        function getTierColor(tier) {
+            switch(tier) {
+                case 'BRONZE': return '#cd7f32';
+                case 'PRATA': return '#c0c0c0';
+                case 'OURO': return '#ffd700';
+                case 'DIAMANTE': return '#b9f2ff';
+                case 'VETERANO': return '#ff6b6b';
+                case 'BLACK': return '#000000';
+                default: return '#6a11cb';
+            }
+        }
+        
+        // Update avatar tier badge
+        function updateAvatarTierBadge() {
+            const badge = document.getElementById('avatarTierBadge');
+            badge.textContent = appData.user.tier;
+            badge.style.background = getTierGradient(appData.user.tier);
+            badge.style.color = appData.user.tier === 'BLACK' ? 'white' : 'black';
+        }
+        
+        // Load avatar items
+        function loadAvatarItems() {
+            const container = document.getElementById('avatarItems');
+            container.innerHTML = '';
+            
+            const displayItems = appData.user.items.slice(0, 6);
+            
+            displayItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = `avatar-item rarity-${item.rarity}`;
+                itemElement.innerHTML = `<i class="fas fa-${getItemIcon(item.id)}"></i> ${item.name}`;
+                container.appendChild(itemElement);
+            });
+            
+            if (appData.user.items.length > 6) {
+                const moreElement = document.createElement('div');
+                moreElement.className = 'avatar-item';
+                moreElement.innerHTML = `<i class="fas fa-plus"></i> +${appData.user.items.length - 6} mais`;
+                container.appendChild(moreElement);
+            }
+        }
+        
+        // Filter shop items
+        function filterItems(category) {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            let filteredItems = [...appData.shopItems];
+            
+            switch(category) {
+                case 'phone':
+                    filteredItems = filteredItems.filter(item => item.category === 'phone');
+                    break;
+                case 'moto':
+                    filteredItems = filteredItems.filter(item => item.category === 'moto');
+                    break;
+                case 'maverick':
+                    filteredItems = filteredItems.filter(item => item.category === 'maverick');
+                    break;
+                case 'carro':
+                    filteredItems = filteredItems.filter(item => item.category === 'carro');
+                    break;
+                case 'drink':
+                    filteredItems = filteredItems.filter(item => item.category === 'drink');
+                    break;
+                case 'vape':
+                    filteredItems = filteredItems.filter(item => item.category === 'vape');
+                    break;
+                case 'jewelry':
+                    filteredItems = filteredItems.filter(item => item.category === 'jewelry' || item.category === 'watch' || item.category === 'accessory');
+                    break;
+                case 'tech':
+                    filteredItems = filteredItems.filter(item => item.category === 'tech');
+                    break;
+                case 'elite':
+                    filteredItems = filteredItems.filter(item => item.rarity === 'elite');
+                    break;
+                case 'cheap':
+                    filteredItems.sort((a, b) => a.price - b.price);
+                    break;
+                case 'all':
+                default:
+                    break;
+            }
+            
+            loadShopItems(filteredItems);
+        }
+        
+        // Load shop items
+        function loadShopItems(items = appData.shopItems) {
+            const container = document.getElementById('shop-items');
+            container.innerHTML = '';
+            
+            items.forEach(item => {
+                const alreadyOwned = appData.user.items.some(userItem => userItem.id === item.id);
+                
+                let imageContent = `<div style="font-size: 70px;">${item.icon}</div>`;
+                
+                if (item.category === 'vape' && item.smokeColor) {
+                    if (item.smokeColor === 'rainbow') {
+                        imageContent = `
+                            <div class="vape-smoke-container">
+                                <div style="font-size: 70px; position: relative; z-index: 2;">${item.icon}</div>
+                                <div class="vape-smoke" style="color: #ff0000; left: 60%; animation-delay: 0s;">☁️</div>
+                                <div class="vape-smoke" style="color: #00ff00; left: 50%; animation-delay: 0.5s;">☁️</div>
+                                <div class="vape-smoke" style="color: #0000ff; left: 40%; animation-delay: 1s;">☁️</div>
+                            </div>
+                        `;
+                    } else {
+                        imageContent = `
+                            <div class="vape-smoke-container">
+                                <div style="font-size: 70px; position: relative; z-index: 2;">${item.icon}</div>
+                                <div class="vape-smoke" style="color: ${item.smokeColor};">☁️</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-card';
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        ${imageContent}
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-rarity rarity-${item.rarity}">${item.rarity.toUpperCase()}</div>
+                        </div>
+                        <p style="margin-bottom: 15px; font-size: 14px; opacity: 0.8;">${item.description}</p>
+                        <div class="item-price">${item.price.toLocaleString()} MT</div>
+                        <button class="buy-btn ${alreadyOwned ? 'already-owned' : ''}" onclick="buyItem('${item.id}')" ${alreadyOwned ? 'disabled' : ''}>
+                            <i class="fas fa-shopping-cart"></i>
+                            ${alreadyOwned ? 'JÁ COMPROU' : 'COMPRAR AGORA'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+        }
+        
+        // Buy item - CORRIGIDO (não verifica saldo no botão, só no modal)
+        function buyItem(itemId) {
+            const item = appData.shopItems.find(i => i.id === itemId);
+            if (!item) return;
+            
+            const alreadyOwned = appData.user.items.some(userItem => userItem.id === itemId);
+            if (alreadyOwned) {
+                alert('Você já possui este item!');
+                return;
+            }
+            
+            // Mostra modal de pagamento (verificação de saldo será feita no processPayment)
+            showPaymentModal(item);
+        }
+        
+        // Show payment modal
+        function showPaymentModal(item) {
+            const modal = document.getElementById('paymentModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h3 style="margin-bottom: 10px;">${item.name}</h3>
+                <p style="margin-bottom: 20px; opacity: 0.8;">${item.description}</p>
+                <div style="font-size: 28px; color: var(--gold); margin-bottom: 30px; text-align: center;">${item.price.toLocaleString()} MT</div>
+                
+                <div class="mpesa-option" onclick="processPayment('${item.id}')">
+                    <h4><i class="fas fa-mobile-alt"></i> Pagar com M-Pesa</h4>
+                    <p>Confirmar pagamento de ${item.price.toLocaleString()} MT</p>
+                </div>
+                
+                <div style="background: rgba(255,215,0,0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <p><strong>Saldo atual:</strong> ${appData.user.balance.toLocaleString()} MT</p>
+                    <p><strong>Após pagamento:</strong> ${(appData.user.balance - item.price).toLocaleString()} MT</p>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+        
+        // Process payment - CORRIGIDO (verifica saldo aqui)
+        function processPayment(itemId) {
+            const item = appData.shopItems.find(i => i.id === itemId);
+            
+            // Verifica saldo ANTES de processar
+            if (appData.user.balance < item.price) {
+                alert('❌ Saldo insuficiente! Recarregue sua conta.');
+                document.getElementById('paymentModal').style.display = 'none';
+                return;
+            }
+            
+            // Simula processamento
+            setTimeout(() => {
+                // Deduz saldo
+                appData.user.balance -= item.price;
+                
+                // Adiciona item
+                const newItem = {
+                    id: item.id,
+                    name: item.name,
+                    icon: item.icon,
+                    rarity: item.rarity,
+                    category: item.category
+                };
+                
+                if (item.smokeColor) {
+                    newItem.smokeColor = item.smokeColor;
+                }
+                
+                appData.user.items.push(newItem);
+                appData.user.totalSpent += item.price;
+                appData.user.prestigeScore += Math.floor(item.price / 100);
+                
+                updateTier();
+                updateUserInfo();
+                loadAvatarItems();
+                loadShopItems();
+                updateAvatarTierBadge();
+                updateTierEffects();
+                
+                document.getElementById('paymentModal').style.display = 'none';
+                
+                showDiscreetNotification(`✅ ${item.name} foi adicionado ao seu avatar!`);
+                
+                addToSocialFeed(item);
+                updateChallengeProgress('buyItem');
+                
+            }, 1500);
+        }
+        
+        // Load parties
+        function loadParties() {
+            const container = document.getElementById('party-grid');
+            container.innerHTML = '';
+            
+            appData.parties.forEach(party => {
+                const partyCard = document.createElement('div');
+                partyCard.className = 'party-card';
+                
+                const alreadyHasParty = appData.user.parties.some(p => p.id === party.id);
+                
+                partyCard.innerHTML = `
+                    <div class="party-image">
+                        <div style="font-size: 80px;">${party.icon}</div>
+                    </div>
+                    <div class="party-content">
+                        <div class="party-title">${party.name}</div>
+                        <div class="party-location">
+                            <i class="fas fa-map-marker-alt"></i> ${party.location}
+                        </div>
+                        <p style="margin-bottom: 15px; font-size: 14px; opacity: 0.8;">${party.description}</p>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <div>
+                                <i class="fas fa-users"></i> ${party.capacity} pessoas
+                            </div>
+                            <div>
+                                <i class="fas fa-calendar"></i> ${party.date}
+                            </div>
+                        </div>
+                        
+                        <div class="party-price">${party.price.toLocaleString()} MT</div>
+                        
+                        <button class="party-btn" onclick="organizeParty('${party.id}')" ${alreadyHasParty || appData.user.balance < party.price ? 'disabled' : ''}>
+                            ${alreadyHasParty ? 'FESTA JÁ AGENDADA' : appData.user.balance < party.price ? 'SALDO INSUFICIENTE' : 'ORGANIZAR ESTA FESTA'}
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(partyCard);
+            });
+        }
+        
+        // Organize a party
+        function organizeParty(partyId) {
+            const party = appData.parties.find(p => p.id === partyId);
+            
+            if (appData.user.balance >= party.price) {
+                setTimeout(() => {
+                    appData.user.balance -= party.price;
+                    appData.user.totalSpent += party.price;
+                    appData.user.prestigeScore += Math.floor(party.price / 50);
+                    
+                    appData.user.parties.push({
+                        id: party.id,
+                        name: party.name,
+                        date: party.date,
+                        location: party.location
+                    });
+                    
+                    updateUserInfo();
+                    loadParties();
+                    updateTier();
+                    
+                    const partyPost = {
+                        user: appData.user.name,
+                        tier: appData.user.tier,
+                        avatarChar: appData.user.avatarChar,
+                        items: [party.icon, "🎉", "🥂"],
+                        likes: 0,
+                        comments: 0,
+                        text: `Acabei de organizar a festa "${party.name}" em ${party.location}! Todos convidados 🎊`
+                    };
+                    
+                    appData.socialFeed.unshift(partyPost);
+                    loadSocialFeed();
+                    
+                    showDiscreetNotification(`🎉 Festa "${party.name}" organizada com sucesso!`);
+                    
+                }, 1500);
+            } else {
+                alert('Saldo insuficiente para organizar esta festa!');
+            }
+        }
+        
+        // Update user tier based on spending - ATUALIZADO com 6 tiers
+        function updateTier() {
+            const spent = appData.user.totalSpent;
+            let newTier = 'BRONZE';
+            
+            if (spent >= 1000000) newTier = 'BLACK';
+            else if (spent >= 500000) newTier = 'VETERANO';
+            else if (spent >= 100000) newTier = 'DIAMANTE';
+            else if (spent >= 20000) newTier = 'OURO';
+            else if (spent >= 5000) newTier = 'PRATA';
+            
+            if (newTier !== appData.user.tier) {
+                appData.user.tier = newTier;
+                showDiscreetNotification(`🎉 Tier atualizado para ${newTier}!`);
+            }
+        }
+        
+        // Add purchase to social feed
+        function addToSocialFeed(item) {
+            const newPost = {
+                user: appData.user.name,
+                tier: appData.user.tier,
+                avatarChar: appData.user.avatarChar,
+                items: [item.icon, ...appData.user.items.slice(0, 2).map(i => i.icon)],
+                likes: 0,
+                comments: 0,
+                text: `Acabei de comprar ${item.name} no StatusVerse! Valeu cada MT 💸`
+            };
+            
+            appData.socialFeed.unshift(newPost);
+            loadSocialFeed();
+        }
+        
+        // Show all items modal
+        function showAllItems() {
+            const modal = document.getElementById('itemsModal');
+            const modalBody = document.getElementById('itemsModalBody');
+            
+            let html = `
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--gold); margin-bottom: 10px;">Total de Itens: ${appData.user.items.length}</h3>
+                    <p>Organizados por categoria:</p>
+                </div>
+            `;
+            
+            const groupedItems = {};
+            appData.user.items.forEach(item => {
+                if (!groupedItems[item.category]) {
+                    groupedItems[item.category] = [];
+                }
+                groupedItems[item.category].push(item);
+            });
+            
+            Object.keys(groupedItems).forEach(category => {
+                const items = groupedItems[category];
+                const categoryName = getCategoryName(category);
+                
+                html += `
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                            ${categoryName} (${items.length})
+                        </h4>
+                        <div class="items-grid">
+                `;
+                
+                items.forEach(item => {
+                    html += `
+                        <div class="item-small">
+                            <div class="item-small-icon">${item.icon}</div>
+                            <div class="item-small-name">${item.name}</div>
+                            <div style="font-size: 12px; opacity: 0.7; margin-top: 5px;">${item.rarity.toUpperCase()}</div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            modalBody.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+        
+        // Get category name
+        function getCategoryName(category) {
+            const names = {
+                'phone': 'Telefones',
+                'tablet': 'Tablets',
+                'vape': 'Cigarros Eletrônicos',
+                'watch': 'Relógios',
+                'accessory': 'Acessórios',
+                'vehicle': 'Veículos',
+                'property': 'Propriedades',
+                'jewelry': 'Jóias',
+                'clothing': 'Roupas',
+                'crypto': 'Cripto',
+                'tech': 'Tecnologia',
+                'music': 'Música',
+                'sports': 'Esportes',
+                'experience': 'Experiências',
+                'wealth': 'Riqueza',
+                'moto': 'Motos',
+                'maverick': 'Mavericks',
+                'carro': 'Carros',
+                'drink': 'Bebidas',
+                'business': 'Negócios',
+                'collection': 'Coleções',
+                'elite': 'Elite Edition',
+                'animal': 'Animais',
+                'experience': 'Experiências'
+            };
+            
+            return names[category] || category.toUpperCase();
+        }
+        
+        // Close items modal
+        function closeItemsModal() {
+            document.getElementById('itemsModal').style.display = 'none';
+        }
+        
+        // Change avatar - ATUALIZADO com mais opções
+        function changeAvatar() {
+            const modal = document.getElementById('avatarModal');
+            const modalBody = document.getElementById('avatarModalBody');
+            
+            let html = `
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--gold); margin-bottom: 10px;">Personalize Seu Avatar</h3>
+                    <p>Escolha um novo visual (${appData.avatarOptions.length} opções):</p>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">Avatar Atual:</h4>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 100px; margin-bottom: 10px;">${appData.user.avatarChar}</div>
+                        <div style="font-size: 18px; color: var(--gold);">${appData.user.name}</div>
+                    </div>
+                </div>
+                
+                <div class="avatar-grid">
+            `;
+            
+            appData.avatarOptions.forEach(avatar => {
+                const isCurrent = avatar === appData.user.avatarChar;
+                html += `
+                    <div class="avatar-option ${isCurrent ? 'selected' : ''}" onclick="selectAvatar('${avatar}')">
+                        <div class="avatar-option-icon">${avatar}</div>
+                        <div class="avatar-option-name">${isCurrent ? 'Atual' : 'Escolher'}</div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="closeAvatarModal()" style="flex: 1; padding: 15px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px; color: white; cursor: pointer;">
+                        Cancelar
+                    </button>
+                    <button onclick="saveAvatar()" style="flex: 1; padding: 15px; background: linear-gradient(45deg, var(--primary), var(--secondary)); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;">
+                        Salvar Avatar
+                    </button>
+                </div>
+            `;
+            
+            modalBody.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+        
+        // Select avatar
+        function selectAvatar(avatar) {
+            appData.user.avatarChar = avatar;
+            changeAvatar();
+        }
+        
+        // Save avatar
+        function saveAvatar() {
+            document.getElementById('avatarChar').textContent = appData.user.avatarChar;
+            closeAvatarModal();
+            showDiscreetNotification('✅ Avatar atualizado com sucesso!');
+            loadSocialFeed();
+        }
+        
+        // Close avatar modal
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'none';
+        }
+        
+        // Share avatar
+        function shareAvatar() {
+            const newPost = {
+                user: appData.user.name,
+                tier: appData.user.tier,
+                avatarChar: appData.user.avatarChar,
+                items: appData.user.items.slice(0, 3).map(i => i.icon),
+                likes: 0,
+                comments: 0,
+                text: `Confira meu novo avatar no StatusVerse! ${appData.user.avatarChar}`
+            };
+            
+            appData.socialFeed.unshift(newPost);
+            loadSocialFeed();
+            showDiscreetNotification('✅ Avatar compartilhado no feed social!');
+        }
+        
+        // Redeem code function - ATUALIZADO com novos tiers
+        function redeemCode() {
+            const codeInput = document.getElementById('redeemCode');
+            const code = codeInput.value.trim().toUpperCase();
+            
+            if (!code) {
+                alert('Digite um código para resgatar!');
+                return;
+            }
+            
+            const redeemInfo = appData.redeemCodes[code];
+            
+            if (redeemInfo) {
+                if (code === 'TAHIR1') {
+                    appData.user.balance += 200000;
+                } else if (code === 'TAHIR12') {
+                    appData.user.balance += 1000000;
+                } else if (redeemInfo.type === 'add_money') {
+                    appData.user.balance += redeemInfo.amount;
+                } else if (redeemInfo.type === 'upgrade_tier') {
+                    appData.user.tier = redeemInfo.tier;
+                    updateTier();
+                    updateTierEffects();
+                }
+                
+                codeInput.value = '';
+                updateUserInfo();
+                updateAvatarTierBadge();
+                
+                showDiscreetNotification(`✅ Código resgatado com sucesso!`);
+                
+            } else {
+                alert('❌ Código inválido ou expirado!');
+            }
+        }
+        
+        // Show discreet notification
+        function showDiscreetNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(0, 200, 81, 0.9);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 10000;
+                font-weight: bold;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i> ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Load chat messages
+        function loadChatMessages() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+            
+            appData.chatMessages.forEach(msg => {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message';
+                messageElement.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-user">
+                            ${msg.user}
+                            <span class="message-tier" style="background: ${getTierColor(msg.tier)}; color: ${msg.tier === 'BLACK' ? 'white' : 'black'};">${msg.tier}</span>
+                        </div>
+                        <div class="message-time">${msg.time}</div>
+                    </div>
+                    <div class="message-text">${msg.message}</div>
+                `;
+                container.appendChild(messageElement);
+            });
+            
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        // Send chat message - ATUALIZADO com novos tiers
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const canAccessChat = appData.user.tier === 'DIAMANTE' || appData.user.tier === 'VETERANO' || appData.user.tier === 'BLACK';
+            if (!canAccessChat) {
+                alert('Apenas membros Diamante, Veterano e Black podem enviar mensagens no chat VIP!');
+                return;
+            }
+            
+            const newMessage = {
+                user: appData.user.name,
+                tier: appData.user.tier,
+                message: message,
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
+            
+            appData.chatMessages.push(newMessage);
+            loadChatMessages();
+            
+            input.value = '';
+            
+            updateChallengeProgress('chatMessage');
+        }
+        
+        // Load social feed
+        function loadSocialFeed() {
+            const container = document.getElementById('socialFeed');
+            container.innerHTML = '';
+            
+            appData.socialFeed.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'feed-post';
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: ${getTierGradient(post.tier)};">
+                            ${post.avatarChar}
+                        </div>
+                        <div class="post-user">
+                            <h4>${post.user}</h4>
+                            <div class="post-tier" style="background: ${getTierColor(post.tier)}; color: ${post.tier === 'BLACK' ? 'white' : 'black'};">TIER ${post.tier}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-avatar-image">
+                        <div class="post-avatar-tier" style="background: ${getTierGradient(post.tier)}; color: ${post.tier === 'BLACK' ? 'white' : 'black'};">${post.tier}</div>
+                        ${post.avatarChar}
+                        <div style="position: absolute; bottom: 10px; display: flex; gap: 10px;">
+                            ${post.items.map(item => `<div style="font-size: 30px;">${item}</div>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <p style="margin-bottom: 15px;">${post.text}</p>
+                    
+                    <div class="post-actions">
+                        <div class="post-action">
+                            <i class="fas fa-heart"></i>
+                            <span>${post.likes}</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-comment"></i>
+                            <span>${post.comments}</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-share"></i>
+                            <span>Compartilhar</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(postElement);
+            });
+        }
+        
+        // Load stories - ESTILO INSTAGRAM
+        function loadStories() {
+            const container = document.getElementById('storiesContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+
+            // Story do próprio usuário
+            const userStoryCircle = document.createElement('div');
+            userStoryCircle.className = 'story-circle';
+            userStoryCircle.onclick = () => viewMyStory();
+            
+            const hasUserStory = appData.user.story !== null;
+            
+            userStoryCircle.innerHTML = `
+                <div class="story-avatar-wrapper ${!hasUserStory ? 'no-story' : ''}">
+                    <div class="story-avatar" style="background: ${getTierGradient(appData.user.tier)};">
+                        ${appData.user.avatarChar}
+                    </div>
+                </div>
+                <span class="story-name">Seu Story</span>
+            `;
+            container.appendChild(userStoryCircle);
+
+            // Stories de outros usuários
+            appData.stories.forEach((story, index) => {
+                const storyCircle = document.createElement('div');
+                storyCircle.className = 'story-circle';
+                storyCircle.onclick = () => openStoryModal(index);
+                storyCircle.innerHTML = `
+                    <div class="story-avatar-wrapper">
+                        <div class="story-avatar" style="background: ${getTierGradient(story.tier)};">
+                            ${story.avatarChar}
+                        </div>
+                    </div>
+                    <span class="story-name">${story.user}</span>
+                `;
+                container.appendChild(storyCircle);
+            });
+        }
+        
+        // Open story modal (Instagram style)
+        function openStoryModal(index) {
+            appData.currentStoryIndex = index;
+            const story = appData.stories[index];
+            
+            document.getElementById('storyHeaderAvatar').innerHTML = story.avatarChar;
+            document.getElementById('storyHeaderName').textContent = story.user;
+            document.getElementById('storyHeaderTime').textContent = story.time;
+            document.getElementById('storyItemIcon').textContent = story.itemIcon || story.item;
+            document.getElementById('storyText').textContent = story.text;
+            
+            // Reset progress animation
+            const progressFill = document.getElementById('storyProgress');
+            progressFill.style.animation = 'none';
+            progressFill.offsetHeight; // Trigger reflow
+            progressFill.style.animation = 'progress 5s linear forwards';
+            
+            // Auto close after 5 seconds
+            if (appData.storyTimeout) clearTimeout(appData.storyTimeout);
+            appData.storyTimeout = setTimeout(() => {
+                if (index < appData.stories.length - 1) {
+                    openStoryModal(index + 1);
+                } else {
+                    closeStoryModal();
+                }
+            }, 5000);
+            
+            document.getElementById('storyModal').style.display = 'flex';
+        }
+        
+        // View my story
+        function viewMyStory() {
+            if (!appData.user.story) {
+                alert('Você ainda não postou nenhum story! Clique em "Adicionar Story" para criar um.');
+                return;
+            }
+            
+            // Adiciona story do usuário ao array temporário
+            const tempStories = [appData.user.story, ...appData.stories];
+            appData.currentStoryIndex = 0;
+            
+            document.getElementById('storyHeaderAvatar').innerHTML = appData.user.avatarChar;
+            document.getElementById('storyHeaderName').textContent = appData.user.name;
+            document.getElementById('storyHeaderTime').textContent = 'Agora mesmo';
+            document.getElementById('storyItemIcon').textContent = appData.user.story.item;
+            document.getElementById('storyText').textContent = appData.user.story.text;
+            
+            const progressFill = document.getElementById('storyProgress');
+            progressFill.style.animation = 'none';
+            progressFill.offsetHeight;
+            progressFill.style.animation = 'progress 5s linear forwards';
+            
+            if (appData.storyTimeout) clearTimeout(appData.storyTimeout);
+            appData.storyTimeout = setTimeout(() => {
+                if (tempStories.length > 1) {
+                    openStoryModal(0);
+                } else {
+                    closeStoryModal();
+                }
+            }, 5000);
+            
+            document.getElementById('storyModal').style.display = 'flex';
+        }
+        
+        // Close story modal
+        function closeStoryModal() {
+            document.getElementById('storyModal').style.display = 'none';
+            if (appData.storyTimeout) clearTimeout(appData.storyTimeout);
+        }
+        
+        // Previous story
+        function previousStory() {
+            if (appData.currentStoryIndex > 0) {
+                openStoryModal(appData.currentStoryIndex - 1);
+            }
+        }
+        
+        // Next story
+        function nextStory() {
+            if (appData.currentStoryIndex < appData.stories.length - 1) {
+                openStoryModal(appData.currentStoryIndex + 1);
+            } else {
+                closeStoryModal();
+            }
+        }
+        
+        // Add story
+        function addStory() {
+            if (appData.user.items.length === 0) {
+                alert('Compre um item para postar no story!');
+                return;
+            }
+            
+            const randomItem = appData.user.items[Math.floor(Math.random() * appData.user.items.length)];
+            
+            const storyTexts = [
+                `Acabei de adquirir ${randomItem.name}! 🔥`,
+                `Novo item na coleção: ${randomItem.name} 💎`,
+                `${randomItem.name} chegou! Tá lindo demais 👌`,
+                `Mais um para a coleção: ${randomItem.name} 🚀`,
+                `Status atualizado com ${randomItem.name} 🎯`
+            ];
+            
+            const randomText = storyTexts[Math.floor(Math.random() * storyTexts.length)];
+            
+            appData.user.story = {
+                user: appData.user.name,
+                tier: appData.user.tier,
+                avatarChar: appData.user.avatarChar,
+                item: randomItem.icon,
+                itemIcon: randomItem.icon,
+                text: randomText,
+                time: 'Agora mesmo',
+                backgroundColor: `linear-gradient(135deg, ${getRandomColor()}, ${getRandomColor()})`
+            };
+            
+            showDiscreetNotification('📸 Story postado com sucesso!');
+            loadStories();
+            updateChallengeProgress('postStory');
+        }
+        
+        // Get random color for story background
+        function getRandomColor() {
+            const colors = ['#667eea', '#764ba2', '#ff6b6b', '#feca57', '#48c6ef', '#6f86d6', '#ee5a24', '#ff4757'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        // Load ranking
+        function loadRanking() {
+            const container = document.getElementById('rankingList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+
+            const sortedRanking = [...appData.ranking].sort((a, b) => b.prestige - a.prestige);
+
+            sortedRanking.forEach((user, index) => {
+                const isCurrentUser = user.name === appData.user.name;
+                const rankItem = document.createElement('li');
+                rankItem.className = 'ranking-item';
+                if (isCurrentUser) rankItem.style.background = 'rgba(255, 215, 0, 0.1)';
+                
+                let medalEmoji = '';
+                if (index === 0) medalEmoji = '🥇';
+                else if (index === 1) medalEmoji = '🥈';
+                else if (index === 2) medalEmoji = '🥉';
+                
+                rankItem.innerHTML = `
+                    <div class="ranking-pos">${medalEmoji || `#${index + 1}`}</div>
+                    <div class="ranking-avatar" style="background: ${getTierGradient(user.tier)};">${user.avatarChar}</div>
+                    <div class="ranking-name">${user.name} ${isCurrentUser ? '(Você)' : ''}</div>
+                    <div class="ranking-score">${user.prestige.toLocaleString()} pts</div>
+                `;
+                container.appendChild(rankItem);
+            });
+        }
+        
+        // Load challenges
+        function loadChallenges() {
+            const container = document.getElementById('challengesContainer');
+            if (!container) return;
+
+            const challenges = appData.user.dailyChallenges;
+            container.innerHTML = '';
+
+            if (!challenges.buyItem.completed) {
+                container.appendChild(createChallengeCard(
+                    '🎯 Compre 1 item na loja',
+                    challenges.buyItem.progress,
+                    challenges.buyItem.target,
+                    '100 MT'
+                ));
+            }
+
+            if (!challenges.postStory.completed) {
+                container.appendChild(createChallengeCard(
+                    '📸 Poste 1 story',
+                    challenges.postStory.progress,
+                    challenges.postStory.target,
+                    '50 MT'
+                ));
+            }
+
+            if (!challenges.chatMessage.completed) {
+                container.appendChild(createChallengeCard(
+                    '💬 Envie 3 mensagens no chat VIP',
+                    challenges.chatMessage.progress,
+                    challenges.chatMessage.target,
+                    '150 MT'
+                ));
+            }
+            
+            if (challenges.buyItem.completed && challenges.postStory.completed && challenges.chatMessage.completed) {
+                const completedDiv = document.createElement('div');
+                completedDiv.className = 'challenge-card';
+                completedDiv.innerHTML = `
+                    <div class="challenge-info">
+                        <div class="challenge-title" style="color: var(--success);">✅ Todos os desafios completos hoje!</div>
+                        <p style="font-size: 14px;">Volte amanhã para mais desafios.</p>
+                    </div>
+                    <div class="challenge-reward">
+                        <i class="fas fa-check-circle" style="color: var(--success); font-size: 24px;"></i>
+                    </div>
+                `;
+                container.appendChild(completedDiv);
+            }
+        }
+
+        function createChallengeCard(title, progress, target, reward) {
+            const card = document.createElement('div');
+            card.className = 'challenge-card';
+            const percent = (progress / target) * 100;
+            card.innerHTML = `
+                <div class="challenge-info">
+                    <div class="challenge-title">${title}</div>
+                    <div class="challenge-progress">
+                        <div class="progress-fill" style="width: ${percent}%;"></div>
+                    </div>
+                    <div style="font-size: 12px; margin-top: 5px;">${progress}/${target}</div>
+                </div>
+                <div class="challenge-reward">
+                    <i class="fas fa-coins"></i> ${reward}
+                </div>
+            `;
+            return card;
+        }
+        
+        // Update challenge progress
+        function updateChallengeProgress(challengeKey) {
+            const challenge = appData.user.dailyChallenges[challengeKey];
+            if (!challenge || challenge.completed) return;
+
+            challenge.progress++;
+            if (challenge.progress >= challenge.target) {
+                challenge.completed = true;
+                let reward = 0;
+                if (challengeKey === 'buyItem') reward = 100;
+                if (challengeKey === 'postStory') reward = 50;
+                if (challengeKey === 'chatMessage') reward = 150;
+                appData.user.balance += reward;
+                updateUserInfo();
+                showDiscreetNotification(`🎉 Desafio completo! Ganhou ${reward} MT!`);
+            }
+            loadChallenges();
+        }
+        
+        // Helper function to get icon for items
+        function getItemIcon(itemId) {
+            const icons = {
+                'iphone17': 'mobile-alt',
+                'iphone16pro': 'mobile-alt',
+                'iphone16': 'mobile-alt',
+                'iphone15pro': 'mobile-alt',
+                'iphone15': 'mobile-alt',
+                'iphone14pro': 'mobile-alt',
+                'iphone14': 'mobile-alt',
+                'iphone13': 'mobile-alt',
+                'iphone12': 'mobile-alt',
+                'iphoneSE': 'mobile-alt',
+                'iphone18_concept': 'mobile-alt',
+                'vape_nasty_blue': 'smoking',
+                'vape_nasty_green': 'smoking',
+                'vape_nasty_red': 'smoking',
+                'vape_nasty_purple': 'smoking',
+                'vape_nasty_gold': 'smoking',
+                'vape_nasty_rainbow': 'smoking',
+                'moto_ltr': 'motorcycle',
+                'moto_yfz': 'motorcycle',
+                'moto_banshee': 'motorcycle',
+                'moto_trx': 'motorcycle',
+                'moto_ltz': 'motorcycle',
+                'moto_yz': 'motorcycle',
+                'moto_ktm': 'motorcycle',
+                'moto_raptor': 'motorcycle',
+                'maverick_2': 'car-side',
+                'maverick_4': 'car-side',
+                'maverick_trail': 'car-side',
+                'maverick_x3': 'car-side',
+                'toyota_ractis': 'car',
+                'ford_raptor': 'truck-pickup',
+                'ford_wildtrak': 'truck-pickup',
+                'fortuner_gd6': 'truck',
+                'hilux_gd6': 'truck',
+                'lexus_lx570': 'car',
+                'mazda_demio': 'car',
+                'nissan_navara': 'truck-pickup',
+                'bmw_x5': 'car',
+                'mercedes_g': 'car',
+                'bugatti_chiron': 'car',
+                'lamborghini_sian': 'car',
+                'porsche_911': 'car',
+                'audi_r8': 'car',
+                'tinto_capital': 'wine-glass-alt',
+                'jack_daniels': 'whiskey-glass',
+                'streeton': 'cocktail',
+                'beefeater': 'martini-glass-citrus',
+                'johnnie_walker': 'whiskey-glass',
+                'hennessy': 'glass-whiskey',
+                'moet': 'wine-bottle',
+                'laurentina': 'beer',
+                '2m': 'beer',
+                'pandora_bracelet': 'gem',
+                'pandora_charm': 'star',
+                'brokenchild_hat': 'hat-cowboy',
+                'brokenchild_tshirt': 'tshirt',
+                'diamond_chain': 'gem',
+                'gold_watch': 'clock',
+                'diamond_vvs': 'gem',
+                'jbl_boombox': 'music',
+                'bang_olufsen': 'headphones',
+                'macbook_pro': 'laptop',
+                'imac_pro': 'desktop',
+                'casino_vip': 'dice',
+                'spa_day': 'spa',
+                'cavalo_luso': 'horse',
+                'leao_estimacao': 'paw',
+                'private_jet': 'plane',
+                'yacht_elite': 'ship',
+                'mansion_maputo': 'home',
+                'island_private': 'umbrella-beach',
+                'hotel_chain': 'hotel',
+                'time_futebol': 'futbol',
+                'helicopter_elite': 'helicopter',
+                'art_collection': 'palette',
+                'crypto_portfolio': 'bitcoin',
+                'rolex': 'clock',
+                'gucci': 'glasses',
+                'yacht': 'ship',
+                'bitcoin': 'bitcoin',
+                'mansao': 'home',
+                'jet': 'plane',
+                'ferrari': 'car',
+                'helicopter': 'helicopter'
+            };
+            
+            return icons[itemId] || 'star';
+        }
+    </script>
+</body>
+</html>
