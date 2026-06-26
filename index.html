@@ -5067,6 +5067,265 @@
             };
             return icons[itemId] || 'star';
         }
+        //pus aqui em baixo do fechamento de todasas chavetas
+       // ============================================
+// SISTEMA DE SALVAMENTO DE DADOS
+// ============================================
+
+// SALVAR TODOS OS DADOS DO JOGADOR
+function salvarDadosCompletos() {
+    var dados = {
+        nome: appData.user.name,
+        moedas: appData.user.balance,
+        tier: appData.user.tier,
+        avatarChar: appData.user.avatarChar,
+        itens: appData.user.items.map(i => i.id),
+        totalSpent: appData.user.totalSpent,
+        prestigeScore: appData.user.prestigeScore,
+        pvpGalaxies: appData.user.pvpGalaxies || 0,
+        battlePass: {
+            level: appData.user.battlePass.level,
+            xp: appData.user.battlePass.xp,
+            xpToNext: appData.user.battlePass.xpToNext,
+            premium: appData.user.battlePass.premium,
+            claimedFree: appData.user.battlePass.claimedFree,
+            claimedPremium: appData.user.battlePass.claimedPremium
+        },
+        story: appData.user.story,
+        parties: appData.user.parties,
+        dailyChallenges: appData.user.dailyChallenges,
+        ultimoLogin: new Date().toLocaleString()
+    };
+    
+    // Salva no LocalStorage do navegador
+    localStorage.setItem('statusVerseDados', JSON.stringify(dados));
+    
+    // Tenta enviar para Google Sheets (se estiver configurado)
+    enviarParaGoogleSheets(dados);
+}
+
+// CARREGAR DADOS SALVOS
+function carregarDadosSalvos() {
+    var dadosSalvos = localStorage.getItem('statusVerseDados');
+    if (dadosSalvos) {
+        try {
+            var dados = JSON.parse(dadosSalvos);
+            
+            // Restaura dados do usuário
+            appData.user.name = dados.nome || appData.user.name;
+            appData.user.balance = dados.moedas || appData.user.balance;
+            appData.user.tier = dados.tier || appData.user.tier;
+            appData.user.avatarChar = dados.avatarChar || appData.user.avatarChar;
+            appData.user.totalSpent = dados.totalSpent || appData.user.totalSpent;
+            appData.user.prestigeScore = dados.prestigeScore || appData.user.prestigeScore;
+            appData.user.pvpGalaxies = dados.pvpGalaxies || 0;
+            appData.user.story = dados.story || null;
+            appData.user.parties = dados.parties || [];
+            
+            // Restaura itens (procura na lista da loja)
+            if (dados.itens && Array.isArray(dados.itens)) {
+                appData.user.items = [];
+                dados.itens.forEach(itemId => {
+                    var itemDaLoja = appData.shopItems.find(i => i.id === itemId);
+                    if (itemDaLoja) {
+                        appData.user.items.push({
+                            id: itemDaLoja.id,
+                            name: itemDaLoja.name,
+                            icon: itemDaLoja.icon,
+                            rarity: itemDaLoja.rarity,
+                            category: itemDaLoja.category
+                        });
+                    }
+                });
+            }
+            
+            // Restaura Battle Pass
+            if (dados.battlePass) {
+                appData.user.battlePass.level = dados.battlePass.level || 1;
+                appData.user.battlePass.xp = dados.battlePass.xp || 0;
+                appData.user.battlePass.xpToNext = dados.battlePass.xpToNext || 100;
+                appData.user.battlePass.premium = dados.battlePass.premium || false;
+                appData.user.battlePass.claimedFree = dados.battlePass.claimedFree || [];
+                appData.user.battlePass.claimedPremium = dados.battlePass.claimedPremium || [];
+            }
+            
+            // Restaura desafios diários
+            if (dados.dailyChallenges) {
+                appData.user.dailyChallenges = dados.dailyChallenges;
+            }
+            
+            // Atualiza a interface
+            updateUserInfo();
+            loadAvatarItems();
+            updateAvatarTierBadge();
+            updateTierEffects();
+            updateBattlePassUI();
+            loadChallenges();
+            
+            return true;
+        } catch (e) {
+            console.log('Erro ao carregar dados:', e);
+            return false;
+        }
+    }
+    return false;
+}
+
+// ENVIAR PARA GOOGLE SHEETS (quando estiver configurado)
+function enviarParaGoogleSheets(dados) {
+    // 🔴 SUBSTITUA SEU_ID_AQUI pelo URL que você copiou do Google Sheets
+    var url = "https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+    
+    // Verifica se o URL foi configurado
+    if (url.includes('SEU_ID_AQUI')) {
+        console.log('Google Sheets não configurado ainda. Dados salvos apenas localmente.');
+        return;
+    }
+    
+    var dadosEnvio = {
+        nome: dados.nome || appData.user.name,
+        moedas: dados.moedas || appData.user.balance,
+        itens: dados.itens ? dados.itens.join(', ') : 'Nenhum',
+        data: new Date().toLocaleString(),
+        ultimoLogin: dados.ultimoLogin || new Date().toLocaleString(),
+        tier: dados.tier || appData.user.tier,
+        totalGasto: dados.totalSpent || appData.user.totalSpent,
+        prestigio: dados.prestigeScore || appData.user.prestigeScore,
+        battlePassLevel: dados.battlePass ? dados.battlePass.level : 1,
+        battlePassPremium: dados.battlePass ? dados.battlePass.premium : false
+    };
+    
+    fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dadosEnvio)
+    }).catch(function(err) {
+        console.log('Erro ao enviar para Google Sheets:', err);
+    });
+}
+
+// SALVAR AUTOMATICAMENTE QUANDO O JOGADOR FIZER ALGO
+function salvarAutomaticamente() {
+    salvarDadosCompletos();
+}
+
+// ============================================
+// INICIALIZAÇÃO - CARREGAR DADOS AO ABRIR O JOGO
+// ============================================
+
+// Quando a página carregar, tenta carregar os dados salvos
+document.addEventListener('DOMContentLoaded', function() {
+    // Tenta carregar dados salvos
+    var dadosCarregados = carregarDadosSalvos();
+    
+    if (dadosCarregados) {
+        console.log('✅ Dados carregados com sucesso!');
+    } else {
+        console.log('🆕 Novo jogo iniciado!');
+    }
+    
+    // Salva automaticamente a cada 30 segundos
+    setInterval(function() {
+        salvarAutomaticamente();
+    }, 30000);
+    
+    // Salva quando a página for fechada
+    window.addEventListener('beforeunload', function() {
+        salvarAutomaticamente();
+    });
+});
+
+// ============================================
+// MODIFICAR FUNÇÕES EXISTENTES PARA SALVAR AUTOMATICAMENTE
+// ============================================
+
+// Sobrescrever funções principais para salvar automaticamente
+
+// Função de compra original modificada
+var buyItemOriginal = buyItem;
+buyItem = function(itemId) {
+    buyItemOriginal(itemId);
+    // Salva após comprar
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função do casino modificada
+var spinRouletteOriginal = spinRoulette;
+spinRoulette = function() {
+    spinRouletteOriginal();
+    // Salva após girar (com delay para esperar o resultado)
+    setTimeout(salvarAutomaticamente, 6000);
+};
+
+// Função PVP modificada
+var pvpAttackOriginal = pvpAttack;
+pvpAttack = function() {
+    pvpAttackOriginal();
+    setTimeout(salvarAutomaticamente, 1000);
+};
+
+// Função de comprar galáxia modificada
+var buyGalaxyOriginal = buyGalaxy;
+buyGalaxy = function(cost) {
+    buyGalaxyOriginal(cost);
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de criar story modificada
+var createStoryOriginal = createStory;
+createStory = function() {
+    createStoryOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de criar post no feed modificada
+var createFeedPostOriginal = createFeedPost;
+createFeedPost = function() {
+    createFeedPostOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de organizar festa modificada
+var organizePartyOriginal = organizeParty;
+organizeParty = function(partyId) {
+    organizePartyOriginal(partyId);
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de criar festa personalizada modificada
+var createCustomPartyOriginal = createCustomParty;
+createCustomParty = function() {
+    createCustomPartyOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de resgatar código modificada
+var redeemCodeOriginal = redeemCode;
+redeemCode = function() {
+    redeemCodeOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de resgatar recompensa do Battle Pass modificada
+var claimRewardOriginal = claimReward;
+claimReward = function(level, tab) {
+    claimRewardOriginal(level, tab);
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de upgrade do Battle Pass modificada
+var upgradeBattlePassOriginal = upgradeBattlePass;
+upgradeBattlePass = function() {
+    upgradeBattlePassOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+console.log('✅ Sistema de salvamento ativado!');
+console.log('📊 Dados salvos automaticamente a cada 30 segundos');
+console.log('🔗 Para conectar ao Google Sheets, configure o URL no enviarParaGoogleSheets()');
+
+        
     </script>
 </body>
 </html>
