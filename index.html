@@ -3,184 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StatusVerse - Login</title>
+    <title>StatusVerse - Prestígio Digital</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== LOGIN SCREEN ===== */
-        #loginScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            padding: 20px;
-        }
-
-        #loginScreen .login-box {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 30px;
-            padding: 50px 40px;
-            max-width: 420px;
-            width: 100%;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.1);
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        #loginScreen .login-logo {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        #loginScreen .login-logo h1 {
-            font-size: 36px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #loginScreen .login-logo i {
-            color: var(--gold);
-            -webkit-text-fill-color: var(--gold);
-            font-size: 48px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        #loginScreen .login-logo p {
-            color: #aaa;
-            font-size: 14px;
-            margin-top: 5px;
-            -webkit-text-fill-color: #aaa;
-        }
-
-        #loginScreen .form-group {
-            margin-bottom: 18px;
-        }
-
-        #loginScreen .form-group label {
-            display: block;
-            color: var(--gold);
-            font-weight: bold;
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-
-        #loginScreen .form-group input {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        #loginScreen .form-group input:focus {
-            outline: none;
-            border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        #loginScreen .form-group input::placeholder {
-            color: #666;
-        }
-
-        #loginScreen .login-btns {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-
-        #loginScreen .login-btn {
-            flex: 1;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-width: 120px;
-        }
-
-        #loginScreen .login-btn:hover {
-            transform: scale(1.03);
-        }
-
-        #loginScreen .login-btn.primary {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        #loginScreen .login-btn.success {
-            background: linear-gradient(45deg, #00c851, #007e33);
-            color: white;
-        }
-
-        #loginScreen .login-btn.danger {
-            background: linear-gradient(45deg, var(--danger), #cc0000);
-            color: white;
-        }
-
-        #loginScreen .login-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        #loginScreen .login-error {
-            color: var(--danger);
-            font-size: 14px;
-            margin-top: 12px;
-            text-align: center;
-            min-height: 24px;
-        }
-
-        #loginScreen .login-success {
-            color: var(--success);
-            font-size: 14px;
-            margin-top: 12px;
-            text-align: center;
-            min-height: 24px;
-        }
-
-        #loginScreen .login-toggle {
-            text-align: center;
-            margin-top: 20px;
-            color: #888;
-            font-size: 14px;
-        }
-
-        #loginScreen .login-toggle span {
-            color: var(--gold);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #loginScreen .login-toggle span:hover {
-            text-decoration: underline;
-        }
-
-        /* Resto do CSS do jogo */
         * {
             margin: 0;
             padding: 0;
@@ -204,7 +29,15 @@
             --light: #f8f9fa;
             --elite: #ff00ff;
             --casino-gold: #FFD700;
-            --admin-color: #ff0044;
+            --casino-red: #CC0000;
+            --casino-green: #00CC00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -251,26 +84,6 @@
             -webkit-text-fill-color: var(--gold);
         }
         
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .header-settings {
-            font-size: 28px;
-            cursor: pointer;
-            color: #aaa;
-            transition: all 0.3s;
-            padding: 5px;
-        }
-
-        .header-settings:hover {
-            color: var(--gold);
-            transform: rotate(60deg);
-        }
-        
         .user-info {
             display: flex;
             align-items: center;
@@ -282,11 +95,6 @@
             flex-wrap: wrap;
             max-width: 100%;
             position: relative;
-        }
-
-        .user-info.admin-border {
-            border: 2px solid var(--admin-color);
-            box-shadow: 0 0 30px rgba(255, 0, 68, 0.3);
         }
         
         .user-info.diamond-effect::before,
@@ -348,16 +156,6 @@
             border: 3px solid var(--gold);
             flex-shrink: 0;
         }
-
-        .user-avatar.admin-avatar {
-            border-color: var(--admin-color);
-            animation: adminGlow 2s infinite alternate;
-        }
-
-        @keyframes adminGlow {
-            0% { box-shadow: 0 0 10px var(--admin-color); }
-            100% { box-shadow: 0 0 30px var(--admin-color); }
-        }
         
         .user-details {
             min-width: 0;
@@ -378,10 +176,6 @@
             font-size: 18px;
             white-space: nowrap;
         }
-
-        .user-details .balance.admin-balance {
-            color: var(--admin-color);
-        }
         
         .user-tier {
             padding: 5px 15px;
@@ -390,19 +184,8 @@
             font-size: 14px;
             white-space: nowrap;
         }
-
-        .user-tier.admin-tier {
-            background: linear-gradient(45deg, var(--admin-color), #ff0066);
-            color: white;
-            animation: adminTierGlow 1s infinite alternate;
-        }
-
-        @keyframes adminTierGlow {
-            0% { box-shadow: 0 0 5px var(--admin-color); }
-            100% { box-shadow: 0 0 20px var(--admin-color); }
-        }
         
-        /* Battle Pass Section */
+        /* Battle Pass */
         .battlepass-section {
             background: linear-gradient(135deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
             border-radius: 20px;
@@ -410,7 +193,6 @@
             margin-bottom: 30px;
             border: 2px solid var(--gold);
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
-            display: block !important;
         }
 
         .battlepass-header {
@@ -640,15 +422,6 @@
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
         }
-
-        .tab.admin-tab {
-            color: var(--admin-color);
-        }
-
-        .tab.admin-tab.active {
-            background: linear-gradient(45deg, var(--admin-color), #ff0066);
-            box-shadow: 0 5px 15px rgba(255, 0, 68, 0.4);
-        }
         
         /* Avatar Section */
         .avatar-section {
@@ -784,14 +557,6 @@
         .control-btn:hover {
             transform: scale(1.05);
             opacity: 0.9;
-        }
-
-        .control-btn.admin-btn {
-            background: linear-gradient(45deg, var(--admin-color), #ff0066);
-        }
-
-        .control-btn.admin-btn:hover {
-            box-shadow: 0 0 30px rgba(255, 0, 68, 0.5);
         }
         
         /* Shop Items */
@@ -1639,7 +1404,7 @@
             text-align: right;
         }
 
-        /* Casino Section */
+        /* ===== CASINO SECTION ===== */
         .casino-section {
             background: rgba(0, 0, 0, 0.6);
             border-radius: 20px;
@@ -1772,6 +1537,7 @@
             justify-content: center;
             border-radius: 50%;
             text-shadow: 0 0 3px rgba(0,0,0,0.9);
+            transform-origin: center;
         }
 
         .roulette-number.red { color: #ff4444; background: rgba(0,0,0,0.3); }
@@ -1912,7 +1678,7 @@
         .history-item.win { color: var(--success); }
         .history-item.lose { color: var(--danger); }
 
-        /* PVP Section */
+        /* ===== PVP SECTION ===== */
         .pvp-section {
             background: rgba(0, 0, 0, 0.6);
             border-radius: 20px;
@@ -2331,119 +2097,6 @@
         .trade-confirm-btn:hover:not(:disabled) { transform: scale(1.02); opacity: 0.9; }
         .trade-confirm-btn:disabled { background: #666; cursor: not-allowed; transform: none; }
 
-        /* Admin Section */
-        .admin-section {
-            background: rgba(255, 0, 68, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border: 2px solid var(--admin-color);
-            box-shadow: 0 0 30px rgba(255, 0, 68, 0.1);
-        }
-
-        .admin-header {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--admin-color);
-            padding-bottom: 15px;
-        }
-
-        .admin-header h2 {
-            font-size: 32px;
-            color: var(--admin-color);
-            text-shadow: 0 0 20px rgba(255, 0, 68, 0.3);
-        }
-
-        .admin-header p {
-            opacity: 0.7;
-            margin-top: 5px;
-        }
-
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .admin-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(255, 0, 68, 0.2);
-            transition: all 0.3s;
-        }
-
-        .admin-card:hover {
-            border-color: var(--admin-color);
-            box-shadow: 0 0 20px rgba(255, 0, 68, 0.1);
-        }
-
-        .admin-card h3 {
-            color: var(--admin-color);
-            margin-bottom: 15px;
-        }
-
-        .admin-card .form-group {
-            margin-bottom: 10px;
-        }
-
-        .admin-card .form-group label {
-            color: #aaa;
-        }
-
-        .admin-card .form-control {
-            border-color: var(--admin-color);
-        }
-
-        .admin-btn {
-            padding: 10px 20px;
-            background: linear-gradient(45deg, var(--admin-color), #ff0066);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .admin-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 0, 68, 0.3);
-        }
-
-        .admin-btn.danger {
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-        }
-
-        .admin-btn.success {
-            background: linear-gradient(45deg, var(--success), #007e33);
-        }
-
-        .admin-user-list {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .admin-user-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-        }
-
-        .admin-user-item .admin-user-name {
-            font-weight: bold;
-            color: var(--gold);
-        }
-
-        .admin-user-item .admin-user-tier {
-            font-size: 12px;
-            padding: 2px 10px;
-            border-radius: 10px;
-        }
-
         /* Footer */
         .bottom-nav {
             position: fixed;
@@ -2483,15 +2136,6 @@
             top: -8px;
             right: -8px;
         }
-
-        .nav-icon.admin-nav {
-            color: var(--admin-color);
-        }
-
-        .nav-icon.admin-nav.active {
-            color: var(--admin-color);
-            text-shadow: 0 0 20px rgba(255, 0, 68, 0.5);
-        }
         
         /* Modal */
         .modal {
@@ -2520,12 +2164,6 @@
         }
 
         .modal-content.trading-modal { max-width: 600px; }
-        .modal-content.profile-modal { max-width: 450px; }
-
-        .modal-content.admin-modal {
-            border-color: var(--admin-color);
-            max-width: 700px;
-        }
         
         .modal-header {
             display: flex;
@@ -2657,7 +2295,7 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .shop-section, .party-grid, .admin-grid {
+            .shop-section, .party-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
             
@@ -2717,15 +2355,11 @@
             .bp-rewards-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
-
-            #loginScreen .login-box {
-                padding: 30px 20px;
-            }
         }
         
         @media (max-width: 480px) {
             .container { padding: 10px; }
-            .shop-section, .party-grid, .admin-grid { grid-template-columns: 1fr; }
+            .shop-section, .party-grid { grid-template-columns: 1fr; }
             .avatar-section { padding: 20px; }
             .modal-content { padding: 20px; }
             .bottom-nav { padding: 8px; }
@@ -2767,584 +2401,499 @@
             .bp-rewards-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
-
-            #loginScreen .login-box {
-                padding: 20px 15px;
-            }
-
-            #loginScreen .login-logo h1 {
-                font-size: 28px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- ============================================ -->
-    <!-- LOGIN / CREATE ACCOUNT SCREEN -->
-    <!-- ============================================ -->
-    <div id="loginScreen">
-        <div class="login-box">
-            <div class="login-logo">
+    <!-- TELA DE LOGIN/CADASTRO -->
+<div id="telaLogin" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); z-index: 99999; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px;">
+    <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; max-width: 400px; width: 100%; border: 2px solid var(--gold);">
+        <h1 style="text-align: center; font-size: 32px; margin-bottom: 10px;">
+            <span style="background: linear-gradient(45deg, #6a11cb, #2575fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">StatusVerse</span>
+        </h1>
+        <p style="text-align: center; opacity: 0.7; margin-bottom: 30px;">Prestígio Digital</p>
+        
+        <!-- Abas: Login / Cadastro -->
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <button id="btnLoginTab" onclick="mostrarLogin()" style="flex: 1; padding: 12px; background: linear-gradient(45deg, var(--primary), var(--secondary)); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;">Entrar</button>
+            <button id="btnCadastroTab" onclick="mostrarCadastro()" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;">Criar Conta</button>
+        </div>
+        
+        <!-- Formulário de Login -->
+        <div id="formLogin">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">👤 Nome de usuário</label>
+                <input type="text" id="loginNome" placeholder="Digite seu nome" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">🔒 Senha</label>
+                <input type="password" id="loginSenha" placeholder="Digite sua senha" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <button onclick="fazerLogin()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--gold), #b8860b); border: none; border-radius: 10px; color: black; font-weight: bold; font-size: 18px; cursor: pointer;">🚀 Entrar</button>
+        </div>
+        
+        <!-- Formulário de Cadastro -->
+        <div id="formCadastro" style="display: none;">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">👤 Nome de usuário</label>
+                <input type="text" id="cadastroNome" placeholder="Escolha um nome" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">🔒 Senha</label>
+                <input type="password" id="cadastroSenha" placeholder="Crie uma senha" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">🔒 Confirmar senha</label>
+                <input type="password" id="cadastroConfirmar" placeholder="Confirme sua senha" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <button onclick="criarConta()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--gold), #b8860b); border: none; border-radius: 10px; color: black; font-weight: bold; font-size: 18px; cursor: pointer;">✨ Criar Conta</button>
+        </div>
+        
+        <p id="loginMensagem" style="text-align: center; margin-top: 15px; color: var(--danger); font-size: 14px;"></p>
+    </div>
+</div>
+    
+
+
+
+
+
+    
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
                 <i class="fas fa-crown"></i>
-                <h1>StatusVerse</h1>
-                <p>💰 O jogo do prestígio digital</p>
+                <span>StatusVerse</span>
+            </div>
+            <div class="user-info" id="userInfoContainer">
+                <div class="user-avatar" id="headerAvatar">👑</div>
+                <div class="user-details">
+                    <h3 id="username">Tahir</h3>
+                    <div class="balance" id="balance">25.000 MT</div>
+                </div>
+                <div class="user-tier" id="userTier">TIER OURO</div>
+            </div>
+        </header>
+
+        <!-- Battle Pass Section -->
+        <div class="battlepass-section" id="battlepass-section">
+            <div class="battlepass-header">
+                <div class="battlepass-title">
+                    <i class="fas fa-passport"></i> Passe de Batalha
+                </div>
+                <div class="battlepass-level">
+                    Nível <span id="bpLevel">1</span>
+                </div>
             </div>
 
-            <div id="loginForm">
-                <div class="form-group">
-                    <label>👤 Nome de Usuário</label>
-                    <input type="text" id="loginUsername" placeholder="Digite seu nome" value="">
+            <div class="battlepass-tabs">
+                <div class="bp-tab free active" onclick="switchBPTab('free', this)">🎁 Grátis</div>
+                <div class="bp-tab premium" onclick="switchBPTab('premium', this)">⭐ Premium</div>
+            </div>
+
+            <div class="bp-progress">
+                <div class="bp-progress-text">
+                    <span>Progresso</span>
+                    <span id="bpProgressText">0 / 100 XP</span>
                 </div>
-                <div class="form-group">
-                    <label>🔒 Senha</label>
-                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
+                <div class="bp-progress-bar">
+                    <div class="bp-progress-fill" id="bpProgressFill" style="width: 0%;"></div>
                 </div>
-                <div id="loginError" class="login-error"></div>
-                <div id="loginSuccess" class="login-success"></div>
-                <div class="login-btns">
-                    <button class="login-btn primary" id="loginBtn" onclick="handleLogin()">🔐 Entrar</button>
-                    <button class="login-btn success" id="registerBtn" onclick="handleRegister()">✨ Criar Conta</button>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; align-items: center;">
+                    <span style="font-size: 14px; opacity: 0.7;">Ganhe XP comprando itens, postando stories e jogando!</span>
+                    <button class="bp-upgrade-btn" id="bpUpgradeBtn" onclick="upgradeBattlePass()">
+                        <i class="fas fa-crown"></i> Premium (5000 MT)
+                    </button>
                 </div>
-                <div class="login-toggle">
-                    Não tem conta? <span onclick="toggleLoginMode()">Criar agora</span>
+            </div>
+
+            <div id="bpRewardsContainer">
+                <div class="bp-rewards-grid" id="bpRewardsGrid"></div>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <div class="tab active" data-tab="avatar">Avatar</div>
+            <div class="tab" data-tab="shop">Loja</div>
+            <div class="tab" data-tab="casino">🎰 Casino</div>
+            <div class="tab" data-tab="pvp">⚔️ PVP</div>
+            <div class="tab" data-tab="party">Festas</div>
+            <div class="tab" data-tab="friends">Amigos</div>
+            <div class="tab" data-tab="stories">Stories</div>
+            <div class="tab" data-tab="ranking">Ranking</div>
+            <div class="tab" data-tab="chat">Chat</div>
+            <div class="tab" data-tab="feed">Feed</div>
+            <div class="tab" data-tab="redeem">Códigos</div>
+        </div>
+        
+        <!-- Avatar Section -->
+        <div class="content-section" id="avatar-section">
+            <div class="avatar-section" id="avatarContainer">
+                <div class="avatar-container">
+                    <div class="avatar-display">
+                        <div class="avatar-tier-badge" id="avatarTierBadge">OURO</div>
+                        <div class="avatar-character" id="avatarChar">👑</div>
+                        <div class="avatar-items" id="avatarItems"></div>
+                    </div>
+                    <div class="avatar-name" id="avatarName">Tahir - O Rei</div>
+                    <div class="avatar-stats">
+                        <div class="stat"><div class="stat-value" id="totalSpent">85.500 MT</div><div class="stat-label">Total Gasto</div></div>
+                        <div class="stat"><div class="stat-value" id="itemCount">3</div><div class="stat-label">Itens VIP</div></div>
+                        <div class="stat"><div class="stat-value" id="prestigeScore">945</div><div class="stat-label">Prestígio</div></div>
+                    </div>
+                    
+                    <div class="challenges-section">
+                        <h3 style="margin-bottom: 15px; color: var(--gold);">🎯 Desafios Diários</h3>
+                        <div id="challengesContainer"></div>
+                    </div>
+                    
+                    <div class="avatar-controls">
+                        <button class="control-btn" onclick="showAllItems()"><i class="fas fa-box-open"></i> Ver Itens</button>
+                        <button class="control-btn" onclick="changeAvatar()"><i class="fas fa-user-edit"></i> Modificar Avatar</button>
+                        <button class="control-btn" onclick="shareAvatar()"><i class="fas fa-share"></i> Compartilhar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        
+        <!-- Shop Section -->
+        <div class="content-section" id="shop-section" style="display: none;">
+            <h2 style="margin-bottom: 20px; font-size: 28px;">🛒 Loja VIP</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterItems('all')">Todos</button>
+                <button class="filter-btn" onclick="filterItems('phone')">Telefones</button>
+                <button class="filter-btn" onclick="filterItems('moto')">Motos</button>
+                <button class="filter-btn" onclick="filterItems('maverick')">Mavericks</button>
+                <button class="filter-btn" onclick="filterItems('carro')">Carros</button>
+                <button class="filter-btn" onclick="filterItems('drink')">Bebidas</button>
+                <button class="filter-btn" onclick="filterItems('vape')">Vapes</button>
+                <button class="filter-btn" onclick="filterItems('jewelry')">Jóias</button>
+                <button class="filter-btn" onclick="filterItems('tech')">Tecnologia</button>
+                <button class="filter-btn" onclick="filterItems('elite')">Elite</button>
+                <button class="filter-btn" onclick="filterItems('cheap')">Baratos</button>
+            </div>
+            <div class="shop-section" id="shop-items"></div>
+        </div>
 
-    <!-- ============================================ -->
-    <!-- MAIN GAME (hidden until login) -->
-    <!-- ============================================ -->
-    <div id="gameContainer" style="display: none;">
-        <div class="container">
-            <!-- Header -->
-            <header>
-                <div class="logo">
-                    <i class="fas fa-crown"></i>
-                    <span>StatusVerse</span>
+        <!-- Casino Section -->
+        <div class="content-section" id="casino-section" style="display: none;">
+            <div class="casino-section">
+                <div class="casino-header">
+                    <h2>🎰 Casino Royale</h2>
+                    <p>Gire a roleta e multiplique seu dinheiro!</p>
                 </div>
-                <div class="header-right">
-                    <div class="header-settings" onclick="openProfileModal()" title="Perfil e Configurações">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <div class="user-info" id="userInfoContainer">
-                        <div class="user-avatar" id="headerAvatar">👑</div>
-                        <div class="user-details">
-                            <h3 id="username">Carregando...</h3>
-                            <div class="balance" id="balance">0 MT</div>
+
+                <div class="roulette-container">
+                    <div class="roulette-wheel-wrapper">
+                        <div class="roulette-wheel" id="rouletteWheel">
+                            <div class="roulette-pointer">▼</div>
+                            <div class="roulette-center">♠</div>
+                            <div class="roulette-numbers-container" id="rouletteNumbersContainer"></div>
                         </div>
-                        <div class="user-tier" id="userTier">CARREGANDO</div>
+                    </div>
+
+                    <div class="roulette-bets">
+                        <button class="bet-btn active" data-bet="red" onclick="setBet('red')">🔴 Vermelho</button>
+                        <button class="bet-btn" data-bet="black" onclick="setBet('black')">⚫ Preto</button>
+                        <button class="bet-btn" data-bet="even" onclick="setBet('even')">Par</button>
+                        <button class="bet-btn" data-bet="odd" onclick="setBet('odd')">Ímpar</button>
+                        <button class="bet-btn" data-bet="1-12" onclick="setBet('1-12')">1-12</button>
+                        <button class="bet-btn" data-bet="13-24" onclick="setBet('13-24')">13-24</button>
+                        <button class="bet-btn" data-bet="25-36" onclick="setBet('25-36')">25-36</button>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; align-items: center;">
+                        <input type="number" class="bet-amount-input" id="betAmount" value="100" min="10" max="100000">
+                        <button class="spin-btn" id="spinBtn" onclick="spinRoulette()">🎰 GIRAR</button>
+                    </div>
+
+                    <div class="casino-result" id="casinoResult">
+                        <span>Escolha sua aposta e gire!</span>
+                    </div>
+
+                    <div class="casino-history" id="casinoHistory">
+                        <h4>📜 Histórico</h4>
+                        <div id="historyList"></div>
                     </div>
                 </div>
-            </header>
+            </div>
+        </div>
 
-            <!-- Battle Pass Section -->
-            <div class="battlepass-section" id="battlepass-section">
-                <div class="battlepass-header">
-                    <div class="battlepass-title">
-                        <i class="fas fa-passport"></i> Passe de Batalha
-                    </div>
-                    <div class="battlepass-level">
-                        Nível <span id="bpLevel">1</span>
-                    </div>
+        <!-- PVP Section -->
+        <div class="content-section" id="pvp-section" style="display: none;">
+            <div class="pvp-section">
+                <div class="pvp-header">
+                    <h2>⚔️ Batalha PVP</h2>
+                    <p>Compre galáxias e derrote seu oponente!</p>
                 </div>
 
-                <div class="battlepass-tabs">
-                    <div class="bp-tab free active" onclick="switchBPTab('free', this)">🎁 Grátis</div>
-                    <div class="bp-tab premium" onclick="switchBPTab('premium', this)">⭐ Premium</div>
-                </div>
+                <div class="pvp-battle-container">
+                    <div class="pvp-players">
+                        <div class="pvp-player active" id="player1">
+                            <div class="pvp-avatar" id="pvpAvatar1">👑</div>
+                            <div class="pvp-name" id="pvpName1">Tahir</div>
+                            <div class="pvp-tier" id="pvpTier1" style="background: var(--gold); color: black;">OURO</div>
+                            <div class="pvp-health">
+                                <div class="pvp-health-bar" id="pvpHealth1" style="width: 100%;"></div>
+                                <div class="pvp-health-text" id="pvpHealthText1">100/100</div>
+                            </div>
+                            <div style="margin-top: 10px; font-size: 14px; opacity: 0.7;">
+                                <span id="pvpGalaxies1">0</span> Galáxias
+                            </div>
+                        </div>
 
-                <div class="bp-progress">
-                    <div class="bp-progress-text">
-                        <span>Progresso</span>
-                        <span id="bpProgressText">0 / 100 XP</span>
+                        <div class="pvp-vs">⚡ VS ⚡</div>
+
+                        <div class="pvp-player" id="player2">
+                            <div class="pvp-avatar" id="pvpAvatar2">🤖</div>
+                            <div class="pvp-name" id="pvpName2">Bot</div>
+                            <div class="pvp-tier" id="pvpTier2" style="background: var(--elite); color: white;">ELITE</div>
+                            <div class="pvp-health">
+                                <div class="pvp-health-bar" id="pvpHealth2" style="width: 100%;"></div>
+                                <div class="pvp-health-text" id="pvpHealthText2">100/100</div>
+                            </div>
+                            <div style="margin-top: 10px; font-size: 14px; opacity: 0.7;">
+                                <span id="pvpGalaxies2">0</span> Galáxias
+                            </div>
+                        </div>
                     </div>
-                    <div class="bp-progress-bar">
-                        <div class="bp-progress-fill" id="bpProgressFill" style="width: 0%;"></div>
-                    </div>
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; align-items: center;">
-                        <span style="font-size: 14px; opacity: 0.7;">Ganhe XP comprando itens, postando stories e jogando!</span>
-                        <button class="bp-upgrade-btn" id="bpUpgradeBtn" onclick="upgradeBattlePass()">
-                            <i class="fas fa-crown"></i> Premium (5000 MT)
+
+                    <div class="pvp-galaxies">
+                        <button class="pvp-galaxy-btn" onclick="buyGalaxy(5)" id="galaxy5">
+                            🌌 G5 (5 MT)
+                            <span class="galaxy-damage">Dano: 5</span>
+                        </button>
+                        <button class="pvp-galaxy-btn" onclick="buyGalaxy(10)" id="galaxy10">
+                            🌌 G10 (10 MT)
+                            <span class="galaxy-damage">Dano: 10</span>
+                        </button>
+                        <button class="pvp-galaxy-btn" onclick="buyGalaxy(25)" id="galaxy25">
+                            🌌 G25 (25 MT)
+                            <span class="galaxy-damage">Dano: 25</span>
+                        </button>
+                        <button class="pvp-galaxy-btn" onclick="buyGalaxy(50)" id="galaxy50">
+                            🌌 G50 (50 MT)
+                            <span class="galaxy-damage">Dano: 50</span>
+                        </button>
+                        <button class="pvp-galaxy-btn" onclick="buyGalaxy(100)" id="galaxy100">
+                            🌌 G100 (100 MT)
+                            <span class="galaxy-damage">Dano: 100</span>
+                        </button>
+                        <button class="pvp-galaxy-btn" onclick="buyGalaxy(250)" id="galaxy250">
+                            🌌 G250 (250 MT)
+                            <span class="galaxy-damage">Dano: 250</span>
                         </button>
                     </div>
-                </div>
 
-                <div id="bpRewardsContainer">
-                    <div class="bp-rewards-grid" id="bpRewardsGrid"></div>
-                </div>
-            </div>
-            
-            <!-- Navigation Tabs -->
-            <div class="nav-tabs">
-                <div class="tab active" data-tab="avatar">Avatar</div>
-                <div class="tab" data-tab="shop">Loja</div>
-                <div class="tab" data-tab="casino">🎰 Casino</div>
-                <div class="tab" data-tab="pvp">⚔️ PVP</div>
-                <div class="tab" data-tab="party">Festas</div>
-                <div class="tab" data-tab="friends">Amigos</div>
-                <div class="tab" data-tab="stories">Stories</div>
-                <div class="tab" data-tab="ranking">Ranking</div>
-                <div class="tab" data-tab="chat">Chat</div>
-                <div class="tab" data-tab="feed">Feed</div>
-                <div class="tab" data-tab="redeem">Códigos</div>
-                <div class="tab admin-tab" data-tab="admin" id="adminTab" style="display: none;">👑 Admin</div>
-            </div>
-            
-            <!-- Avatar Section -->
-            <div class="content-section" id="avatar-section">
-                <div class="avatar-section" id="avatarContainer">
-                    <div class="avatar-container">
-                        <div class="avatar-display">
-                            <div class="avatar-tier-badge" id="avatarTierBadge">OURO</div>
-                            <div class="avatar-character" id="avatarChar">👑</div>
-                            <div class="avatar-items" id="avatarItems"></div>
-                        </div>
-                        <div class="avatar-name" id="avatarName">Carregando...</div>
-                        <div class="avatar-stats">
-                            <div class="stat"><div class="stat-value" id="totalSpent">0 MT</div><div class="stat-label">Total Gasto</div></div>
-                            <div class="stat"><div class="stat-value" id="itemCount">0</div><div class="stat-label">Itens VIP</div></div>
-                            <div class="stat"><div class="stat-value" id="prestigeScore">0</div><div class="stat-label">Prestígio</div></div>
-                        </div>
-                        
-                        <div class="challenges-section">
-                            <h3 style="margin-bottom: 15px; color: var(--gold);">🎯 Desafios Diários</h3>
-                            <div id="challengesContainer"></div>
-                        </div>
-                        
-                        <div class="avatar-controls">
-                            <button class="control-btn" onclick="showAllItems()"><i class="fas fa-box-open"></i> Ver Itens</button>
-                            <button class="control-btn" onclick="changeAvatar()"><i class="fas fa-user-edit"></i> Modificar Avatar</button>
-                            <button class="control-btn" onclick="shareAvatar()"><i class="fas fa-share"></i> Compartilhar</button>
-                        </div>
+                    <div class="pvp-controls">
+                        <button class="pvp-btn start" id="pvpStartBtn" onclick="startPVP()">⚔️ Iniciar Batalha</button>
+                        <button class="pvp-btn fight" id="pvpFightBtn" onclick="pvpAttack()" disabled>💥 Atacar</button>
+                        <button class="pvp-btn reset" onclick="resetPVP()">🔄 Resetar</button>
+                    </div>
+
+                    <div class="pvp-log" id="pvpLog">
+                        <div class="log-entry info">⚔️ Pronto para batalhar!</div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Shop Section -->
-            <div class="content-section" id="shop-section" style="display: none;">
-                <h2 style="margin-bottom: 20px; font-size: 28px;">🛒 Loja VIP</h2>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="filterItems('all')">Todos</button>
-                    <button class="filter-btn" onclick="filterItems('phone')">Telefones</button>
-                    <button class="filter-btn" onclick="filterItems('moto')">Motos</button>
-                    <button class="filter-btn" onclick="filterItems('maverick')">Mavericks</button>
-                    <button class="filter-btn" onclick="filterItems('carro')">Carros</button>
-                    <button class="filter-btn" onclick="filterItems('drink')">Bebidas</button>
-                    <button class="filter-btn" onclick="filterItems('vape')">Vapes</button>
-                    <button class="filter-btn" onclick="filterItems('jewelry')">Jóias</button>
-                    <button class="filter-btn" onclick="filterItems('tech')">Tecnologia</button>
-                    <button class="filter-btn" onclick="filterItems('elite')">Elite</button>
-                    <button class="filter-btn" onclick="filterItems('cheap')">Baratos</button>
-                </div>
-                <div class="shop-section" id="shop-items"></div>
-            </div>
-
-            <!-- Casino Section -->
-            <div class="content-section" id="casino-section" style="display: none;">
-                <div class="casino-section">
-                    <div class="casino-header">
-                        <h2>🎰 Casino Royale</h2>
-                        <p>Gire a roleta e multiplique seu dinheiro!</p>
-                    </div>
-
-                    <div class="roulette-container">
-                        <div class="roulette-wheel-wrapper">
-                            <div class="roulette-wheel" id="rouletteWheel">
-                                <div class="roulette-pointer">▼</div>
-                                <div class="roulette-center">♠</div>
-                                <div class="roulette-numbers-container" id="rouletteNumbersContainer"></div>
-                            </div>
-                        </div>
-
-                        <div class="roulette-bets">
-                            <button class="bet-btn active" data-bet="red" onclick="setBet('red')">🔴 Vermelho</button>
-                            <button class="bet-btn" data-bet="black" onclick="setBet('black')">⚫ Preto</button>
-                            <button class="bet-btn" data-bet="even" onclick="setBet('even')">Par</button>
-                            <button class="bet-btn" data-bet="odd" onclick="setBet('odd')">Ímpar</button>
-                            <button class="bet-btn" data-bet="1-12" onclick="setBet('1-12')">1-12</button>
-                            <button class="bet-btn" data-bet="13-24" onclick="setBet('13-24')">13-24</button>
-                            <button class="bet-btn" data-bet="25-36" onclick="setBet('25-36')">25-36</button>
-                        </div>
-
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; align-items: center;">
-                            <input type="number" class="bet-amount-input" id="betAmount" value="100" min="10" max="100000">
-                            <button class="spin-btn" id="spinBtn" onclick="spinRoulette()">🎰 GIRAR</button>
-                        </div>
-
-                        <div class="casino-result" id="casinoResult">
-                            <span>Escolha sua aposta e gire!</span>
-                        </div>
-
-                        <div class="casino-history" id="casinoHistory">
-                            <h4>📜 Histórico</h4>
-                            <div id="historyList"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PVP Section -->
-            <div class="content-section" id="pvp-section" style="display: none;">
-                <div class="pvp-section">
-                    <div class="pvp-header">
-                        <h2>⚔️ Batalha PVP</h2>
-                        <p>Compre galáxias e derrote seu oponente!</p>
-                    </div>
-
-                    <div class="pvp-battle-container">
-                        <div class="pvp-players">
-                            <div class="pvp-player active" id="player1">
-                                <div class="pvp-avatar" id="pvpAvatar1">👑</div>
-                                <div class="pvp-name" id="pvpName1">Carregando...</div>
-                                <div class="pvp-tier" id="pvpTier1" style="background: var(--gold); color: black;">OURO</div>
-                                <div class="pvp-health">
-                                    <div class="pvp-health-bar" id="pvpHealth1" style="width: 100%;"></div>
-                                    <div class="pvp-health-text" id="pvpHealthText1">100/100</div>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 14px; opacity: 0.7;">
-                                    <span id="pvpGalaxies1">0</span> Galáxias
-                                </div>
-                            </div>
-
-                            <div class="pvp-vs">⚡ VS ⚡</div>
-
-                            <div class="pvp-player" id="player2">
-                                <div class="pvp-avatar" id="pvpAvatar2">🤖</div>
-                                <div class="pvp-name" id="pvpName2">Bot</div>
-                                <div class="pvp-tier" id="pvpTier2" style="background: var(--elite); color: white;">ELITE</div>
-                                <div class="pvp-health">
-                                    <div class="pvp-health-bar" id="pvpHealth2" style="width: 100%;"></div>
-                                    <div class="pvp-health-text" id="pvpHealthText2">100/100</div>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 14px; opacity: 0.7;">
-                                    <span id="pvpGalaxies2">0</span> Galáxias
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pvp-galaxies">
-                            <button class="pvp-galaxy-btn" onclick="buyGalaxy(5)" id="galaxy5">
-                                🌌 G5 (5 MT)
-                                <span class="galaxy-damage">Dano: 5</span>
-                            </button>
-                            <button class="pvp-galaxy-btn" onclick="buyGalaxy(10)" id="galaxy10">
-                                🌌 G10 (10 MT)
-                                <span class="galaxy-damage">Dano: 10</span>
-                            </button>
-                            <button class="pvp-galaxy-btn" onclick="buyGalaxy(25)" id="galaxy25">
-                                🌌 G25 (25 MT)
-                                <span class="galaxy-damage">Dano: 25</span>
-                            </button>
-                            <button class="pvp-galaxy-btn" onclick="buyGalaxy(50)" id="galaxy50">
-                                🌌 G50 (50 MT)
-                                <span class="galaxy-damage">Dano: 50</span>
-                            </button>
-                            <button class="pvp-galaxy-btn" onclick="buyGalaxy(100)" id="galaxy100">
-                                🌌 G100 (100 MT)
-                                <span class="galaxy-damage">Dano: 100</span>
-                            </button>
-                            <button class="pvp-galaxy-btn" onclick="buyGalaxy(250)" id="galaxy250">
-                                🌌 G250 (250 MT)
-                                <span class="galaxy-damage">Dano: 250</span>
-                            </button>
-                        </div>
-
-                        <div class="pvp-controls">
-                            <button class="pvp-btn start" id="pvpStartBtn" onclick="startPVP()">⚔️ Iniciar Batalha</button>
-                            <button class="pvp-btn fight" id="pvpFightBtn" onclick="pvpAttack()" disabled>💥 Atacar</button>
-                            <button class="pvp-btn reset" onclick="resetPVP()">🔄 Resetar</button>
-                        </div>
-
-                        <div class="pvp-log" id="pvpLog">
-                            <div class="log-entry info">⚔️ Pronto para batalhar!</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Party Section -->
-            <div class="content-section" id="party-section" style="display: none;">
-                <div class="party-section">
-                    <h2 style="margin-bottom: 15px; font-size: 28px;">🎉 Festas Elite</h2>
-                    <p style="margin-bottom: 20px; opacity: 0.8;">Escolha uma festa pronta ou crie a sua própria!</p>
-                    <div class="party-grid" id="party-grid"></div>
-                    
-                    <div class="custom-party-form">
-                        <h3><i class="fas fa-pencil-alt"></i> Criar Festa Personalizada</h3>
-                        <div class="form-group">
-                            <label>Nome da Festa:</label>
-                            <input type="text" class="form-control" id="customPartyName" placeholder="Ex: Sunset na Praia">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Local:</label>
-                                <select class="form-control" id="customPartyLocation">
-                                    <option value="Praia do Tofo, Inhambane">Praia do Tofo, Inhambane</option>
-                                    <option value="Bilene, Gaza">Bilene, Gaza</option>
-                                    <option value="Ponta do Ouro">Ponta do Ouro</option>
-                                    <option value="Casa Social Maputo">Casa Social Maputo</option>
-                                    <option value="Praia do Xai-Xai">Praia do Xai-Xai</option>
-                                    <option value="Ilha de Moçambique">Ilha de Moçambique</option>
-                                    <option value="Complexo Costa do Sol">Complexo Costa do Sol</option>
-                                    <option value="Outro (especificar abaixo)">Outro...</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Data:</label>
-                                <input type="date" class="form-control" id="customPartyDate" min="2024-12-01" max="2025-12-31">
-                            </div>
-                        </div>
-                        <div class="form-group" id="otherLocationGroup" style="display: none;">
-                            <label>Especifique o local:</label>
-                            <input type="text" class="form-control" id="customPartyOtherLocation" placeholder="Digite o local desejado">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Capacidade:</label>
-                                <input type="number" class="form-control" id="customPartyCapacity" value="100" min="10" max="1000">
-                            </div>
-                            <div class="form-group">
-                                <label>Ícone:</label>
-                                <select class="form-control" id="customPartyIcon">
-                                    <option value="🏖️">🏖️ Praia</option>
-                                    <option value="🏠">🏠 Casa</option>
-                                    <option value="🎪">🎪 Festival</option>
-                                    <option value="🌅">🌅 Sunset</option>
-                                    <option value="🌊">🌊 Oceano</option>
-                                    <option value="🏝️">🏝️ Ilha</option>
-                                    <option value="🎉">🎉 Festa</option>
-                                    <option value="🥂">🥂 Coquetel</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Preço (MT):</label>
-                            <input type="number" class="form-control" id="customPartyPrice" value="15000" min="5000" max="100000" step="1000">
-                        </div>
-                        <div class="form-group">
-                            <label>Descrição:</label>
-                            <textarea class="form-control" id="customPartyDescription" rows="3" placeholder="Descreva sua festa...">Festa personalizada exclusiva!</textarea>
-                        </div>
-                        <button class="party-btn" onclick="createCustomParty()" style="margin-top: 10px;">
-                            <i class="fas fa-plus-circle"></i> CRIAR FESTA PERSONALIZADA
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Friends Section -->
-            <div class="content-section" id="friends-section" style="display: none;">
-                <div class="friends-section">
-                    <h2 style="margin-bottom: 15px; font-size: 28px;">👥 Amigos & Trading</h2>
-                    <p style="margin-bottom: 20px; opacity: 0.8;">Adicione amigos, negocie itens e troque dinheiro!</p>
-
-                    <div class="friends-tabs">
-                        <div class="friends-tab active" onclick="switchFriendsTab('online', this)">📡 Online</div>
-                        <div class="friends-tab" onclick="switchFriendsTab('all', this)">👥 Todos</div>
-                        <div class="friends-tab" onclick="switchFriendsTab('requests', this)">📩 Pedidos <span id="requestBadge" style="background: var(--danger); color: white; border-radius: 50%; padding: 2px 8px; font-size: 11px; margin-left: 5px; display: none;">0</span></div>
-                        <div class="friends-tab" onclick="switchFriendsTab('add', this)">➕ Adicionar</div>
-                    </div>
-
-                    <div id="addFriendForm" style="display: none;">
-                        <div class="add-friend-form">
-                            <input type="text" class="add-friend-input" id="friendSearchInput" placeholder="Digite o nome do amigo...">
-                            <button class="add-friend-btn" onclick="addFriend()"><i class="fas fa-user-plus"></i> Adicionar</button>
-                        </div>
-                    </div>
-
-                    <div class="friends-list" id="friendsList"></div>
-                </div>
-            </div>
-            
-            <!-- Stories Section -->
-            <div class="content-section" id="stories-section" style="display: none;">
-                <div class="stories-section">
-                    <h2 style="margin-bottom: 20px; font-size: 28px;">📸 Stories</h2>
-                    <div class="stories-container" id="storiesContainer"></div>
-                    <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="control-btn" onclick="openStoryCreator()"><i class="fas fa-plus-circle"></i> Criar Story</button>
-                        <button class="control-btn" onclick="viewMyStory()" style="background: linear-gradient(45deg, #f09433, #bc1888);"><i class="fas fa-eye"></i> Ver Meu Story</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Ranking Section -->
-            <div class="content-section" id="ranking-section" style="display: none;">
-                <div class="ranking-section">
-                    <h2 style="margin-bottom: 20px; font-size: 28px;">🏆 Ranking Nacional</h2>
-                    <ul class="ranking-list" id="rankingList"></ul>
-                </div>
-            </div>
-            
-            <!-- Chat Section -->
-            <div class="content-section" id="chat-section" style="display: none;">
-                <div class="chat-section">
-                    <div class="chat-header">
-                        <i class="fas fa-comments"></i> Chat VIP - Apenas Diamante, Veterano e Black
-                        <div id="chatAccessWarning" style="font-size: 14px; color: var(--warning); margin-top: 5px; display: none;">
-                            Você precisa ser DIAMANTE, VETERANO ou BLACK para acessar este chat
-                        </div>
-                    </div>
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="chat-input-container">
-                        <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
-                        <button class="chat-send" id="sendMessage">ENVIAR</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Social Feed Section -->
-            <div class="content-section" id="feed-section" style="display: none;">
-                <h2 style="margin-bottom: 20px; font-size: 28px;">📱 Feed Social</h2>
+        </div>
+        
+        <!-- Party Section -->
+        <div class="content-section" id="party-section" style="display: none;">
+            <div class="party-section">
+                <h2 style="margin-bottom: 15px; font-size: 28px;">🎉 Festas Elite</h2>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Escolha uma festa pronta ou crie a sua própria!</p>
+                <div class="party-grid" id="party-grid"></div>
                 
-                <div class="feed-post" style="margin-bottom: 30px;">
-                    <h3 style="color: var(--gold); margin-bottom: 15px;">Criar Publicação</h3>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 10px;">Escolha o que ostentar:</label>
-                        <div style="display: flex; gap: 20px; margin-bottom: 15px;">
-                            <label style="display: flex; align-items: center; gap: 5px;">
-                                <input type="radio" name="postType" value="items" checked onchange="togglePostType('items')"> Itens
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 5px;">
-                                <input type="radio" name="postType" value="money" onchange="togglePostType('money')"> Dinheiro
-                            </label>
+                <div class="custom-party-form">
+                    <h3><i class="fas fa-pencil-alt"></i> Criar Festa Personalizada</h3>
+                    <div class="form-group">
+                        <label>Nome da Festa:</label>
+                        <input type="text" class="form-control" id="customPartyName" placeholder="Ex: Sunset na Praia">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Local:</label>
+                            <select class="form-control" id="customPartyLocation">
+                                <option value="Praia do Tofo, Inhambane">Praia do Tofo, Inhambane</option>
+                                <option value="Bilene, Gaza">Bilene, Gaza</option>
+                                <option value="Ponta do Ouro">Ponta do Ouro</option>
+                                <option value="Casa Social Maputo">Casa Social Maputo</option>
+                                <option value="Praia do Xai-Xai">Praia do Xai-Xai</option>
+                                <option value="Ilha de Moçambique">Ilha de Moçambique</option>
+                                <option value="Complexo Costa do Sol">Complexo Costa do Sol</option>
+                                <option value="Outro (especificar abaixo)">Outro...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Data:</label>
+                            <input type="date" class="form-control" id="customPartyDate" min="2024-12-01" max="2025-12-31">
                         </div>
                     </div>
-                    
-                    <div id="itemsSelection" style="margin-bottom: 20px;">
-                        <p>Selecione até 5 itens para mostrar (clique nos itens):</p>
-                        <div class="items-grid" id="postItemsGrid" style="max-height: 300px;"></div>
-                        <div id="selectedItemsCount" style="margin-top: 10px; color: var(--gold);">0/5 itens selecionados</div>
+                    <div class="form-group" id="otherLocationGroup" style="display: none;">
+                        <label>Especifique o local:</label>
+                        <input type="text" class="form-control" id="customPartyOtherLocation" placeholder="Digite o local desejado">
                     </div>
-                    
-                    <div id="moneySelection" style="margin-bottom: 20px; display: none;">
-                        <label>Quanto dinheiro quer ostentar? (MT):</label>
-                        <input type="number" class="form-control" id="postMoneyAmount" value="100000" min="1000" max="10000000" step="1000">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Capacidade:</label>
+                            <input type="number" class="form-control" id="customPartyCapacity" value="100" min="10" max="1000">
+                        </div>
+                        <div class="form-group">
+                            <label>Ícone:</label>
+                            <select class="form-control" id="customPartyIcon">
+                                <option value="🏖️">🏖️ Praia</option>
+                                <option value="🏠">🏠 Casa</option>
+                                <option value="🎪">🎪 Festival</option>
+                                <option value="🌅">🌅 Sunset</option>
+                                <option value="🌊">🌊 Oceano</option>
+                                <option value="🏝️">🏝️ Ilha</option>
+                                <option value="🎉">🎉 Festa</option>
+                                <option value="🥂">🥂 Coquetel</option>
+                            </select>
+                        </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Legenda:</label>
-                        <textarea class="form-control" id="postCaption" rows="2" placeholder="Escreva uma legenda..."></textarea>
+                        <label>Preço (MT):</label>
+                        <input type="number" class="form-control" id="customPartyPrice" value="15000" min="5000" max="100000" step="1000">
                     </div>
-                    
-                    <button class="control-btn" onclick="createFeedPost()" style="width: 100%;">
-                        <i class="fas fa-paper-plane"></i> PUBLICAR
+                    <div class="form-group">
+                        <label>Descrição:</label>
+                        <textarea class="form-control" id="customPartyDescription" rows="3" placeholder="Descreva sua festa...">Festa personalizada exclusiva!</textarea>
+                    </div>
+                    <button class="party-btn" onclick="createCustomParty()" style="margin-top: 10px;">
+                        <i class="fas fa-plus-circle"></i> CRIAR FESTA PERSONALIZADA
                     </button>
                 </div>
-                
-                <div class="feed-section" id="socialFeed"></div>
             </div>
-            
-            <!-- Redeem Section -->
-            <div class="content-section" id="redeem-section" style="display: none;">
-                <div class="redeem-section">
-                    <h2 style="margin-bottom: 15px; font-size: 28px;">🔑 Códigos Secretos</h2>
-                    <p style="margin-bottom: 20px; opacity: 0.8;">Digite códigos especiais para desbloquear itens exclusivos e vantagens VIP.</p>
-                    
-                    <div class="redeem-form">
-                        <input type="text" class="redeem-input" id="redeemCode" placeholder="Digite seu código secreto">
-                        <button class="redeem-btn" id="submitRedeem"><i class="fas fa-key"></i> RESGATAR</button>
-                    </div>
-                    
-                    <div style="margin-top: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border-left: 4px solid var(--gold);">
-                        <h3 style="margin-bottom: 10px; color: var(--gold);"><i class="fas fa-lock"></i> Códigos Secretos VIP:</h3>
-                        <p style="opacity: 0.5;">🔒 Códigos ocultos - tente descobrir!</p>
+        </div>
+
+        <!-- Friends Section -->
+        <div class="content-section" id="friends-section" style="display: none;">
+            <div class="friends-section">
+                <h2 style="margin-bottom: 15px; font-size: 28px;">👥 Amigos & Trading</h2>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Adicione amigos, negocie itens e troque dinheiro!</p>
+
+                <div class="friends-tabs">
+                    <div class="friends-tab active" onclick="switchFriendsTab('online', this)">📡 Online</div>
+                    <div class="friends-tab" onclick="switchFriendsTab('all', this)">👥 Todos</div>
+                    <div class="friends-tab" onclick="switchFriendsTab('requests', this)">📩 Pedidos <span id="requestBadge" style="background: var(--danger); color: white; border-radius: 50%; padding: 2px 8px; font-size: 11px; margin-left: 5px; display: none;">0</span></div>
+                    <div class="friends-tab" onclick="switchFriendsTab('add', this)">➕ Adicionar</div>
+                </div>
+
+                <div id="addFriendForm" style="display: none;">
+                    <div class="add-friend-form">
+                        <input type="text" class="add-friend-input" id="friendSearchInput" placeholder="Digite o nome do amigo...">
+                        <button class="add-friend-btn" onclick="addFriend()"><i class="fas fa-user-plus"></i> Adicionar</button>
                     </div>
                 </div>
+
+                <div class="friends-list" id="friendsList"></div>
             </div>
-
-            <!-- Admin Section -->
-            <div class="content-section" id="admin-section" style="display: none;">
-                <div class="admin-section">
-                    <div class="admin-header">
-                        <h2>👑 Painel Admin</h2>
-                        <p>Controle total do sistema - <span style="color: var(--admin-color);">Modo Admin Ativo</span></p>
+        </div>
+        
+        <!-- Stories Section -->
+        <div class="content-section" id="stories-section" style="display: none;">
+            <div class="stories-section">
+                <h2 style="margin-bottom: 20px; font-size: 28px;">📸 Stories</h2>
+                <div class="stories-container" id="storiesContainer"></div>
+                <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="control-btn" onclick="openStoryCreator()"><i class="fas fa-plus-circle"></i> Criar Story</button>
+                    <button class="control-btn" onclick="viewMyStory()" style="background: linear-gradient(45deg, #f09433, #bc1888);"><i class="fas fa-eye"></i> Ver Meu Story</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ranking Section -->
+        <div class="content-section" id="ranking-section" style="display: none;">
+            <div class="ranking-section">
+                <h2 style="margin-bottom: 20px; font-size: 28px;">🏆 Ranking Nacional</h2>
+                <ul class="ranking-list" id="rankingList"></ul>
+            </div>
+        </div>
+        
+        <!-- Chat Section -->
+        <div class="content-section" id="chat-section" style="display: none;">
+            <div class="chat-section">
+                <div class="chat-header">
+                    <i class="fas fa-comments"></i> Chat VIP - Apenas Diamante, Veterano e Black
+                    <div id="chatAccessWarning" style="font-size: 14px; color: var(--warning); margin-top: 5px; display: none;">
+                        Você precisa ser DIAMANTE, VETERANO ou BLACK para acessar este chat
                     </div>
-
-                    <div class="admin-grid">
-                        <div class="admin-card">
-                            <h3>💰 Gerenciar Saldo</h3>
-                            <div class="form-group">
-                                <label>Usuário:</label>
-                                <input type="text" class="form-control" id="adminUserMoney" value="">
-                            </div>
-                            <div class="form-group">
-                                <label>Valor (MT):</label>
-                                <input type="number" class="form-control" id="adminMoneyAmount" value="10000">
-                            </div>
-                            <button class="admin-btn success" onclick="adminAddMoney()"><i class="fas fa-plus"></i> Adicionar Saldo</button>
-                            <button class="admin-btn danger" onclick="adminRemoveMoney()" style="margin-left: 10px;"><i class="fas fa-minus"></i> Remover Saldo</button>
-                            <button class="admin-btn" onclick="adminSetInfiniteMoney()" style="margin-top: 10px; width: 100%;"><i class="fas fa-infinity"></i> Dinheiro Infinito</button>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>📦 Gerenciar Itens</h3>
-                            <div class="form-group">
-                                <label>Usuário:</label>
-                                <input type="text" class="form-control" id="adminUserItem" value="">
-                            </div>
-                            <div class="form-group">
-                                <label>ID do Item:</label>
-                                <input type="text" class="form-control" id="adminItemId" placeholder="Ex: iphone17">
-                            </div>
-                            <button class="admin-btn success" onclick="adminGiveItem()"><i class="fas fa-gift"></i> Dar Item</button>
-                            <button class="admin-btn danger" onclick="adminRemoveItem()" style="margin-left: 10px;"><i class="fas fa-trash"></i> Remover Item</button>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>🏷️ Gerenciar Tier</h3>
-                            <div class="form-group">
-                                <label>Usuário:</label>
-                                <input type="text" class="form-control" id="adminUserTier" value="">
-                            </div>
-                            <div class="form-group">
-                                <label>Novo Tier:</label>
-                                <select class="form-control" id="adminTierSelect">
-                                    <option value="BRONZE">BRONZE</option>
-                                    <option value="PRATA">PRATA</option>
-                                    <option value="OURO">OURO</option>
-                                    <option value="DIAMANTE">DIAMANTE</option>
-                                    <option value="VETERANO">VETERANO</option>
-                                    <option value="BLACK">BLACK</option>
-                                </select>
-                            </div>
-                            <button class="admin-btn" onclick="adminSetTier()"><i class="fas fa-crown"></i> Definir Tier</button>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>👥 Usuários Online</h3>
-                            <div class="admin-user-list" id="adminUserList">
-                                <div class="admin-user-item">
-                                    <span class="admin-user-name">Carregando...</span>
-                                    <span class="admin-user-tier" style="background: var(--gold); color: black;">-</span>
-                                    <span style="color: var(--success);">🟢 Online</span>
-                                </div>
-                            </div>
-                            <button class="admin-btn" onclick="adminRefreshUsers()" style="margin-top: 10px; width: 100%;"><i class="fas fa-sync"></i> Atualizar Usuários</button>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>🎯 Comandos Rápidos</h3>
-                            <button class="admin-btn" onclick="adminResetAll()" style="width: 100%; margin-bottom: 10px;"><i class="fas fa-redo"></i> Resetar Todo o Progresso</button>
-                            <button class="admin-btn" onclick="adminGiveAllItems()" style="width: 100%; margin-bottom: 10px;"><i class="fas fa-boxes"></i> Dar Todos os Itens</button>
-                            <button class="admin-btn" onclick="adminMaxLevel()" style="width: 100%;"><i class="fas fa-level-up-alt"></i> Nível Máximo Passe</button>
-                            <button class="admin-btn" onclick="adminBroadcast()" style="width: 100%; margin-top: 10px;"><i class="fas fa-bullhorn"></i> Enviar Broadcast</button>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>🔄 Gerenciar Contas</h3>
-                            <button class="admin-btn" onclick="adminCreateAccount()" style="width: 100%; margin-bottom: 10px;"><i class="fas fa-user-plus"></i> Criar Nova Conta</button>
-                            <button class="admin-btn danger" onclick="adminDeleteAccount()" style="width: 100%;"><i class="fas fa-user-times"></i> Deletar Conta</button>
-                        </div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
+                    <button class="chat-send" id="sendMessage">ENVIAR</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Social Feed Section -->
+        <div class="content-section" id="feed-section" style="display: none;">
+            <h2 style="margin-bottom: 20px; font-size: 28px;">📱 Feed Social</h2>
+            
+            <div class="feed-post" style="margin-bottom: 30px;">
+                <h3 style="color: var(--gold); margin-bottom: 15px;">Criar Publicação</h3>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 10px;">Escolha o que ostentar:</label>
+                    <div style="display: flex; gap: 20px; margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="postType" value="items" checked onchange="togglePostType('items')"> Itens
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="postType" value="money" onchange="togglePostType('money')"> Dinheiro
+                        </label>
                     </div>
+                </div>
+                
+                <div id="itemsSelection" style="margin-bottom: 20px;">
+                    <p>Selecione até 5 itens para mostrar (clique nos itens):</p>
+                    <div class="items-grid" id="postItemsGrid" style="max-height: 300px;"></div>
+                    <div id="selectedItemsCount" style="margin-top: 10px; color: var(--gold);">0/5 itens selecionados</div>
+                </div>
+                
+                <div id="moneySelection" style="margin-bottom: 20px; display: none;">
+                    <label>Quanto dinheiro quer ostentar? (MT):</label>
+                    <input type="number" class="form-control" id="postMoneyAmount" value="100000" min="1000" max="10000000" step="1000">
+                </div>
+                
+                <div class="form-group">
+                    <label>Legenda:</label>
+                    <textarea class="form-control" id="postCaption" rows="2" placeholder="Escreva uma legenda..."></textarea>
+                </div>
+                
+                <button class="control-btn" onclick="createFeedPost()" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> PUBLICAR
+                </button>
+            </div>
+            
+            <div class="feed-section" id="socialFeed"></div>
+        </div>
+        
+        <!-- Redeem Section -->
+        <div class="content-section" id="redeem-section" style="display: none;">
+            <div class="redeem-section">
+                <h2 style="margin-bottom: 15px; font-size: 28px;">🔑 Códigos Secretos</h2>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Digite códigos especiais para desbloquear itens exclusivos e vantagens VIP.</p>
+                
+                <div class="redeem-form">
+                    <input type="text" class="redeem-input" id="redeemCode" placeholder="Digite seu código secreto">
+                    <button class="redeem-btn" id="submitRedeem"><i class="fas fa-key"></i> RESGATAR</button>
+                </div>
+                
+                <div style="margin-top: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border-left: 4px solid var(--gold);">
+                    <h3 style="margin-bottom: 10px; color: var(--gold);"><i class="fas fa-lock"></i> Códigos Secretos VIP:</h3>
+                    <p>Dica: Tente TAHIR1, TAHIR12, VIP2024, DIAMANTE, VETERANO, BLACK</p>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- Bottom Navigation -->
-    <div class="bottom-nav" id="bottomNav" style="display: none;">
+    <div class="bottom-nav">
         <div class="nav-icon active" data-tab="avatar"><i class="fas fa-user-circle"></i><span>Avatar</span></div>
         <div class="nav-icon" data-tab="shop"><i class="fas fa-shopping-cart"></i><span>Loja</span></div>
         <div class="nav-icon" data-tab="casino"><i class="fas fa-dice"></i><span>Casino</span></div>
@@ -3352,7 +2901,6 @@
         <div class="nav-icon" data-tab="friends"><i class="fas fa-users"></i><span>Amigos</span><span class="badge" id="friendBadge" style="display: none;">0</span></div>
         <div class="nav-icon" data-tab="stories"><i class="fas fa-story"></i><span>Stories</span></div>
         <div class="nav-icon" data-tab="feed"><i class="fas fa-newspaper"></i><span>Feed</span></div>
-        <div class="nav-icon admin-nav" data-tab="admin" id="adminNav" style="display: none;"><i class="fas fa-crown"></i><span>Admin</span></div>
     </div>
     
     <!-- Payment Modal -->
@@ -3442,238 +2990,29 @@
             <div id="tradingModalBody"></div>
         </div>
     </div>
-
-    <!-- Profile Modal -->
-    <div class="modal" id="profileModal">
-        <div class="modal-content profile-modal">
-            <div class="modal-header">
-                <div class="modal-title">👤 Perfil</div>
-                <button class="modal-close" onclick="closeProfileModal()">&times;</button>
-            </div>
-            <div id="profileModalBody"></div>
-        </div>
-    </div>
     
     <script>
-        // ============================================
-        // ACCOUNT SYSTEM - Login/Register
-        // ============================================
-        let currentUser = null;
-        let isLoginMode = true;
-
-        // Get all accounts from localStorage
-        function getAccounts() {
-            const data = localStorage.getItem('statusverse_accounts');
-            return data ? JSON.parse(data) : {};
-        }
-
-        // Save accounts to localStorage
-        function saveAccounts(accounts) {
-            localStorage.setItem('statusverse_accounts', JSON.stringify(accounts));
-        }
-
-        // Get account data by username
-        function getAccount(username) {
-            const accounts = getAccounts();
-            return accounts[username] || null;
-        }
-
-        // Save account data
-        function saveAccount(username, data) {
-            const accounts = getAccounts();
-            accounts[username] = data;
-            saveAccounts(accounts);
-        }
-
-        // Toggle between login and register mode
-        function toggleLoginMode() {
-            isLoginMode = !isLoginMode;
-            const loginBtn = document.getElementById('loginBtn');
-            const registerBtn = document.getElementById('registerBtn');
-            const toggleText = document.querySelector('.login-toggle span');
-            
-            if (isLoginMode) {
-                loginBtn.textContent = '🔐 Entrar';
-                registerBtn.textContent = '✨ Criar Conta';
-                toggleText.textContent = 'Criar agora';
-                document.querySelector('.login-toggle').innerHTML = 'Não tem conta? <span onclick="toggleLoginMode()">Criar agora</span>';
-                document.getElementById('loginError').textContent = '';
-                document.getElementById('loginSuccess').textContent = '';
-            } else {
-                loginBtn.textContent = '🔐 Voltar';
-                registerBtn.textContent = '✅ Registrar';
-                toggleText.textContent = 'Voltar ao login';
-                document.querySelector('.login-toggle').innerHTML = 'Já tem conta? <span onclick="toggleLoginMode()">Entrar agora</span>';
-                document.getElementById('loginError').textContent = '';
-                document.getElementById('loginSuccess').textContent = '✨ Crie sua conta gratuitamente!';
-            }
-        }
-
-        // Handle Login
-        function handleLogin() {
-            if (!isLoginMode) {
-                // Switch to login mode
-                isLoginMode = true;
-                toggleLoginMode();
-                return;
-            }
-
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-
-            if (!username || !password) {
-                document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
-                return;
-            }
-
-            const account = getAccount(username);
-            if (!account) {
-                document.getElementById('loginError').textContent = '❌ Conta não encontrada!';
-                return;
-            }
-
-            if (account.password !== password) {
-                document.getElementById('loginError').textContent = '❌ Senha incorreta!';
-                return;
-            }
-
-            // Login successful
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('loginSuccess').textContent = '✅ Login realizado com sucesso!';
-            
-            setTimeout(() => {
-                enterGame(username);
-            }, 500);
-        }
-
-        // Handle Register
-        function handleRegister() {
-            if (isLoginMode) {
-                // Switch to register mode
-                isLoginMode = false;
-                toggleLoginMode();
-                return;
-            }
-
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-
-            if (!username || !password) {
-                document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
-                return;
-            }
-
-            if (username.length < 3) {
-                document.getElementById('loginError').textContent = '❌ Nome deve ter pelo menos 3 caracteres!';
-                return;
-            }
-
-            if (password.length < 4) {
-                document.getElementById('loginError').textContent = '❌ Senha deve ter pelo menos 4 caracteres!';
-                return;
-            }
-
-            const accounts = getAccounts();
-            if (accounts[username]) {
-                document.getElementById('loginError').textContent = '❌ Este nome já está em uso!';
-                return;
-            }
-
-            // Create new account with default data
-            const newAccount = {
-                password: password,
-                name: username,
-                balance: 5000,
-                tier: "BRONZE",
-                avatarChar: "👤",
-                items: [],
-                parties: [],
-                totalSpent: 0,
-                prestigeScore: 0,
-                story: null,
-                pvpGalaxies: 0,
-                isAdmin: false,
-                infiniteMoney: false,
-                battlePass: {
-                    level: 1,
-                    xp: 0,
-                    xpToNext: 100,
-                    premium: false,
-                    claimedFree: [],
-                    claimedPremium: []
-                },
-                dailyChallenges: {
-                    buyItem: { progress: 0, target: 1, completed: false },
-                    postStory: { progress: 0, target: 1, completed: false },
-                    chatMessage: { progress: 0, target: 3, completed: false }
-                }
-            };
-
-            saveAccount(username, newAccount);
-            
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('loginSuccess').textContent = '✅ Conta criada com sucesso! Entrando...';
-            
-            setTimeout(() => {
-                enterGame(username);
-            }, 500);
-        }
-
-        // Enter the game
-        function enterGame(username) {
-            currentUser = username;
-            const account = getAccount(username);
-            
-            // Load user data into appData
-            appData.user.name = account.name;
-            appData.user.balance = account.balance;
-            appData.user.tier = account.tier;
-            appData.user.avatarChar = account.avatarChar;
-            appData.user.items = account.items || [];
-            appData.user.parties = account.parties || [];
-            appData.user.totalSpent = account.totalSpent || 0;
-            appData.user.prestigeScore = account.prestigeScore || 0;
-            appData.user.story = account.story || null;
-            appData.user.pvpGalaxies = account.pvpGalaxies || 0;
-            appData.user.isAdmin = account.isAdmin || false;
-            appData.user.infiniteMoney = account.infiniteMoney || false;
-            appData.user.battlePass = account.battlePass || {
-                level: 1, xp: 0, xpToNext: 100, premium: false, claimedFree: [], claimedPremium: []
-            };
-            appData.user.dailyChallenges = account.dailyChallenges || {
-                buyItem: { progress: 0, target: 1, completed: false },
-                postStory: { progress: 0, target: 1, completed: false },
-                chatMessage: { progress: 0, target: 3, completed: false }
-            };
-            
-            appData.pvpGalaxies = appData.user.pvpGalaxies || 0;
-            
-            // Hide login, show game
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('gameContainer').style.display = 'block';
-            document.getElementById('bottomNav').style.display = 'flex';
-            
-            // Initialize game
-            initGame();
-        }
-
         // ============================================
         // APP DATA
         // ============================================
         const appData = {
             user: {
-                name: "",
-                balance: 5000,
-                tier: "BRONZE",
-                avatarChar: "👤",
-                items: [],
+                name: "Tahir",
+                balance: 25000,
+                tier: "OURO",
+                avatarChar: "👑",
+                items: [
+                    {id: "iphone17", name: "iPhone 17 Pro", icon: "📱", rarity: "exclusive", category: "phone"},
+                    {id: "rolex", name: "Rolex Diamante", icon: "⌚", rarity: "legendary", category: "watch"},
+                    {id: "vape_nasty_blue", name: "Nasty Vape Blue", icon: "💨", rarity: "rare", category: "vape", smokeColor: "#1e90ff"},
+                    {id: "ford_raptor", name: "Ford Raptor", icon: "🚙", price: 15000, rarity: "exclusive", category: "carro"},
+                    {id: "diamond_chain", name: "Colar Diamante", icon: "💎", price: 3500, rarity: "legendary", category: "jewelry"}
+                ],
                 parties: [],
-                totalSpent: 0,
-                prestigeScore: 0,
+                totalSpent: 85500,
+                prestigeScore: 945,
                 story: null,
                 pvpGalaxies: 0,
-                isAdmin: false,
-                infiniteMoney: false,
                 battlePass: {
                     level: 1,
                     xp: 0,
@@ -3849,14 +3188,13 @@
             ],
             
             redeemCodes: {
-                "TAHIR1": {type: "add_money", amount: 200000, message: "✅ 200.000 MT adicionados!"},
-                "TAHIR12": {type: "add_money", amount: 1000000, message: "✅ 1.000.000 MT adicionados!"},
-                "VIP2024": {type: "add_money", amount: 10000, message: "✅ 10.000 MT adicionados!"},
-                "DIAMANTE": {type: "upgrade_tier", tier: "DIAMANTE", message: "✅ Tier atualizado para Diamante!"},
-                "VETERANO": {type: "upgrade_tier", tier: "VETERANO", message: "✅ Tier atualizado para Veterano!"},
-                "BLACK": {type: "upgrade_tier", tier: "BLACK", message: "✅ Tier atualizado para Black!"},
-                "PARTY2024": {type: "add_money", amount: 30000, message: "✅ 30.000 MT para festas!"},
-                "ADMIN2004": {type: "admin", message: "👑 Modo Admin ativado!"}
+                "TAHIR1": {type: "add_money", amount: 200000, message: "200.000 MT adicionados secretamente!"},
+                "TAHIR12": {type: "add_money", amount: 1000000, message: "1.000.000 MT adicionados secretamente!"},
+                "VIP2024": {type: "add_money", amount: 10000, message: "10.000 MT adicionados!"},
+                "DIAMANTE": {type: "upgrade_tier", tier: "DIAMANTE", message: "Tier atualizado para Diamante!"},
+                "VETERANO": {type: "upgrade_tier", tier: "VETERANO", message: "Tier atualizado para Veterano!"},
+                "BLACK": {type: "upgrade_tier", tier: "BLACK", message: "Tier atualizado para Black!"},
+                "PARTY2024": {type: "add_money", amount: 30000, message: "30.000 MT para festas!"}
             },
             
             chatMessages: [
@@ -3910,368 +3248,71 @@
         const tabs = document.querySelectorAll('.tab');
         const navIcons = document.querySelectorAll('.nav-icon');
         
-        // ============================================
-        // SAVE USER DATA TO ACCOUNT
-        // ============================================
-        function saveUserData() {
-            if (!currentUser) return;
-            
-            const account = getAccount(currentUser);
-            if (!account) return;
-            
-            // Update account with current appData
-            account.name = appData.user.name;
-            account.balance = appData.user.balance;
-            account.tier = appData.user.tier;
-            account.avatarChar = appData.user.avatarChar;
-            account.items = appData.user.items;
-            account.parties = appData.user.parties;
-            account.totalSpent = appData.user.totalSpent;
-            account.prestigeScore = appData.user.prestigeScore;
-            account.story = appData.user.story;
-            account.pvpGalaxies = appData.user.pvpGalaxies;
-            account.isAdmin = appData.user.isAdmin;
-            account.infiniteMoney = appData.user.infiniteMoney;
-            account.battlePass = appData.user.battlePass;
-            account.dailyChallenges = appData.user.dailyChallenges;
-            
-            saveAccount(currentUser, account);
-        }
-
-        // ============================================
-        // ADMIN SYSTEM - Ativado via código secreto
-        // ============================================
-        let adminActivated = false;
-        
-        function activateAdmin() {
-            if (adminActivated) return;
-            
-            adminActivated = true;
-            appData.user.isAdmin = true;
-            
-            // Show admin tab
-            document.getElementById('adminTab').style.display = 'block';
-            document.getElementById('adminNav').style.display = 'flex';
-            
-            // Add admin class to user info
-            document.getElementById('userInfoContainer').classList.add('admin-border');
-            document.getElementById('headerAvatar').classList.add('admin-avatar');
-            document.getElementById('balance').classList.add('admin-balance');
-            document.getElementById('userTier').classList.add('admin-tier');
-            document.getElementById('userTier').textContent = '👑 ADMIN';
-            
-            // Update admin tab
-            document.querySelectorAll('.tab.admin-tab').forEach(t => t.style.display = 'block');
-            document.querySelectorAll('.nav-icon.admin-nav').forEach(n => n.style.display = 'flex');
-            
-            // Update admin user fields
-            document.getElementById('adminUserMoney').value = appData.user.name;
-            document.getElementById('adminUserItem').value = appData.user.name;
-            document.getElementById('adminUserTier').value = appData.user.name;
-            
-            showDiscreetNotification('👑 Modo Admin ativado!');
-            saveUserData();
-        }
-        
-        // Admin functions
-        function adminAddMoney() {
-            if (!appData.user.isAdmin) return;
-            const user = document.getElementById('adminUserMoney').value.trim();
-            const amount = parseInt(document.getElementById('adminMoneyAmount').value) || 0;
-            if (amount <= 0) { alert('Digite um valor válido!'); return; }
-            
-            if (user.toLowerCase() === appData.user.name.toLowerCase()) {
-                appData.user.balance += amount;
-                updateUserInfo();
-                saveUserData();
-                showDiscreetNotification(`💰 Adicionado ${amount.toLocaleString()} MT ao saldo!`);
-            } else {
-                showDiscreetNotification(`❌ Usuário "${user}" não encontrado! (Simulação)`);
-            }
-        }
-        
-        function adminRemoveMoney() {
-            if (!appData.user.isAdmin) return;
-            const user = document.getElementById('adminUserMoney').value.trim();
-            const amount = parseInt(document.getElementById('adminMoneyAmount').value) || 0;
-            if (amount <= 0) { alert('Digite um valor válido!'); return; }
-            
-            if (user.toLowerCase() === appData.user.name.toLowerCase()) {
-                appData.user.balance = Math.max(0, appData.user.balance - amount);
-                updateUserInfo();
-                saveUserData();
-                showDiscreetNotification(`💰 Removido ${amount.toLocaleString()} MT do saldo!`);
-            } else {
-                showDiscreetNotification(`❌ Usuário "${user}" não encontrado! (Simulação)`);
-            }
-        }
-        
-        function adminSetInfiniteMoney() {
-            if (!appData.user.isAdmin) return;
-            appData.user.infiniteMoney = !appData.user.infiniteMoney;
-            if (appData.user.infiniteMoney) {
-                appData.user.balance = 999999999;
-                showDiscreetNotification('💰 Dinheiro INFINITO ativado!');
-            } else {
-                showDiscreetNotification('💰 Dinheiro INFINITO desativado!');
-            }
+        document.addEventListener('DOMContentLoaded', function() {
             updateUserInfo();
-            saveUserData();
-        }
-        
-        function adminGiveItem() {
-            if (!appData.user.isAdmin) return;
-            const user = document.getElementById('adminUserItem').value.trim();
-            const itemId = document.getElementById('adminItemId').value.trim();
-            
-            if (!itemId) { alert('Digite o ID do item!'); return; }
-            
-            const item = appData.shopItems.find(i => i.id === itemId);
-            if (!item) { alert('Item não encontrado!'); return; }
-            
-            if (user.toLowerCase() === appData.user.name.toLowerCase()) {
-                if (appData.user.items.some(i => i.id === itemId)) {
-                    showDiscreetNotification('❌ Usuário já possui este item!');
-                    return;
-                }
-                const newItem = {
-                    id: item.id,
-                    name: item.name,
-                    icon: item.icon,
-                    rarity: item.rarity,
-                    category: item.category
-                };
-                if (item.smokeColor) newItem.smokeColor = item.smokeColor;
-                appData.user.items.push(newItem);
-                loadAvatarItems();
-                updateUserInfo();
-                saveUserData();
-                showDiscreetNotification(`🎁 Item "${item.name}" adicionado!`);
-            } else {
-                showDiscreetNotification(`❌ Usuário "${user}" não encontrado! (Simulação)`);
-            }
-        }
-        
-        function adminRemoveItem() {
-            if (!appData.user.isAdmin) return;
-            const user = document.getElementById('adminUserItem').value.trim();
-            const itemId = document.getElementById('adminItemId').value.trim();
-            
-            if (!itemId) { alert('Digite o ID do item!'); return; }
-            
-            if (user.toLowerCase() === appData.user.name.toLowerCase()) {
-                const index = appData.user.items.findIndex(i => i.id === itemId);
-                if (index === -1) { showDiscreetNotification('❌ Item não encontrado!'); return; }
-                appData.user.items.splice(index, 1);
-                loadAvatarItems();
-                updateUserInfo();
-                saveUserData();
-                showDiscreetNotification(`🗑️ Item removido!`);
-            } else {
-                showDiscreetNotification(`❌ Usuário "${user}" não encontrado! (Simulação)`);
-            }
-        }
-        
-        function adminSetTier() {
-            if (!appData.user.isAdmin) return;
-            const user = document.getElementById('adminUserTier').value.trim();
-            const tier = document.getElementById('adminTierSelect').value;
-            
-            if (user.toLowerCase() === appData.user.name.toLowerCase()) {
-                appData.user.tier = tier;
-                updateUserInfo();
-                updateAvatarTierBadge();
-                updateTierEffects();
-                saveUserData();
-                showDiscreetNotification(`🏷️ Tier atualizado para ${tier}!`);
-            } else {
-                showDiscreetNotification(`❌ Usuário "${user}" não encontrado! (Simulação)`);
-            }
-        }
-        
-        function adminRefreshUsers() {
-            if (!appData.user.isAdmin) return;
-            showDiscreetNotification('🔄 Lista de usuários atualizada!');
-        }
-        
-        function adminResetAll() {
-            if (!appData.user.isAdmin) return;
-            if (confirm('⚠️ Tem certeza? Isso vai resetar TODO o progresso!')) {
-                appData.user.balance = 1000;
-                appData.user.items = [];
-                appData.user.totalSpent = 0;
-                appData.user.prestigeScore = 0;
-                appData.user.battlePass.level = 1;
-                appData.user.battlePass.xp = 0;
-                appData.user.battlePass.xpToNext = 100;
-                appData.user.battlePass.claimedFree = [];
-                appData.user.battlePass.claimedPremium = [];
-                appData.user.parties = [];
-                appData.user.story = null;
-                appData.user.pvpGalaxies = 0;
-                appData.pvpGalaxies = 0;
-                appData.user.dailyChallenges = {
-                    buyItem: { progress: 0, target: 1, completed: false },
-                    postStory: { progress: 0, target: 1, completed: false },
-                    chatMessage: { progress: 0, target: 3, completed: false }
-                };
-                updateUserInfo();
-                loadAvatarItems();
-                loadChallenges();
-                updateBattlePassUI();
-                saveUserData();
-                showDiscreetNotification('🔄 Todos os dados resetados!');
-            }
-        }
-        
-        function adminGiveAllItems() {
-            if (!appData.user.isAdmin) return;
-            if (confirm('⚠️ Dar todos os itens da loja para o usuário?')) {
-                appData.shopItems.forEach(item => {
-                    if (!appData.user.items.some(i => i.id === item.id)) {
-                        const newItem = {
-                            id: item.id,
-                            name: item.name,
-                            icon: item.icon,
-                            rarity: item.rarity,
-                            category: item.category
-                        };
-                        if (item.smokeColor) newItem.smokeColor = item.smokeColor;
-                        appData.user.items.push(newItem);
-                    }
-                });
-                loadAvatarItems();
-                updateUserInfo();
-                saveUserData();
-                showDiscreetNotification('📦 Todos os itens adicionados!');
-            }
-        }
-        
-        function adminMaxLevel() {
-            if (!appData.user.isAdmin) return;
-            appData.user.battlePass.level = 10;
-            appData.user.battlePass.xp = 0;
-            appData.user.battlePass.xpToNext = 1000;
-            appData.user.battlePass.claimedFree = appData.battlePassRewards.free.map(r => r.level);
-            appData.user.battlePass.claimedPremium = appData.battlePassRewards.premium.map(r => r.level);
+            loadAvatarItems();
+            loadShopItems();
+            loadParties();
+            loadChatMessages();
+            loadSocialFeed();
+            loadStories();
+            loadRanking();
+            loadChallenges();
+            loadPostItemsGrid();
+            loadFriends();
+            updateAvatarTierBadge();
+            updateTierEffects();
+            updateFriendBadge();
+            initRoulette();
+            initPVP();
             updateBattlePassUI();
-            saveUserData();
-            showDiscreetNotification('⭐ Nível máximo do Passe atingido! Todas as recompensas resgatadas!');
-        }
-        
-        function adminBroadcast() {
-            if (!appData.user.isAdmin) return;
-            const msg = prompt('Digite a mensagem para todos os usuários:');
-            if (msg) {
-                showDiscreetNotification(`📢 BROADCAST: ${msg}`);
-            }
-        }
-        
-        function adminCreateAccount() {
-            if (!appData.user.isAdmin) return;
-            const name = prompt('Digite o nome da nova conta:');
-            if (name) {
-                showDiscreetNotification(`✅ Conta "${name}" criada com sucesso! (Simulação)`);
-            }
-        }
-        
-        function adminDeleteAccount() {
-            if (!appData.user.isAdmin) return;
-            const name = prompt('Digite o nome da conta a ser deletada:');
-            if (name && confirm(`⚠️ Tem certeza que deseja deletar a conta "${name}"?`)) {
-                showDiscreetNotification(`🗑️ Conta "${name}" deletada! (Simulação)`);
-            }
-        }
-        
-        // ============================================
-        // PROFILE MODAL
-        // ============================================
-        function openProfileModal() {
-            const modal = document.getElementById('profileModal');
-            const body = document.getElementById('profileModalBody');
             
-            body.innerHTML = `
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div style="font-size: 80px; margin-bottom: 10px;">${appData.user.avatarChar}</div>
-                    <h2 style="color: var(--gold);">${appData.user.name}</h2>
-                    <div class="user-tier" style="display: inline-block; margin-top: 5px; background: ${getTierGradient(appData.user.tier)}; padding: 5px 20px; border-radius: 20px; font-weight: bold;">TIER ${appData.user.tier}</div>
-                    ${appData.user.isAdmin ? '<div style="color: var(--admin-color); font-weight: bold; margin-top: 5px;">👑 ADMIN</div>' : ''}
-                    ${appData.user.infiniteMoney ? '<div style="color: var(--admin-color); font-weight: bold;">💰 Dinheiro Infinito</div>' : ''}
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center;">
-                        <div style="color: var(--gold); font-size: 24px; font-weight: bold;">${appData.user.balance.toLocaleString()} MT</div>
-                        <div style="font-size: 12px; opacity: 0.7;">Saldo</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center;">
-                        <div style="color: var(--gold); font-size: 24px; font-weight: bold;">${appData.user.items.length}</div>
-                        <div style="font-size: 12px; opacity: 0.7;">Itens</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center;">
-                        <div style="color: var(--gold); font-size: 24px; font-weight: bold;">${appData.user.totalSpent.toLocaleString()} MT</div>
-                        <div style="font-size: 12px; opacity: 0.7;">Total Gasto</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center;">
-                        <div style="color: var(--gold); font-size: 24px; font-weight: bold;">${appData.user.prestigeScore}</div>
-                        <div style="font-size: 12px; opacity: 0.7;">Prestígio</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center;">
-                        <div style="color: var(--gold); font-size: 24px; font-weight: bold;">${appData.user.battlePass.level}</div>
-                        <div style="font-size: 12px; opacity: 0.7;">Nível Passe</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center;">
-                        <div style="color: var(--gold); font-size: 24px; font-weight: bold;">${appData.user.pvpGalaxies}</div>
-                        <div style="font-size: 12px; opacity: 0.7;">Galáxias</div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class="control-btn" onclick="closeProfileModal()" style="flex: 1;">Fechar</button>
-                    <button class="control-btn" onclick="logout()" style="flex: 1; background: linear-gradient(45deg, var(--danger), #cc0000);">🚪 Sair</button>
-                </div>
-            `;
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
             
-            modal.style.display = 'flex';
-        }
-        
-        function closeProfileModal() {
-            document.getElementById('profileModal').style.display = 'none';
-        }
-        
-        function logout() {
-            if (confirm('Tem certeza que deseja sair? Seus dados serão salvos.')) {
-                saveUserData();
-                
-                // Reset admin state
-                adminActivated = false;
-                appData.user.isAdmin = false;
-                appData.user.infiniteMoney = false;
-                
-                // Hide admin elements
-                document.getElementById('adminTab').style.display = 'none';
-                document.getElementById('adminNav').style.display = 'none';
-                document.getElementById('userInfoContainer').classList.remove('admin-border');
-                document.getElementById('headerAvatar').classList.remove('admin-avatar');
-                document.getElementById('balance').classList.remove('admin-balance');
-                document.getElementById('userTier').classList.remove('admin-tier');
-                
-                closeProfileModal();
-                showDiscreetNotification('👋 Até logo! Dados salvos.');
-                
-                // Show login screen again
-                setTimeout(() => {
-                    document.getElementById('gameContainer').style.display = 'none';
-                    document.getElementById('bottomNav').style.display = 'none';
-                    document.getElementById('loginScreen').style.display = 'flex';
-                    document.getElementById('loginUsername').value = '';
-                    document.getElementById('loginPassword').value = '';
-                    document.getElementById('loginError').textContent = '';
-                    document.getElementById('loginSuccess').textContent = '';
-                    currentUser = null;
-                }, 1000);
-            }
-        }
+            // Bottom nav switching
+            navIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+            
+            // Redeem code
+            document.getElementById('submitRedeem').addEventListener('click', redeemCode);
+            document.getElementById('redeemCode').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') redeemCode();
+            });
+            
+            // Chat
+            document.getElementById('sendMessage').addEventListener('click', sendChatMessage);
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+            
+            // Payment modal
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('paymentModal').style.display = 'none';
+            });
+            
+            // Friend search
+            document.getElementById('friendSearchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') addFriend();
+            });
+            
+            // Custom party location
+            document.getElementById('customPartyLocation').addEventListener('change', function() {
+                document.getElementById('otherLocationGroup').style.display = 
+                    this.value === 'Outro (especificar abaixo)' ? 'block' : 'none';
+            });
+            
+            filterItems('all');
+        });
         
         // ============================================
         // BATTLE PASS SYSTEM
@@ -4293,6 +3334,7 @@
             document.getElementById('bpProgressText').textContent = `${xp} / ${xpToNext} XP`;
             document.getElementById('bpProgressFill').style.width = `${(xp / xpToNext) * 100}%`;
             
+            // Upgrade button
             const upgradeBtn = document.getElementById('bpUpgradeBtn');
             if (bp.premium) {
                 upgradeBtn.disabled = true;
@@ -4304,6 +3346,7 @@
                 upgradeBtn.style.background = 'linear-gradient(45deg, var(--gold), #b8860b)';
             }
             
+            // Render rewards
             const grid = document.getElementById('bpRewardsGrid');
             grid.innerHTML = '';
             
@@ -4362,6 +3405,7 @@
                 return;
             }
             
+            // Apply reward
             const r = reward.reward;
             if (r.type === 'money') {
                 appData.user.balance += r.amount;
@@ -4395,7 +3439,6 @@
             
             updateUserInfo();
             updateBattlePassUI();
-            saveUserData();
         }
 
         function addBattlePassXP(amount) {
@@ -4407,10 +3450,19 @@
                 bp.level++;
                 bp.xpToNext = Math.floor(bp.xpToNext * 1.2) + 50;
                 showDiscreetNotification(`🎉 Subiu para o nível ${bp.level}!`);
+                
+                // Check if there are rewards to claim
+                const freeRewards = appData.battlePassRewards.free.filter(r => r.level === bp.level && !bp.claimedFree.includes(r.level));
+                const premiumRewards = appData.battlePassRewards.premium.filter(r => r.level === bp.level && !bp.claimedPremium.includes(r.level));
+                
+                if (freeRewards.length > 0 || premiumRewards.length > 0) {
+                    setTimeout(() => {
+                        showDiscreetNotification(`🎁 Novas recompensas disponíveis no Passe!`);
+                    }, 1000);
+                }
             }
             
             updateBattlePassUI();
-            saveUserData();
         }
 
         function upgradeBattlePass() {
@@ -4430,7 +3482,6 @@
             updateUserInfo();
             updateBattlePassUI();
             showDiscreetNotification('⭐ Premium ativado com sucesso!');
-            saveUserData();
         }
 
         // ============================================
@@ -4450,7 +3501,7 @@
             if (activeNav) activeNav.classList.add('active');
             
             if (tabName === 'chat') {
-                const canAccessChat = appData.user.tier === 'DIAMANTE' || appData.user.tier === 'VETERANO' || appData.user.tier === 'BLACK' || appData.user.isAdmin;
+                const canAccessChat = appData.user.tier === 'DIAMANTE' || appData.user.tier === 'VETERANO' || appData.user.tier === 'BLACK';
                 document.getElementById('chatAccessWarning').style.display = canAccessChat ? 'none' : 'block';
                 document.getElementById('chatInput').disabled = !canAccessChat;
                 document.getElementById('sendMessage').disabled = !canAccessChat;
@@ -4472,34 +3523,16 @@
         // USER INFO FUNCTIONS
         // ============================================
         function updateUserInfo() {
-            if (appData.user.infiniteMoney) {
-                appData.user.balance = 999999999;
-            }
-            
             document.getElementById('username').textContent = appData.user.name;
             document.getElementById('balance').textContent = `${appData.user.balance.toLocaleString()} MT`;
-            
-            if (appData.user.isAdmin) {
-                document.getElementById('userTier').textContent = '👑 ADMIN';
-                document.getElementById('userTier').style.background = 'linear-gradient(45deg, var(--admin-color), #ff0066)';
-                document.getElementById('userTier').classList.add('admin-tier');
-                document.getElementById('balance').classList.add('admin-balance');
-                document.getElementById('headerAvatar').classList.add('admin-avatar');
-                document.getElementById('userInfoContainer').classList.add('admin-border');
-            } else {
-                document.getElementById('userTier').textContent = `TIER ${appData.user.tier}`;
-                document.getElementById('userTier').style.background = getTierGradient(appData.user.tier);
-                document.getElementById('userTier').classList.remove('admin-tier');
-                document.getElementById('balance').classList.remove('admin-balance');
-                document.getElementById('headerAvatar').classList.remove('admin-avatar');
-                document.getElementById('userInfoContainer').classList.remove('admin-border');
-            }
+            document.getElementById('userTier').textContent = `TIER ${appData.user.tier}`;
+            document.getElementById('userTier').style.background = getTierGradient(appData.user.tier);
             
             const headerAvatar = document.getElementById('headerAvatar');
             if (headerAvatar) headerAvatar.innerHTML = appData.user.avatarChar;
             
             document.getElementById('avatarChar').textContent = appData.user.avatarChar;
-            document.getElementById('avatarName').textContent = `${appData.user.name} - ${appData.user.isAdmin ? '👑 ADMIN' : getTierTitle(appData.user.tier)}`;
+            document.getElementById('avatarName').textContent = `${appData.user.name} - ${getTierTitle(appData.user.tier)}`;
             document.getElementById('totalSpent').textContent = `${appData.user.totalSpent.toLocaleString()} MT`;
             document.getElementById('itemCount').textContent = appData.user.items.length;
             document.getElementById('prestigeScore').textContent = appData.user.prestigeScore;
@@ -4507,13 +3540,6 @@
             updateTierEffects();
             updateFriendBadge();
             updateBattlePassUI();
-            
-            appData.pvpGalaxies = appData.user.pvpGalaxies || 0;
-            if (document.getElementById('pvpGalaxies1')) {
-                document.getElementById('pvpGalaxies1').textContent = appData.pvpGalaxies;
-            }
-            
-            saveUserData();
         }
         
         function updateTierEffects() {
@@ -4522,8 +3548,6 @@
             
             userInfo.classList.remove('diamond-effect', 'veterano-effect', 'black-effect');
             avatarContainer.classList.remove('diamond-effect', 'veterano-effect', 'black-effect');
-            
-            if (appData.user.isAdmin) return;
             
             if (appData.user.tier === 'DIAMANTE') {
                 userInfo.classList.add('diamond-effect');
@@ -4575,15 +3599,9 @@
         
         function updateAvatarTierBadge() {
             const badge = document.getElementById('avatarTierBadge');
-            if (appData.user.isAdmin) {
-                badge.textContent = '👑 ADMIN';
-                badge.style.background = 'linear-gradient(45deg, var(--admin-color), #ff0066)';
-                badge.style.color = 'white';
-            } else {
-                badge.textContent = appData.user.tier;
-                badge.style.background = getTierGradient(appData.user.tier);
-                badge.style.color = appData.user.tier === 'BLACK' ? 'white' : 'black';
-            }
+            badge.textContent = appData.user.tier;
+            badge.style.background = getTierGradient(appData.user.tier);
+            badge.style.color = appData.user.tier === 'BLACK' ? 'white' : 'black';
         }
         
         // ============================================
@@ -4714,16 +3732,14 @@
         
         function processPayment(itemId) {
             const item = appData.shopItems.find(i => i.id === itemId);
-            if (appData.user.balance < item.price && !appData.user.infiniteMoney) {
+            if (appData.user.balance < item.price) {
                 alert('❌ Saldo insuficiente! Recarregue sua conta.');
                 document.getElementById('paymentModal').style.display = 'none';
                 return;
             }
             
             setTimeout(() => {
-                if (!appData.user.infiniteMoney) {
-                    appData.user.balance -= item.price;
-                }
+                appData.user.balance -= item.price;
                 const newItem = {
                     id: item.id,
                     name: item.name,
@@ -4737,6 +3753,7 @@
                 appData.user.totalSpent += item.price;
                 appData.user.prestigeScore += Math.floor(item.price / 100);
                 
+                // Add XP to battle pass
                 addBattlePassXP(Math.floor(item.price / 10));
                 
                 updateTier();
@@ -4749,7 +3766,6 @@
                 showDiscreetNotification(`✅ ${item.name} foi adicionado ao seu avatar!`);
                 addToSocialFeed(item);
                 updateChallengeProgress('buyItem');
-                saveUserData();
             }, 1500);
         }
         
@@ -4786,11 +3802,9 @@
         
         function organizeParty(partyId) {
             const party = appData.parties.find(p => p.id === partyId);
-            if (appData.user.balance >= party.price || appData.user.infiniteMoney) {
+            if (appData.user.balance >= party.price) {
                 setTimeout(() => {
-                    if (!appData.user.infiniteMoney) {
-                        appData.user.balance -= party.price;
-                    }
+                    appData.user.balance -= party.price;
                     appData.user.totalSpent += party.price;
                     appData.user.prestigeScore += Math.floor(party.price / 50);
                     appData.user.parties.push({ id: party.id, name: party.name, date: party.date, location: party.location });
@@ -4808,7 +3822,6 @@
                     appData.socialFeed.unshift(partyPost);
                     loadSocialFeed();
                     showDiscreetNotification(`🎉 Festa "${party.name}" organizada com sucesso!`);
-                    saveUserData();
                 }, 1500);
             } else {
                 alert('Saldo insuficiente para organizar esta festa!');
@@ -4832,7 +3845,7 @@
                 if (!otherLocation) { alert('Especifique o local da festa!'); return; }
                 location = otherLocation;
             }
-            if (appData.user.balance < price && !appData.user.infiniteMoney) { alert('Saldo insuficiente para criar esta festa!'); return; }
+            if (appData.user.balance < price) { alert('Saldo insuficiente para criar esta festa!'); return; }
             
             const partyId = 'custom_' + Date.now();
             const newParty = {
@@ -4842,9 +3855,7 @@
             };
             
             setTimeout(() => {
-                if (!appData.user.infiniteMoney) {
-                    appData.user.balance -= price;
-                }
+                appData.user.balance -= price;
                 appData.user.totalSpent += price;
                 appData.user.prestigeScore += Math.floor(price / 50);
                 appData.user.parties.push({ id: partyId, name: name, date: newParty.date, location: location });
@@ -4862,12 +3873,11 @@
                 appData.socialFeed.unshift(partyPost);
                 loadSocialFeed();
                 showDiscreetNotification(`🎉 Festa "${name}" criada com sucesso!`);
-                saveUserData();
             }, 1500);
         }
         
         // ============================================
-        // CASINO - ROULETTE
+        // CASINO - ROULETTE (FIXED)
         // ============================================
         let rouletteRotation = 0;
         
@@ -4879,7 +3889,7 @@
             const numbers = appData.rouletteNumbers;
             const numCount = numbers.length;
             const angleStep = 360 / numCount;
-            const radius = 130;
+            const radius = 130; // pixels from center
             
             numbers.forEach((num, index) => {
                 const angle = index * angleStep - 90;
@@ -4924,7 +3934,7 @@
             
             const betAmount = parseInt(document.getElementById('betAmount').value) || 100;
             if (betAmount < 10) { alert('Aposta mínima: 10 MT'); return; }
-            if (appData.user.balance < betAmount && !appData.user.infiniteMoney) { alert('Saldo insuficiente!'); return; }
+            if (betAmount > appData.user.balance) { alert('Saldo insuficiente!'); return; }
             
             appData.isSpinning = true;
             document.getElementById('spinBtn').disabled = true;
@@ -4935,6 +3945,7 @@
             resultDisplay.className = 'casino-result';
             resultDisplay.innerHTML = '<span>🎰 Girando...</span>';
             
+            // Random rotation with realistic physics
             const extraSpins = 5 + Math.random() * 5;
             const randomAngle = Math.random() * 360;
             const totalRotation = extraSpins * 360 + randomAngle;
@@ -4943,11 +3954,13 @@
             wheel.style.transition = 'transform 5s cubic-bezier(0.1, 0.9, 0.1, 1)';
             wheel.style.transform = `rotate(${rouletteRotation}deg)`;
             
+            // Calculate result - based on the stopping angle
             const numbers = appData.rouletteNumbers;
             const numCount = numbers.length;
             const angleStep = 360 / numCount;
             const normalizedAngle = randomAngle % 360;
             let index = Math.floor(normalizedAngle / angleStep) % numCount;
+            // Adjust for pointer at top
             index = (index + Math.floor(numCount / 2)) % numCount;
             const resultNumber = numbers[index];
             const isRed = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(resultNumber);
@@ -4971,9 +3984,7 @@
                 let winnings = 0;
                 if (win) {
                     winnings = betAmount * multiplier;
-                    if (!appData.user.infiniteMoney) {
-                        appData.user.balance += winnings;
-                    }
+                    appData.user.balance += winnings;
                     resultDisplay.className = 'casino-result win';
                     resultDisplay.innerHTML = `
                         <span>🎉 Número ${resultNumber} - ${isRed ? '🔴 Vermelho' : isBlack ? '⚫ Preto' : '🟢 Zero'}</span>
@@ -4981,9 +3992,7 @@
                     `;
                     addBattlePassXP(Math.floor(winnings / 10));
                 } else {
-                    if (!appData.user.infiniteMoney) {
-                        appData.user.balance -= betAmount;
-                    }
+                    appData.user.balance -= betAmount;
                     resultDisplay.className = 'casino-result lose';
                     resultDisplay.innerHTML = `
                         <span>😔 Número ${resultNumber} - ${isRed ? '🔴 Vermelho' : isBlack ? '⚫ Preto' : '🟢 Zero'}</span>
@@ -4991,6 +4000,7 @@
                     `;
                 }
                 
+                // Add to history
                 const historyEntry = {
                     number: resultNumber,
                     color: isRed ? '🔴' : isBlack ? '⚫' : '🟢',
@@ -5004,7 +4014,6 @@
                 updateCasinoHistory();
                 
                 updateUserInfo();
-                saveUserData();
                 
                 appData.isSpinning = false;
                 document.getElementById('spinBtn').disabled = false;
@@ -5080,16 +4089,16 @@
                 return;
             }
             
+            // Player attacks
             const damage = Math.floor(Math.random() * appData.pvpGalaxies) + 1;
             appData.pvpBotHealth = Math.max(0, appData.pvpBotHealth - damage);
             appData.pvpLogs.push({ text: `💥 Você causou ${damage} de dano!`, type: 'damage' });
             
+            // Check if bot is defeated
             if (appData.pvpBotHealth <= 0) {
                 appData.pvpState = 'finished';
                 const winAmount = appData.pvpBotGalaxies * 2 + 50;
-                if (!appData.user.infiniteMoney) {
-                    appData.user.balance += winAmount;
-                }
+                appData.user.balance += winAmount;
                 appData.user.prestigeScore += Math.floor(winAmount / 10);
                 appData.pvpLogs.push({ text: `🎉 VITÓRIA! Ganhou ${winAmount} MT!`, type: 'win' });
                 addBattlePassXP(Math.floor(winAmount / 5));
@@ -5099,10 +4108,10 @@
                 updateTier();
                 updatePVPUI();
                 updatePVPLog();
-                saveUserData();
                 return;
             }
             
+            // Bot attacks
             appData.pvpTurn = 'bot';
             updatePVPUI();
             
@@ -5133,14 +4142,12 @@
                 return;
             }
             
-            if (appData.user.balance < cost && !appData.user.infiniteMoney) {
+            if (appData.user.balance < cost) {
                 alert(`Saldo insuficiente! ${cost} MT necessário.`);
                 return;
             }
             
-            if (!appData.user.infiniteMoney) {
-                appData.user.balance -= cost;
-            }
+            appData.user.balance -= cost;
             appData.pvpGalaxies += 1;
             appData.user.pvpGalaxies = appData.pvpGalaxies;
             appData.user.totalSpent += cost;
@@ -5152,10 +4159,10 @@
             updateTier();
             updatePVPUI();
             showDiscreetNotification(`🌌 Galáxia comprada por ${cost} MT!`);
-            saveUserData();
         }
         
         function updatePVPUI() {
+            // Player health
             const health1 = document.getElementById('pvpHealth1');
             const healthText1 = document.getElementById('pvpHealthText1');
             health1.style.width = `${appData.pvpPlayerHealth}%`;
@@ -5164,6 +4171,7 @@
                 'linear-gradient(90deg, var(--danger), #ff4444)';
             healthText1.textContent = `${Math.round(appData.pvpPlayerHealth)}/100`;
             
+            // Bot health
             const health2 = document.getElementById('pvpHealth2');
             const healthText2 = document.getElementById('pvpHealthText2');
             health2.style.width = `${appData.pvpBotHealth}%`;
@@ -5172,15 +4180,18 @@
                 'linear-gradient(90deg, var(--danger), #ff4444)';
             healthText2.textContent = `${Math.round(appData.pvpBotHealth)}/100`;
             
+            // Galaxies
             document.getElementById('pvpGalaxies1').textContent = appData.pvpGalaxies;
             document.getElementById('pvpGalaxies2').textContent = appData.pvpBotGalaxies;
             
+            // Player info
             document.getElementById('pvpAvatar1').textContent = appData.user.avatarChar;
             document.getElementById('pvpName1').textContent = appData.user.name;
-            document.getElementById('pvpTier1').textContent = appData.user.isAdmin ? 'ADMIN' : appData.user.tier;
-            document.getElementById('pvpTier1').style.background = appData.user.isAdmin ? 'var(--admin-color)' : getTierColor(appData.user.tier);
-            document.getElementById('pvpTier1').style.color = appData.user.isAdmin ? 'white' : (appData.user.tier === 'BLACK' ? 'white' : 'black');
+            document.getElementById('pvpTier1').textContent = appData.user.tier;
+            document.getElementById('pvpTier1').style.background = getTierColor(appData.user.tier);
+            document.getElementById('pvpTier1').style.color = appData.user.tier === 'BLACK' ? 'white' : 'black';
             
+            // Active player highlight
             document.getElementById('player1').classList.toggle('active', appData.pvpTurn === 'player' && appData.pvpState === 'fighting');
             document.getElementById('player2').classList.toggle('active', appData.pvpTurn === 'bot' && appData.pvpState === 'fighting');
         }
@@ -5217,6 +4228,7 @@
             if (tab === 'online') friendsToShow = appData.friends.list.filter(f => f.status === 'online');
             else if (tab === 'all') friendsToShow = appData.friends.list;
             else if (tab === 'requests') {
+                // Friend requests
                 appData.friends.requests.forEach(req => {
                     const card = document.createElement('div');
                     card.className = 'friend-card';
@@ -5234,6 +4246,7 @@
                     container.appendChild(card);
                 });
                 
+                // Trade requests
                 appData.friends.pendingTradeRequests.forEach(trade => {
                     const card = document.createElement('div');
                     card.className = 'friend-card';
@@ -5319,7 +4332,6 @@
             loadFriends();
             updateFriendBadge();
             showDiscreetNotification(`✅ ${name} adicionado como amigo!`);
-            saveUserData();
         }
         
         function removeFriend(id) {
@@ -5328,7 +4340,6 @@
                 loadFriends();
                 updateFriendBadge();
                 showDiscreetNotification('Amigo removido');
-                saveUserData();
             }
         }
         
@@ -5340,7 +4351,6 @@
                 loadFriends();
                 updateFriendBadge();
                 showDiscreetNotification(`✅ ${req.name} agora é seu amigo!`);
-                saveUserData();
             }
         }
         
@@ -5348,20 +4358,17 @@
             appData.friends.requests = appData.friends.requests.filter(r => r.id !== id);
             loadFriends();
             updateFriendBadge();
-            saveUserData();
         }
         
         function acceptTradeRequest(from) {
             appData.friends.pendingTradeRequests = appData.friends.pendingTradeRequests.filter(t => t.from !== from);
             loadFriends();
             showDiscreetNotification(`✅ Trade com ${from} aceito!`);
-            saveUserData();
         }
         
         function declineTradeRequest(from) {
             appData.friends.pendingTradeRequests = appData.friends.pendingTradeRequests.filter(t => t.from !== from);
             loadFriends();
-            saveUserData();
         }
         
         function updateFriendBadge() {
@@ -5493,9 +4500,7 @@
                 selectedTradeItems.forEach(id => {
                     appData.user.items = appData.user.items.filter(i => i.id !== id);
                 });
-                if (tradeMoneyAmount > 0 && !appData.user.infiniteMoney) {
-                    appData.user.balance -= tradeMoneyAmount;
-                }
+                if (tradeMoneyAmount > 0) appData.user.balance -= tradeMoneyAmount;
                 updateUserInfo();
                 loadAvatarItems();
                 closeTradingModal();
@@ -5504,7 +4509,6 @@
                     from: appData.user.name, offer: offerDesc, asking: 'Aguardando resposta', status: 'pending'
                 });
                 updateFriendBadge();
-                saveUserData();
             }, 1000);
         }
         
@@ -5516,7 +4520,6 @@
         // SHARED FUNCTIONS
         // ============================================
         function updateTier() {
-            if (appData.user.isAdmin) return;
             const spent = appData.user.totalSpent;
             let newTier = 'BRONZE';
             if (spent >= 1000000) newTier = 'BLACK';
@@ -5527,7 +4530,6 @@
             if (newTier !== appData.user.tier) {
                 appData.user.tier = newTier;
                 showDiscreetNotification(`🎉 Tier atualizado para ${newTier}!`);
-                saveUserData();
             }
         }
         
@@ -5539,7 +4541,6 @@
             };
             appData.socialFeed.unshift(newPost);
             loadSocialFeed();
-            saveUserData();
         }
         
         function showAllItems() {
@@ -5625,7 +4626,6 @@
             showDiscreetNotification('✅ Avatar atualizado com sucesso!');
             loadSocialFeed();
             updateUserInfo();
-            saveUserData();
         }
         
         function closeAvatarModal() { document.getElementById('avatarModal').style.display = 'none'; }
@@ -5640,25 +4640,15 @@
             loadSocialFeed();
             showDiscreetNotification('✅ Avatar compartilhado no feed social!');
             addBattlePassXP(10);
-            saveUserData();
         }
         
         // ============================================
-        // REDEEM CODE - COM ADMIN HIDDEN
+        // REDEEM CODE
         // ============================================
         function redeemCode() {
             const codeInput = document.getElementById('redeemCode');
             const code = codeInput.value.trim().toUpperCase();
             if (!code) { alert('Digite um código para resgatar!'); return; }
-            
-            if (code === 'ADMIN2004') {
-                activateAdmin();
-                codeInput.value = '';
-                showDiscreetNotification('👑 Modo Admin ativado!');
-                saveUserData();
-                return;
-            }
-            
             const redeemInfo = appData.redeemCodes[code];
             if (redeemInfo) {
                 if (code === 'TAHIR1') appData.user.balance += 200000;
@@ -5672,9 +4662,8 @@
                 codeInput.value = '';
                 updateUserInfo();
                 updateAvatarTierBadge();
-                showDiscreetNotification(`✅ ${redeemInfo.message}`);
+                showDiscreetNotification(`✅ Código resgatado com sucesso!`);
                 addBattlePassXP(50);
-                saveUserData();
             } else {
                 alert('❌ Código inválido ou expirado!');
             }
@@ -5733,13 +4722,13 @@
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
             if (!message) return;
-            const canAccessChat = appData.user.tier === 'DIAMANTE' || appData.user.tier === 'VETERANO' || appData.user.tier === 'BLACK' || appData.user.isAdmin;
+            const canAccessChat = appData.user.tier === 'DIAMANTE' || appData.user.tier === 'VETERANO' || appData.user.tier === 'BLACK';
             if (!canAccessChat) {
                 alert('Apenas membros Diamante, Veterano e Black podem enviar mensagens no chat VIP!');
                 return;
             }
             const newMessage = {
-                user: appData.user.name, tier: appData.user.isAdmin ? 'ADMIN' : appData.user.tier,
+                user: appData.user.name, tier: appData.user.tier,
                 message: message, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             };
             appData.chatMessages.push(newMessage);
@@ -5747,7 +4736,6 @@
             input.value = '';
             updateChallengeProgress('chatMessage');
             addBattlePassXP(2);
-            saveUserData();
         }
         
         // ============================================
@@ -5794,14 +4782,12 @@
             else { post.likes++; post.liked = true; }
             loadSocialFeed();
             addBattlePassXP(1);
-            saveUserData();
         }
         
         function sharePost(index) {
             const post = appData.socialFeed[index];
             showDiscreetNotification(`📢 Post de ${post.user} compartilhado!`);
             addBattlePassXP(2);
-            saveUserData();
         }
         
         function togglePostType(type) {
@@ -5872,7 +4858,6 @@
             loadPostItemsGrid();
             showDiscreetNotification('✅ Post publicado com sucesso!');
             addBattlePassXP(5);
-            saveUserData();
         }
         
         // ============================================
@@ -5945,7 +4930,6 @@
             showDiscreetNotification('📸 Story publicado com sucesso!');
             updateChallengeProgress('postStory');
             addBattlePassXP(10);
-            saveUserData();
         }
         
         function closeStoryCreation() { document.getElementById('storyCreationModal').style.display = 'none'; }
@@ -6096,13 +5080,10 @@
                 if (challengeKey === 'buyItem') reward = 100;
                 else if (challengeKey === 'postStory') reward = 50;
                 else if (challengeKey === 'chatMessage') reward = 150;
-                if (!appData.user.infiniteMoney) {
-                    appData.user.balance += reward;
-                }
+                appData.user.balance += reward;
                 updateUserInfo();
                 showDiscreetNotification(`🎉 Desafio completo! Ganhou ${reward} MT!`);
                 addBattlePassXP(reward / 2);
-                saveUserData();
             }
             loadChallenges();
         }
@@ -6140,87 +5121,409 @@
             };
             return icons[itemId] || 'star';
         }
-        
-        // ============================================
-        // INIT GAME
-        // ============================================
-        function initGame() {
-            // Set pvpGalaxies from user data
-            appData.pvpGalaxies = appData.user.pvpGalaxies || 0;
+        //pus aqui em baixo do fechamento de todasas chavetas
+       // ============================================
+// SISTEMA DE SALVAMENTO DE DADOS
+// ============================================
+
+// SALVAR TODOS OS DADOS DO JOGADOR
+function salvarDadosCompletos() {
+    var dados = {
+        nome: appData.user.name,
+        moedas: appData.user.balance,
+        tier: appData.user.tier,
+        avatarChar: appData.user.avatarChar,
+        itens: appData.user.items.map(i => i.id),
+        totalSpent: appData.user.totalSpent,
+        prestigeScore: appData.user.prestigeScore,
+        pvpGalaxies: appData.user.pvpGalaxies || 0,
+        battlePass: {
+            level: appData.user.battlePass.level,
+            xp: appData.user.battlePass.xp,
+            xpToNext: appData.user.battlePass.xpToNext,
+            premium: appData.user.battlePass.premium,
+            claimedFree: appData.user.battlePass.claimedFree,
+            claimedPremium: appData.user.battlePass.claimedPremium
+        },
+        story: appData.user.story,
+        parties: appData.user.parties,
+        dailyChallenges: appData.user.dailyChallenges,
+        ultimoLogin: new Date().toLocaleString()
+    };
+    
+    // Salva no LocalStorage do navegador
+    localStorage.setItem('statusVerseDados', JSON.stringify(dados));
+    
+    // Tenta enviar para Google Sheets (se estiver configurado)
+    enviarParaGoogleSheets(dados);
+}
+
+// CARREGAR DADOS SALVOS
+function carregarDadosSalvos() {
+    var dadosSalvos = localStorage.getItem('statusVerseDados');
+    if (dadosSalvos) {
+        try {
+            var dados = JSON.parse(dadosSalvos);
             
-            // Initialize UI
+            // Restaura dados do usuário
+            appData.user.name = dados.nome || appData.user.name;
+            appData.user.balance = dados.moedas || appData.user.balance;
+            appData.user.tier = dados.tier || appData.user.tier;
+            appData.user.avatarChar = dados.avatarChar || appData.user.avatarChar;
+            appData.user.totalSpent = dados.totalSpent || appData.user.totalSpent;
+            appData.user.prestigeScore = dados.prestigeScore || appData.user.prestigeScore;
+            appData.user.pvpGalaxies = dados.pvpGalaxies || 0;
+            appData.user.story = dados.story || null;
+            appData.user.parties = dados.parties || [];
+            
+            // Restaura itens (procura na lista da loja)
+            if (dados.itens && Array.isArray(dados.itens)) {
+                appData.user.items = [];
+                dados.itens.forEach(itemId => {
+                    var itemDaLoja = appData.shopItems.find(i => i.id === itemId);
+                    if (itemDaLoja) {
+                        appData.user.items.push({
+                            id: itemDaLoja.id,
+                            name: itemDaLoja.name,
+                            icon: itemDaLoja.icon,
+                            rarity: itemDaLoja.rarity,
+                            category: itemDaLoja.category
+                        });
+                    }
+                });
+            }
+            
+            // Restaura Battle Pass
+            if (dados.battlePass) {
+                appData.user.battlePass.level = dados.battlePass.level || 1;
+                appData.user.battlePass.xp = dados.battlePass.xp || 0;
+                appData.user.battlePass.xpToNext = dados.battlePass.xpToNext || 100;
+                appData.user.battlePass.premium = dados.battlePass.premium || false;
+                appData.user.battlePass.claimedFree = dados.battlePass.claimedFree || [];
+                appData.user.battlePass.claimedPremium = dados.battlePass.claimedPremium || [];
+            }
+            
+            // Restaura desafios diários
+            if (dados.dailyChallenges) {
+                appData.user.dailyChallenges = dados.dailyChallenges;
+            }
+            
+            // Atualiza a interface
             updateUserInfo();
             loadAvatarItems();
-            loadShopItems();
-            loadParties();
-            loadChatMessages();
-            loadSocialFeed();
-            loadStories();
-            loadRanking();
-            loadChallenges();
-            loadPostItemsGrid();
-            loadFriends();
             updateAvatarTierBadge();
             updateTierEffects();
-            updateFriendBadge();
-            initRoulette();
-            initPVP();
             updateBattlePassUI();
+            loadChallenges();
             
-            // Tab switching
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabName = this.getAttribute('data-tab');
-                    switchTab(tabName);
-                });
-            });
-            
-            // Bottom nav switching
-            navIcons.forEach(icon => {
-                icon.addEventListener('click', function() {
-                    const tabName = this.getAttribute('data-tab');
-                    switchTab(tabName);
-                });
-            });
-            
-            // Redeem code
-            document.getElementById('submitRedeem').addEventListener('click', redeemCode);
-            document.getElementById('redeemCode').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') redeemCode();
-            });
-            
-            // Chat
-            document.getElementById('sendMessage').addEventListener('click', sendChatMessage);
-            document.getElementById('chatInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') sendChatMessage();
-            });
-            
-            // Payment modal
-            document.getElementById('closeModal').addEventListener('click', function() {
-                document.getElementById('paymentModal').style.display = 'none';
-            });
-            
-            // Friend search
-            document.getElementById('friendSearchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') addFriend();
-            });
-            
-            // Custom party location
-            document.getElementById('customPartyLocation').addEventListener('change', function() {
-                document.getElementById('otherLocationGroup').style.display = 
-                    this.value === 'Outro (especificar abaixo)' ? 'block' : 'none';
-            });
-            
-            filterItems('all');
-            
-            // Auto-save every 30 seconds
-            setInterval(saveUserData, 30000);
-            
-            console.log('🎮 StatusVerse carregado!');
-            console.log('👤 Usuário:', appData.user.name);
-            console.log('👑 Modo Admin: digite "ADMIN2004" na aba de códigos');
-            console.log('💾 Dados salvos automaticamente!');
+            return true;
+        } catch (e) {
+            console.log('Erro ao carregar dados:', e);
+            return false;
         }
+    }
+    return false;
+}
+
+// ENVIAR PARA GOOGLE SHEETS (quando estiver configurado)
+function enviarParaGoogleSheets(dados) {
+    // 🔴 SUBSTITUA SEU_ID_AQUI pelo URL que você copiou do Google Sheets
+    var url = "https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+    
+    // Verifica se o URL foi configurado
+    if (url.includes('SEU_ID_AQUI')) {
+        console.log('Google Sheets não configurado ainda. Dados salvos apenas localmente.');
+        return;
+    }
+    
+    var dadosEnvio = {
+        nome: dados.nome || appData.user.name,
+        moedas: dados.moedas || appData.user.balance,
+        itens: dados.itens ? dados.itens.join(', ') : 'Nenhum',
+        data: new Date().toLocaleString(),
+        ultimoLogin: dados.ultimoLogin || new Date().toLocaleString(),
+        tier: dados.tier || appData.user.tier,
+        totalGasto: dados.totalSpent || appData.user.totalSpent,
+        prestigio: dados.prestigeScore || appData.user.prestigeScore,
+        battlePassLevel: dados.battlePass ? dados.battlePass.level : 1,
+        battlePassPremium: dados.battlePass ? dados.battlePass.premium : false
+    };
+    
+    fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dadosEnvio)
+    }).catch(function(err) {
+        console.log('Erro ao enviar para Google Sheets:', err);
+    });
+}
+
+// SALVAR AUTOMATICAMENTE QUANDO O JOGADOR FIZER ALGO
+function salvarAutomaticamente() {
+    salvarDadosCompletos();
+}
+
+// ============================================
+// INICIALIZAÇÃO - CARREGAR DADOS AO ABRIR O JOGO
+// ============================================
+
+// Quando a página carregar, tenta carregar os dados salvos
+document.addEventListener('DOMContentLoaded', function() {
+    // Tenta carregar dados salvos
+    var dadosCarregados = carregarDadosSalvos();
+    
+    if (dadosCarregados) {
+        console.log('✅ Dados carregados com sucesso!');
+    } else {
+        console.log('🆕 Novo jogo iniciado!');
+    }
+    
+    // Salva automaticamente a cada 30 segundos
+    setInterval(function() {
+        salvarAutomaticamente();
+    }, 30000);
+    
+    // Salva quando a página for fechada
+    window.addEventListener('beforeunload', function() {
+        salvarAutomaticamente();
+    });
+});
+
+// ============================================
+// MODIFICAR FUNÇÕES EXISTENTES PARA SALVAR AUTOMATICAMENTE
+// ============================================
+
+// Sobrescrever funções principais para salvar automaticamente
+
+// Função de compra original modificada
+var buyItemOriginal = buyItem;
+buyItem = function(itemId) {
+    buyItemOriginal(itemId);
+    // Salva após comprar
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função do casino modificada
+var spinRouletteOriginal = spinRoulette;
+spinRoulette = function() {
+    spinRouletteOriginal();
+    // Salva após girar (com delay para esperar o resultado)
+    setTimeout(salvarAutomaticamente, 6000);
+};
+
+// Função PVP modificada
+var pvpAttackOriginal = pvpAttack;
+pvpAttack = function() {
+    pvpAttackOriginal();
+    setTimeout(salvarAutomaticamente, 1000);
+};
+
+// Função de comprar galáxia modificada
+var buyGalaxyOriginal = buyGalaxy;
+buyGalaxy = function(cost) {
+    buyGalaxyOriginal(cost);
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de criar story modificada
+var createStoryOriginal = createStory;
+createStory = function() {
+    createStoryOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de criar post no feed modificada
+var createFeedPostOriginal = createFeedPost;
+createFeedPost = function() {
+    createFeedPostOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de organizar festa modificada
+var organizePartyOriginal = organizeParty;
+organizeParty = function(partyId) {
+    organizePartyOriginal(partyId);
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de criar festa personalizada modificada
+var createCustomPartyOriginal = createCustomParty;
+createCustomParty = function() {
+    createCustomPartyOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de resgatar código modificada
+var redeemCodeOriginal = redeemCode;
+redeemCode = function() {
+    redeemCodeOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de resgatar recompensa do Battle Pass modificada
+var claimRewardOriginal = claimReward;
+claimReward = function(level, tab) {
+    claimRewardOriginal(level, tab);
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+// Função de upgrade do Battle Pass modificada
+var upgradeBattlePassOriginal = upgradeBattlePass;
+upgradeBattlePass = function() {
+    upgradeBattlePassOriginal();
+    setTimeout(salvarAutomaticamente, 500);
+};
+
+console.log('✅ Sistema de salvamento ativado!');
+console.log('📊 Dados salvos automaticamente a cada 30 segundos');
+console.log('🔗 Para conectar ao Google Sheets, configure o URL no enviarParaGoogleSheets()');
+
+// ============================================
+// SISTEMA DE LOGIN E CADASTRO
+// ============================================
+
+// Mostrar formulário de login
+function mostrarLogin() {
+    document.getElementById('formLogin').style.display = 'block';
+    document.getElementById('formCadastro').style.display = 'none';
+    document.getElementById('btnLoginTab').style.background = 'linear-gradient(45deg, var(--primary), var(--secondary))';
+    document.getElementById('btnCadastroTab').style.background = 'rgba(255,255,255,0.1)';
+    document.getElementById('loginMensagem').textContent = '';
+}
+
+// Mostrar formulário de cadastro
+function mostrarCadastro() {
+    document.getElementById('formLogin').style.display = 'none';
+    document.getElementById('formCadastro').style.display = 'block';
+    document.getElementById('btnCadastroTab').style.background = 'linear-gradient(45deg, var(--primary), var(--secondary))';
+    document.getElementById('btnLoginTab').style.background = 'rgba(255,255,255,0.1)';
+    document.getElementById('loginMensagem').textContent = '';
+}
+
+// Criar conta
+function criarConta() {
+    var nome = document.getElementById('cadastroNome').value.trim();
+    var senha = document.getElementById('cadastroSenha').value;
+    var confirmar = document.getElementById('cadastroConfirmar').value;
+    
+    if (!nome || !senha || !confirmar) {
+        document.getElementById('loginMensagem').textContent = '❌ Preencha todos os campos!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (senha.length < 4) {
+        document.getElementById('loginMensagem').textContent = '❌ A senha deve ter no mínimo 4 caracteres!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (senha !== confirmar) {
+        document.getElementById('loginMensagem').textContent = '❌ As senhas não coincidem!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    // Verifica se o nome já existe
+    var contas = JSON.parse(localStorage.getItem('statusVerseContas')) || {};
+    if (contas[nome]) {
+        document.getElementById('loginMensagem').textContent = '❌ Este nome já está em uso!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    // Salva a nova conta
+    contas[nome] = { senha: senha, criadoEm: new Date().toLocaleString() };
+    localStorage.setItem('statusVerseContas', JSON.stringify(contas));
+    
+    document.getElementById('loginMensagem').textContent = '✅ Conta criada com sucesso! Faça login.';
+    document.getElementById('loginMensagem').style.color = 'var(--success)';
+    
+    // Limpa campos
+    document.getElementById('cadastroNome').value = '';
+    document.getElementById('cadastroSenha').value = '';
+    document.getElementById('cadastroConfirmar').value = '';
+    
+    // Muda para login
+    setTimeout(mostrarLogin, 1000);
+}
+
+// Fazer login
+function fazerLogin() {
+    var nome = document.getElementById('loginNome').value.trim();
+    var senha = document.getElementById('loginSenha').value;
+    
+    if (!nome || !senha) {
+        document.getElementById('loginMensagem').textContent = '❌ Preencha todos os campos!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    var contas = JSON.parse(localStorage.getItem('statusVerseContas')) || {};
+    
+    if (!contas[nome]) {
+        document.getElementById('loginMensagem').textContent = '❌ Usuário não encontrado! Crie uma conta.';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (contas[nome].senha !== senha) {
+        document.getElementById('loginMensagem').textContent = '❌ Senha incorreta!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    // Login bem-sucedido
+    document.getElementById('loginMensagem').textContent = '✅ Entrando...';
+    document.getElementById('loginMensagem').style.color = 'var(--success)';
+    
+    // Salva quem está logado
+    localStorage.setItem('statusVerseLogado', JSON.stringify({
+        nome: nome,
+        loginEm: new Date().toLocaleString()
+    }));
+    
+    // Define o nome do usuário no jogo
+    appData.user.name = nome;
+    
+    // Esconde a tela de login
+    setTimeout(function() {
+        document.getElementById('telaLogin').style.display = 'none';
+        updateUserInfo();
+        // Tentar carregar dados salvos do usuário
+        carregarDadosSalvos();
+    }, 1000);
+}
+
+// Verificar se já está logado ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    var logado = localStorage.getItem('statusVerseLogado');
+    if (logado) {
+        try {
+            var dados = JSON.parse(logado);
+            appData.user.name = dados.nome;
+            document.getElementById('telaLogin').style.display = 'none';
+            updateUserInfo();
+            carregarDadosSalvos();
+        } catch(e) {
+            document.getElementById('telaLogin').style.display = 'flex';
+        }
+    } else {
+        document.getElementById('telaLogin').style.display = 'flex';
+    }
+});
+
+// Ver contas criadas (admin - clicar 3x no título)
+document.querySelector('.logo')?.addEventListener('click', function() {
+    var contas = localStorage.getItem('statusVerseContas');
+    if (contas) {
+        var lista = Object.keys(JSON.parse(contas));
+        alert('📊 Jogadores cadastrados: ' + lista.length + '\n\n' + lista.join('\n'));
+    }
+});
+
+        
     </script>
 </body>
 </html>
