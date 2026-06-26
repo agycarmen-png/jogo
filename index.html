@@ -2405,6 +2405,60 @@
     </style>
 </head>
 <body>
+    <!-- TELA DE LOGIN/CADASTRO -->
+<div id="telaLogin" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); z-index: 99999; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px;">
+    <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; max-width: 400px; width: 100%; border: 2px solid var(--gold);">
+        <h1 style="text-align: center; font-size: 32px; margin-bottom: 10px;">
+            <span style="background: linear-gradient(45deg, #6a11cb, #2575fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">StatusVerse</span>
+        </h1>
+        <p style="text-align: center; opacity: 0.7; margin-bottom: 30px;">Prestígio Digital</p>
+        
+        <!-- Abas: Login / Cadastro -->
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <button id="btnLoginTab" onclick="mostrarLogin()" style="flex: 1; padding: 12px; background: linear-gradient(45deg, var(--primary), var(--secondary)); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;">Entrar</button>
+            <button id="btnCadastroTab" onclick="mostrarCadastro()" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;">Criar Conta</button>
+        </div>
+        
+        <!-- Formulário de Login -->
+        <div id="formLogin">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">👤 Nome de usuário</label>
+                <input type="text" id="loginNome" placeholder="Digite seu nome" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">🔒 Senha</label>
+                <input type="password" id="loginSenha" placeholder="Digite sua senha" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <button onclick="fazerLogin()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--gold), #b8860b); border: none; border-radius: 10px; color: black; font-weight: bold; font-size: 18px; cursor: pointer;">🚀 Entrar</button>
+        </div>
+        
+        <!-- Formulário de Cadastro -->
+        <div id="formCadastro" style="display: none;">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">👤 Nome de usuário</label>
+                <input type="text" id="cadastroNome" placeholder="Escolha um nome" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">🔒 Senha</label>
+                <input type="password" id="cadastroSenha" placeholder="Crie uma senha" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: var(--gold);">🔒 Confirmar senha</label>
+                <input type="password" id="cadastroConfirmar" placeholder="Confirme sua senha" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--primary); background: rgba(0,0,0,0.3); color: white; font-size: 16px;">
+            </div>
+            <button onclick="criarConta()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--gold), #b8860b); border: none; border-radius: 10px; color: black; font-weight: bold; font-size: 18px; cursor: pointer;">✨ Criar Conta</button>
+        </div>
+        
+        <p id="loginMensagem" style="text-align: center; margin-top: 15px; color: var(--danger); font-size: 14px;"></p>
+    </div>
+</div>
+    
+
+
+
+
+
+    
     <div class="container">
         <!-- Header -->
         <header>
@@ -5324,6 +5378,150 @@ upgradeBattlePass = function() {
 console.log('✅ Sistema de salvamento ativado!');
 console.log('📊 Dados salvos automaticamente a cada 30 segundos');
 console.log('🔗 Para conectar ao Google Sheets, configure o URL no enviarParaGoogleSheets()');
+
+// ============================================
+// SISTEMA DE LOGIN E CADASTRO
+// ============================================
+
+// Mostrar formulário de login
+function mostrarLogin() {
+    document.getElementById('formLogin').style.display = 'block';
+    document.getElementById('formCadastro').style.display = 'none';
+    document.getElementById('btnLoginTab').style.background = 'linear-gradient(45deg, var(--primary), var(--secondary))';
+    document.getElementById('btnCadastroTab').style.background = 'rgba(255,255,255,0.1)';
+    document.getElementById('loginMensagem').textContent = '';
+}
+
+// Mostrar formulário de cadastro
+function mostrarCadastro() {
+    document.getElementById('formLogin').style.display = 'none';
+    document.getElementById('formCadastro').style.display = 'block';
+    document.getElementById('btnCadastroTab').style.background = 'linear-gradient(45deg, var(--primary), var(--secondary))';
+    document.getElementById('btnLoginTab').style.background = 'rgba(255,255,255,0.1)';
+    document.getElementById('loginMensagem').textContent = '';
+}
+
+// Criar conta
+function criarConta() {
+    var nome = document.getElementById('cadastroNome').value.trim();
+    var senha = document.getElementById('cadastroSenha').value;
+    var confirmar = document.getElementById('cadastroConfirmar').value;
+    
+    if (!nome || !senha || !confirmar) {
+        document.getElementById('loginMensagem').textContent = '❌ Preencha todos os campos!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (senha.length < 4) {
+        document.getElementById('loginMensagem').textContent = '❌ A senha deve ter no mínimo 4 caracteres!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (senha !== confirmar) {
+        document.getElementById('loginMensagem').textContent = '❌ As senhas não coincidem!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    // Verifica se o nome já existe
+    var contas = JSON.parse(localStorage.getItem('statusVerseContas')) || {};
+    if (contas[nome]) {
+        document.getElementById('loginMensagem').textContent = '❌ Este nome já está em uso!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    // Salva a nova conta
+    contas[nome] = { senha: senha, criadoEm: new Date().toLocaleString() };
+    localStorage.setItem('statusVerseContas', JSON.stringify(contas));
+    
+    document.getElementById('loginMensagem').textContent = '✅ Conta criada com sucesso! Faça login.';
+    document.getElementById('loginMensagem').style.color = 'var(--success)';
+    
+    // Limpa campos
+    document.getElementById('cadastroNome').value = '';
+    document.getElementById('cadastroSenha').value = '';
+    document.getElementById('cadastroConfirmar').value = '';
+    
+    // Muda para login
+    setTimeout(mostrarLogin, 1000);
+}
+
+// Fazer login
+function fazerLogin() {
+    var nome = document.getElementById('loginNome').value.trim();
+    var senha = document.getElementById('loginSenha').value;
+    
+    if (!nome || !senha) {
+        document.getElementById('loginMensagem').textContent = '❌ Preencha todos os campos!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    var contas = JSON.parse(localStorage.getItem('statusVerseContas')) || {};
+    
+    if (!contas[nome]) {
+        document.getElementById('loginMensagem').textContent = '❌ Usuário não encontrado! Crie uma conta.';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (contas[nome].senha !== senha) {
+        document.getElementById('loginMensagem').textContent = '❌ Senha incorreta!';
+        document.getElementById('loginMensagem').style.color = 'var(--danger)';
+        return;
+    }
+    
+    // Login bem-sucedido
+    document.getElementById('loginMensagem').textContent = '✅ Entrando...';
+    document.getElementById('loginMensagem').style.color = 'var(--success)';
+    
+    // Salva quem está logado
+    localStorage.setItem('statusVerseLogado', JSON.stringify({
+        nome: nome,
+        loginEm: new Date().toLocaleString()
+    }));
+    
+    // Define o nome do usuário no jogo
+    appData.user.name = nome;
+    
+    // Esconde a tela de login
+    setTimeout(function() {
+        document.getElementById('telaLogin').style.display = 'none';
+        updateUserInfo();
+        // Tentar carregar dados salvos do usuário
+        carregarDadosSalvos();
+    }, 1000);
+}
+
+// Verificar se já está logado ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    var logado = localStorage.getItem('statusVerseLogado');
+    if (logado) {
+        try {
+            var dados = JSON.parse(logado);
+            appData.user.name = dados.nome;
+            document.getElementById('telaLogin').style.display = 'none';
+            updateUserInfo();
+            carregarDadosSalvos();
+        } catch(e) {
+            document.getElementById('telaLogin').style.display = 'flex';
+        }
+    } else {
+        document.getElementById('telaLogin').style.display = 'flex';
+    }
+});
+
+// Ver contas criadas (admin - clicar 3x no título)
+document.querySelector('.logo')?.addEventListener('click', function() {
+    var contas = localStorage.getItem('statusVerseContas');
+    if (contas) {
+        var lista = Object.keys(JSON.parse(contas));
+        alert('📊 Jogadores cadastrados: ' + lista.length + '\n\n' + lista.join('\n'));
+    }
+});
 
         
     </script>
