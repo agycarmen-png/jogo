@@ -3510,80 +3510,103 @@
         }
 
         // Handle Login
-        function handleLogin() {
-            if (!isLoginMode) {
-                // Switch to login mode
-                isLoginMode = true;
-                toggleLoginMode();
-                return;
-            }
+       async function handleLogin() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
 
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
+    if (!username || !password) {
+        document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
+        return;
+    }
 
-            if (!username || !password) {
-                document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
-                return;
-            }
+    const resultado = await fazerLogin(username, password);
 
-            const account = getAccount(username);
-            if (!account) {
-                document.getElementById('loginError').textContent = '❌ Conta não encontrada!';
-                return;
-            }
+    if (!resultado.sucesso) {
+        document.getElementById('loginError').textContent = resultado.mensagem;
+        return;
+    }
 
-            if (account.password !== password) {
-                document.getElementById('loginError').textContent = '❌ Senha incorreta!';
-                return;
-            }
+    document.getElementById('loginError').textContent = '';
+    document.getElementById('loginSuccess').textContent = '✅ Login realizado!';
 
-            // Login successful
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('loginSuccess').textContent = '✅ Login realizado com sucesso!';
-            
-            setTimeout(() => {
-                enterGame(username);
-            }, 500);
-        }
+    // Carrega os dados do jogador
+    appData.user.name = resultado.dados.nome;
+    appData.user.balance = resultado.dados.moedas;
+    appData.user.tier = resultado.dados.tier;
+    appData.user.avatarChar = resultado.dados.avatarChar;
+    appData.user.items = resultado.dados.itens || [];
+    appData.user.totalSpent = resultado.dados.total_gasto || 0;
+    appData.user.prestigeScore = resultado.dados.prestigio || 0;
+    appData.user.isAdmin = resultado.dados.is_admin || false;
+
+    setTimeout(() => enterGame(username), 500);
+}
+
+
+
+
 
         // Handle Register
-        function handleRegister() {
-            if (isLoginMode) {
-                // Switch to register mode
-                isLoginMode = false;
-                toggleLoginMode();
-                return;
-            }
+       async function handleRegister() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const confirmPassword = document.getElementById('loginConfirmPassword').value.trim();
 
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
+    if (!username || !password || !confirmPassword) {
+        document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
+        return;
+    }
 
-            if (!username || !password) {
-                document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
-                return;
-            }
+    if (username.length < 3) {
+        document.getElementById('loginError').textContent = '❌ Nome deve ter pelo menos 3 caracteres!';
+        return;
+    }
 
-            if (username.length < 3) {
-                document.getElementById('loginError').textContent = '❌ Nome deve ter pelo menos 3 caracteres!';
-                return;
-            }
+    if (password.length < 4) {
+        document.getElementById('loginError').textContent = '❌ Senha deve ter pelo menos 4 caracteres!';
+        return;
+    }
 
-            if (password.length < 4) {
-                document.getElementById('loginError').textContent = '❌ Senha deve ter pelo menos 4 caracteres!';
-                return;
-            }
+    if (password !== confirmPassword) {
+        document.getElementById('loginError').textContent = '❌ As senhas não coincidem!';
+        return;
+    }
 
-            const accounts = getAccounts();
-            if (accounts[username]) {
-                document.getElementById('loginError').textContent = '❌ Este nome já está em uso!';
-                return;
-            }
+    const resultado = await criarConta(username, password);
+
+    if (!resultado.sucesso) {
+        document.getElementById('loginError').textContent = resultado.mensagem;
+        return;
+    }
+
+    document.getElementById('loginError').textContent = '';
+    document.getElementById('loginSuccess').textContent = '✅ Conta criada! Entrando...';
+
+    appData.user.name = resultado.dados.nome;
+    appData.user.balance = resultado.dados.moedas;
+    appData.user.tier = resultado.dados.tier;
+    appData.user.avatarChar = resultado.dados.avatarChar;
+    appData.user.items = resultado.dados.itens || [];
+    appData.user.totalSpent = resultado.dados.total_gasto || 0;
+    appData.user.prestigeScore = resultado.dados.prestigio || 0;
+    appData.user.isAdmin = resultado.dados.is_admin || false;
+
+    setTimeout(() => enterGame(username), 500);
+}
+       
+
+
+
+
+
+
+
 
             // Create new account with default data
             const newAccount = {
                 password: password,
                 name: username,
-                balance: 5000,
+                balance: 500,
                 tier: "BRONZE",
                 avatarChar: "👤",
                 items: [],
@@ -6221,6 +6244,390 @@
             console.log('👑 Modo Admin: digite "ADMIN2004" na aba de códigos');
             console.log('💾 Dados salvos automaticamente!');
         }
+
+
+
+      // ============================================================
+// 🔥 BACKEND - SUPABASE (conexão com banco de dados na nuvem)
+// ============================================================
+
+// 1. CONFIGURAÇÃO (SUAS CREDENCIAIS)
+const SUPABASE_URL = 'https://wklmqrinmuayvcookwdg.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_XIQMrNGzJPZQGpSr6-8cOA_jXvq7xG5';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ============================================================
+// 2. FUNÇÕES DE AUTENTICAÇÃO (LOGIN / CADASTRO)
+// ============================================================
+
+// 👤 Criar nova conta
+async function criarConta(nome, senha) {
+    try {
+        // Verifica se o usuário já existe
+        const { data: existing } = await supabase
+            .from('jogadores')
+            .select('nome')
+            .eq('nome', nome)
+            .single();
+
+        if (existing) {
+            return { sucesso: false, mensagem: '❌ Este nome já está em uso!' };
+        }
+
+        // Cria novo usuário
+        const novoUsuario = {
+            nome: nome,
+            senha: senha,
+            moedas: 5000,
+            tier: 'BRONZE',
+            avatarChar: '👤',
+            itens: [],
+            total_gasto: 0,
+            prestigio: 0,
+            is_admin: false,
+            ultimo_login: new Date().toISOString()
+        };
+
+        const { error } = await supabase
+            .from('jogadores')
+            .insert([novoUsuario]);
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        return { sucesso: true, mensagem: '✅ Conta criada com sucesso!', dados: novoUsuario };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro ao criar conta: ' + error.message };
+    }
+}
+
+// 🔐 Fazer login
+async function fazerLogin(nome, senha) {
+    try {
+        const { data, error } = await supabase
+            .from('jogadores')
+            .select('*')
+            .eq('nome', nome)
+            .single();
+
+        if (error || !data) {
+            return { sucesso: false, mensagem: '❌ Conta não encontrada!' };
+        }
+
+        if (data.senha !== senha) {
+            return { sucesso: false, mensagem: '❌ Senha incorreta!' };
+        }
+
+        // Atualiza último login
+        await supabase
+            .from('jogadores')
+            .update({ ultimo_login: new Date().toISOString() })
+            .eq('nome', nome);
+
+        return { sucesso: true, mensagem: '✅ Login realizado!', dados: data };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro ao fazer login: ' + error.message };
+    }
+}
+
+// ============================================================
+// 3. FUNÇÕES DE DADOS (CRUD)
+// ============================================================
+
+// 💾 Salvar dados do jogador
+async function salvarDados() {
+    if (!appData.currentUser) return;
+
+    const dados = {
+        balance: appData.user.balance,
+        tier: appData.user.tier,
+        avatarChar: appData.user.avatarChar,
+        items: appData.user.items,
+        totalSpent: appData.user.totalSpent,
+        prestigeScore: appData.user.prestigeScore,
+        isAdmin: appData.user.isAdmin
+    };
+
+    await salvarDadosSupabase(appData.currentUser, dados);
+}
+
+
+
+
+// 📥 Carregar dados do jogador
+async function carregarDados(nome) {
+    try {
+        const { data, error } = await supabase
+            .from('jogadores')
+            .select('*')
+            .eq('nome', nome)
+            .single();
+
+        if (error || !data) {
+            return { sucesso: false, mensagem: '❌ Jogador não encontrado!' };
+        }
+
+        return {
+            sucesso: true,
+            dados: {
+                nome: data.nome,
+                balance: data.moedas || 5000,
+                tier: data.tier || 'BRONZE',
+                avatarChar: data.avatarChar || '👤',
+                items: data.itens || [],
+                totalSpent: data.total_gasto || 0,
+                prestigeScore: data.prestigio || 0,
+                isAdmin: data.is_admin || false
+            }
+        };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro ao carregar: ' + error.message };
+    }
+}
+
+// ============================================================
+// 4. FUNÇÕES ADMIN
+// ============================================================
+
+// 👥 Listar todos os jogadores (só admin)
+async function listarJogadores() {
+    try {
+        const { data, error } = await supabase
+            .from('jogadores')
+            .select('*')
+            .order('prestigio', { ascending: false });
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        let msg = '👥 TODOS OS JOGADORES\n\n';
+        data.forEach((jogador, index) => {
+            msg += ${index + 1}. ${jogador.nome}\n;
+            msg += `   💰 ${jogador.moedas.toLocaleString()} MT | Tier: ${jogador.tier}\n`;
+            msg += `   ⭐ Prestígio: ${jogador.prestigio}\n`;
+            msg += `   📦 Itens: ${jogador.itens ? jogador.itens.length : 0}\n`;
+            msg += `   🕐 Último login: ${new Date(jogador.ultimo_login).toLocaleString()}\n\n`;
+        });
+
+        return { sucesso: true, mensagem: msg };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// 📊 Estatísticas do servidor (só admin)
+async function estatisticasServidor() {
+    try {
+        const { data, error } = await supabase
+            .from('jogadores')
+            .select('*');
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        let totalJogadores = data.length;
+        let totalMoedas = 0;
+        let totalPrestigio = 0;
+        let tiers = {};
+
+        data.forEach(jogador => {
+            totalMoedas += jogador.moedas;
+            totalPrestigio += jogador.prestigio;
+            tiers[jogador.tier] = (tiers[jogador.tier] || 0) + 1;
+        });
+
+        let msg = '📊 ESTATÍSTICAS DO SERVIDOR\n\n';
+        msg += 👥 Total de Jogadores: ${totalJogadores}\n;
+        msg += 💰 Moedas Totais: ${totalMoedas.toLocaleString()} MT\n;
+        msg += ⭐ Prestígio Total: ${totalPrestigio}\n\n;
+        msg += '🏷️ Distribuição de Tiers:\n';
+        Object.keys(tiers).forEach(tier => {
+            msg += `   ${tier}: ${tiers[tier]} jogadores\n`;
+        });
+
+        return { sucesso: true, mensagem: msg };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// ============================================================
+// 5. FUNÇÃO PARA ATIVAR ADMIN (código ADMIN2004)
+// ============================================================
+
+async function ativarAdmin(nome) {
+    try {
+        const { error } = await supabase
+            .from('jogadores')
+            .update({
+                is_admin: true,
+                moedas: 999999999,
+                tier: 'BLACK'
+            })
+            .eq('nome', nome);
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        return { sucesso: true, mensagem: '👑 Admin ativado com sucesso!' };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// ============================================================
+// 6. FUNÇÃO PARA DAR ITENS (admin)
+// ============================================================
+
+async function darItemAdmin(nome, itemId) {
+    try {
+        // Busca dados do jogador
+        const { data: jogador, error: buscaError } = await supabase
+            .from('jogadores')
+            .select('itens')
+            .eq('nome', nome)
+            .single();
+
+        if (buscaError || !jogador) {
+            return { sucesso: false, mensagem: '❌ Jogador não encontrado!' };
+        }
+
+        const itensAtuais = jogador.itens || [];
+        
+        // Verifica se o item já existe
+        if (itensAtuais.includes(itemId)) {
+            return { sucesso: false, mensagem: '❌ Jogador já possui este item!' };
+        }
+
+        // Adiciona o item
+        itensAtuais.push(itemId);
+
+        const { error } = await supabase
+            .from('jogadores')
+            .update({ itens: itensAtuais })
+            .eq('nome', nome);
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        return { sucesso: true, mensagem: '✅ Item adicionado com sucesso!' };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// ============================================================
+// 7. FUNÇÃO PARA DAR DINHEIRO (admin)
+// ============================================================
+
+async function darDinheiroAdmin(nome, valor) {
+    try {
+        const { data: jogador, error: buscaError } = await supabase
+            .from('jogadores')
+            .select('moedas')
+            .eq('nome', nome)
+            .single();
+
+        if (buscaError || !jogador) {
+            return { sucesso: false, mensagem: '❌ Jogador não encontrado!' };
+        }
+
+        const novoSaldo = (jogador.moedas || 0) + valor;
+
+        const { error } = await supabase
+            .from('jogadores')
+            .update({ moedas: novoSaldo })
+            .eq('nome', nome);
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        return { sucesso: true, mensagem: ✅ ${valor.toLocaleString()} MT adicionados! };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// ============================================================
+// 8. FUNÇÃO PARA MUDAR TIER (admin)
+// ============================================================
+
+async function mudarTier(nome, novoTier) {
+    try {
+        const { error } = await supabase
+            .from('jogadores')
+            .update({ tier: novoTier })
+            .eq('nome', nome);
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        return { sucesso: true, mensagem: ✅ Tier alterado para ${novoTier}! };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// ============================================================
+// 9. FUNÇÃO PARA DELETAR JOGADOR (admin)
+// ============================================================
+
+async function deletarJogador(nome) {
+    try {
+        const { error } = await supabase
+            .from('jogadores')
+            .delete()
+            .eq('nome', nome);
+
+        if (error) {
+            return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+        }
+
+        return { sucesso: true, mensagem: ✅ Jogador ${nome} deletado! };
+
+    } catch (error) {
+        return { sucesso: false, mensagem: '❌ Erro: ' + error.message };
+    }
+}
+
+// ============================================================
+// 10. EXPORTAR FUNÇÕES (para usar no resto do código)
+// ============================================================
+
+console.log('🔥 Backend Supabase carregado com sucesso!');
+console.log('📦 Funções disponíveis:');
+console.log('   - criarConta(nome, senha)');
+console.log('   - fazerLogin(nome, senha)');
+console.log('   - salvarDados(nome, dados)');
+console.log('   - carregarDados(nome)');
+console.log('   - listarJogadores() [admin]');
+console.log('   - estatisticasServidor() [admin]');
+console.log('   - ativarAdmin(nome) [ADMIN2004]');
+console.log('   - darItemAdmin(nome, itemId) [admin]');
+console.log('   - darDinheiroAdmin(nome, valor) [admin]');
+console.log('   - mudarTier(nome, novoTier) [admin]');
+console.log('   - deletarJogador(nome) [admin]');
+
+
+
+
+
     </script>
 </body>
 </html>
