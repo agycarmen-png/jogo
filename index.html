@@ -2802,8 +2802,10 @@
                 <div id="loginError" class="login-error"></div>
                 <div id="loginSuccess" class="login-success"></div>
                 <div class="login-btns">
-                   <button class="login-btn primary" id="loginBtn">🔐 Entrar</button>
-                   <button class="login-btn success" id="registerBtn">✨ Criar Conta</button>           
+                      <button class="login-btn primary" id="loginBtn" onclick="handleLogin()">🔐 Entrar</button>
+                    <button class="login-btn success" id="registerBtn" onclick="handleRegister()">✨ Criar Conta</button>
+     
+    
                 </div>
                 <div class="login-toggle">
                     Não tem conta? <span onclick="toggleLoginMode()">Criar agora</span>
