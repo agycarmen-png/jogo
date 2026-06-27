@@ -6329,11 +6329,281 @@
       // ============================================================
 // 🔥 BACKEND - SUPABASE (conexão com banco de dados na nuvem)
 // ============================================================
-
-// 1. CONFIGURAÇÃO (SUAS CREDENCIAIS)
+// ============================================================
+// 🔥 BACKEND - SUPABASE
+// ============================================================
 const SUPABASE_URL = 'https://wklmqrinmuayvcookwdg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_XIQMrNGzJPZQGpSr6-8cOA_jXvq7xG5';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ============================================================
+// VARIÁVEIS GLOBAIS
+// ============================================================
+let currentUser = null;
+let isLoginMode = true;
+
+// ============================================================
+// FUNÇÃO PARA ALTERNAR ENTRE LOGIN E CADASTRO
+// ============================================================
+function toggleLoginMode() {
+    isLoginMode = !isLoginMode;
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const confirmGroup = document.getElementById('confirmPasswordGroup');
+    const toggleText = document.querySelector('#loginToggle span');
+
+    if (isLoginMode) {
+        loginBtn.textContent = '🔐 Entrar';
+        registerBtn.textContent = '✨ Criar Conta';
+        document.getElementById('loginToggle').innerHTML = 'Não tem conta? <span onclick="toggleLoginMode()">Criar agora</span>';
+        confirmGroup.classList.add('hidden');
+        document.getElementById('loginError').textContent = '';
+        document.getElementById('loginSuccess').textContent = '';
+        document.getElementById('loginPassword').placeholder = 'Digite sua senha';
+        document.getElementById('loginBtn').style.display = 'block';
+        document.getElementById('registerBtn').style.display = 'block';
+    } else {
+        loginBtn.textContent = '🔐 Voltar';
+        registerBtn.textContent = '✅ Registrar';
+        document.getElementById('loginToggle').innerHTML = 'Já tem conta? <span onclick="toggleLoginMode()">Entrar agora</span>';
+        confirmGroup.classList.remove('hidden');
+        document.getElementById('loginError').textContent = '';
+        document.getElementById('loginSuccess').textContent = '✨ Crie sua conta gratuitamente!';
+        document.getElementById('loginPassword').placeholder = 'Digite sua senha (mín 4)';
+        document.getElementById('loginBtn').style.display = 'block';
+        document.getElementById('registerBtn').style.display = 'block';
+    }
+}
+
+// ============================================================
+// FUNÇÃO DE LOGIN
+// ============================================================
+async function handleLogin() {
+    console.log('🔵 Botão Entrar clicado!');
+    
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    if (!username || !password) {
+        document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
+        document.getElementById('loginError').style.color = 'var(--danger)';
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('jogadores')
+            .select('*')
+            .eq('nome', username)
+            .single();
+
+        if (error || !data) {
+            document.getElementById('loginError').textContent = '❌ Conta não encontrada!';
+            document.getElementById('loginError').style.color = 'var(--danger)';
+            return;
+        }
+
+        if (data.senha !== password) {
+            document.getElementById('loginError').textContent = '❌ Senha incorreta!';
+            document.getElementById('loginError').style.color = 'var(--danger)';
+            return;
+        }
+
+        document.getElementById('loginError').textContent = '';
+        document.getElementById('loginSuccess').textContent = '✅ Login realizado!';
+        document.getElementById('loginSuccess').style.color = 'var(--success)';
+
+        // Carrega dados
+        appData.user.name = data.nome;
+        appData.user.balance = data.moedas || 5000;
+        appData.user.tier = data.tier || 'BRONZE';
+        appData.user.avatarChar = data.avatarChar || '👤';
+        appData.user.items = data.itens || [];
+        appData.user.totalSpent = data.total_gasto || 0;
+        appData.user.prestigeScore = data.prestigio || 0;
+        appData.user.isAdmin = data.is_admin || false;
+
+        await supabase
+            .from('jogadores')
+            .update({ ultimo_login: new Date().toISOString() })
+            .eq('nome', username);
+
+        setTimeout(() => {
+            enterGame(username);
+        }, 500);
+
+    } catch (error) {
+        console.error('❌ Erro:', error);
+        document.getElementById('loginError').textContent = '❌ Erro: ' + error.message;
+        document.getElementById('loginError').style.color = 'var(--danger)';
+    }
+}
+
+// ============================================================
+// FUNÇÃO DE CADASTRO
+// ============================================================
+async function handleRegister() {
+    console.log('🟢 Botão Registrar clicado!');
+    
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const confirmPassword = document.getElementById('loginConfirmPassword').value.trim();
+
+    if (!username || !password || !confirmPassword) {
+        document.getElementById('loginError').textContent = '❌ Preencha todos os campos!';
+        document.getElementById('loginError').style.color = 'var(--danger)';
+        return;
+    }
+
+    if (username.length < 3) {
+        document.getElementById('loginError').textContent = '❌ Nome deve ter pelo menos 3 caracteres!';
+        document.getElementById('loginError').style.color = 'var(--danger)';
+        return;
+    }
+
+    if (password.length < 4) {
+        document.getElementById('loginError').textContent = '❌ Senha deve ter pelo menos 4 caracteres!';
+        document.getElementById('loginError').style.color = 'var(--danger)';
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        document.getElementById('loginError').textContent = '❌ As senhas não coincidem!';
+        document.getElementById('loginError').style.color = 'var(--danger)';
+        return;
+    }
+
+    try {
+        // Verifica se já existe
+        const { data: existing } = await supabase
+            .from('jogadores')
+            .select('nome')
+            .eq('nome', username)
+            .single();
+
+        if (existing) {
+            document.getElementById('loginError').textContent = '❌ Este nome já está em uso!';
+            document.getElementById('loginError').style.color = 'var(--danger)';
+            return;
+        }
+
+        // Cria novo usuário
+        const novoUsuario = {
+            nome: username,
+            senha: password,
+            moedas: 5000,
+            tier: 'BRONZE',
+            avatarChar: '👤',
+            itens: [],
+            total_gasto: 0,
+            prestigio: 0,
+            is_admin: false,
+            ultimo_login: new Date().toISOString()
+        };
+
+        const { error } = await supabase
+            .from('jogadores')
+            .insert([novoUsuario]);
+
+        if (error) {
+            document.getElementById('loginError').textContent = '❌ Erro: ' + error.message;
+            document.getElementById('loginError').style.color = 'var(--danger)';
+            return;
+        }
+
+        document.getElementById('loginError').textContent = '';
+        document.getElementById('loginSuccess').textContent = '✅ Conta criada! Entrando...';
+        document.getElementById('loginSuccess').style.color = 'var(--success)';
+
+        // Carrega dados
+        appData.user.name = username;
+        appData.user.balance = 5000;
+        appData.user.tier = 'BRONZE';
+        appData.user.avatarChar = '👤';
+        appData.user.items = [];
+        appData.user.totalSpent = 0;
+        appData.user.prestigeScore = 0;
+        appData.user.isAdmin = false;
+
+        setTimeout(() => {
+            enterGame(username);
+        }, 1000);
+
+    } catch (error) {
+        console.error('❌ Erro:', error);
+        document.getElementById('loginError').textContent = '❌ Erro: ' + error.message;
+        document.getElementById('loginError').style.color = 'var(--danger)';
+    }
+}
+
+// ============================================================
+// FUNÇÃO PARA ENTRAR NO JOGO
+// ============================================================
+function enterGame(username) {
+    currentUser = username;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('gameContainer').style.display = 'block';
+    document.getElementById('bottomNav').style.display = 'flex';
+    
+    updateUI();
+    loadShopItems();
+    loadChatMessages();
+    loadRanking();
+    checkAdmin();
+    showDiscreetNotification('👋 Bem-vindo, ' + username + '!');
+}
+
+// ============================================================
+// FUNÇÃO DE LOGOUT
+// ============================================================
+async function logout() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        await salvarDados();
+        closeProfileModal();
+        document.getElementById('gameContainer').style.display = 'none';
+        document.getElementById('bottomNav').style.display = 'none';
+        document.getElementById('loginScreen').style.display = 'flex';
+        currentUser = null;
+        showDiscreetNotification('👋 Até logo!');
+    }
+}
+
+// ============================================================
+// CONFIGURAR OS BOTÕES CORRETAMENTE
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Garante que os botões estão chamando as funções certas
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    
+    if (loginBtn) {
+        loginBtn.onclick = function() {
+            if (isLoginMode) {
+                handleLogin();
+            } else {
+                toggleLoginMode();
+            }
+        };
+    }
+    
+    if (registerBtn) {
+        registerBtn.onclick = function() {
+            if (!isLoginMode) {
+                handleRegister();
+            } else {
+                toggleLoginMode();
+            }
+        };
+    }
+    
+    console.log('✅ Botões configurados!');
+    console.log('📌 Login:', loginBtn ? 'OK' : 'NÃO ENCONTRADO');
+    console.log('📌 Register:', registerBtn ? 'OK' : 'NÃO ENCONTRADO');
+});
+
+console.log('🔥 Backend Supabase carregado!');
+console.log('👑 Código Admin: ADMIN2004');
+
 
 // ============================================================
 // 2. FUNÇÕES DE AUTENTICAÇÃO (LOGIN / CADASTRO)
